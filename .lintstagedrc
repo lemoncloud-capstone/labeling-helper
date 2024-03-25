@@ -1,6 +1,7 @@
 {
-    "*.ts": [
-			  "nx affected:lint --fix --files"
+    "*.{ts.tsx}": [
+        "nx affected --target lint --uncommitted --fix true",
+        "nx format:write --uncommitted"
     ],
     "*": [
         "npx nx format:write --files"
