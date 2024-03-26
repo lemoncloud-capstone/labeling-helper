@@ -15,7 +15,7 @@
         "!server": "------------- server scripts -------------",
         "start:server": "nx serve server",
         "build:server": "nx build --configuration=prod server",
-        "predeploy:server:prod": "(rm -rf ./dist/apps/web || true) && yarn build:server",
+        "predeploy:server:prod": "(rm -rf ./dist/apps/server || true) && yarn build:server",
         "deploy:server:prod": "echo TODO: deploy to prod"
     },
     "private": true,
