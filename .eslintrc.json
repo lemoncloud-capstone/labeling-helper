@@ -1,35 +1,83 @@
 {
-  "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
-      "rules": {}
-    }
-  ]
+    "root": true,
+    "ignorePatterns": ["**/*"],
+    "plugins": ["@nx", "import", "unused-imports"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+            "rules": {
+                "@nx/enforce-module-boundaries": [
+                    "error",
+                    {
+                        "enforceBuildableLibDependency": true,
+                        "allow": [],
+                        "depConstraints": [
+                            {
+                                "sourceTag": "*",
+                                "onlyDependOnLibsWithTags": ["*"]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["*.ts", "*.tsx"],
+            "extends": ["prettier", "plugin:@nx/typescript"],
+            "rules": {
+                "@typescript-eslint/no-inferrable-types": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/no-unused-vars": "off",
+                "unused-imports/no-unused-imports": "error",
+                "@nx/enforce-module-boundaries": "off",
+                "import/order": [
+                    "error",
+                    {
+                        "groups": ["builtin", "external", "internal"],
+                        "pathGroups": [
+                            {
+                                "pattern": "react",
+                                "group": "external",
+                                "position": "before"
+                            },
+                            {
+                                "pattern": "react-dom",
+                                "group": "external",
+                                "position": "before"
+                            }
+                        ],
+                        "pathGroupsExcludedImportTypes": ["react"],
+                        "newlines-between": "always",
+                        "alphabetize": {
+                            "order": "asc",
+                            "caseInsensitive": true
+                        }
+                    }
+                ],
+                "sort-imports": [
+                    "error",
+                    {
+                        "ignoreCase": false,
+                        "ignoreDeclarationSort": true,
+                        "ignoreMemberSort": false,
+                        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+                        "allowSeparatedGroups": true
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["*.js", "*.jsx"],
+            "extends": ["plugin:@nx/javascript"],
+            "rules": {}
+        },
+        {
+            "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+            "env": {
+                "jest": true
+            },
+            "rules": {}
+        }
+    ]
 }
