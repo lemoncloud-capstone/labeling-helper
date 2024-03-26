@@ -15,24 +15,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
 app.use(routers);
 
 const PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 3000;
 const HOST = process.env.HOST ?? 'localhost';
 
+app.get('/', (req, res) => {
+    res.send({ message: `Hello Le'code, 와신상담` });
+});
+
 app.listen(PORT, () => {
     console.log(`Running on port ${HOST}:${PORT}`);
 });
-
-// const host = process.env.HOST ?? 'localhost';
-// const port = process.env.PORT ? Number(process.env.PORT) : 3000;
-//
-// const app = express();
-//
-// app.get('/', (req, res) => {
-//     res.send({ message: 'Hello API' });
-// });
-//
-// app.listen(port, host, () => {
-//     console.log(`[ ready ] http://${host}:${port}`);
-// });
