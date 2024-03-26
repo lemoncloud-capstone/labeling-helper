@@ -16,7 +16,9 @@
         "start:server": "nx serve server",
         "build:server": "nx build --configuration=prod server",
         "predeploy:server:prod": "(rm -rf ./dist/apps/server || true) && yarn build:server",
-        "deploy:server:prod": "echo TODO: deploy to prod"
+        "deploy:server:prod": "echo TODO: deploy to prod",
+        "!mobile": "------------- mobile scripts -------------",
+        "start:mobile": "cd apps/mobile && flutter run"
     },
     "private": true,
     "dependencies": {
@@ -67,6 +69,7 @@
         "@nx/vite": "18.1.2",
         "@nx/web": "18.1.2",
         "@nx/workspace": "18.1.2",
+        "@nxrocks/nx-flutter": "^0.0.0-e2e",
         "@redux-devtools/core": "^4.0.0",
         "@swc-node/register": "~1.8.0",
         "@swc/cli": "~0.1.62",

@@ -36,6 +36,29 @@
             "options": {
                 "targetName": "test"
             }
+        },
+        {
+            "plugin": "@nxrocks/nx-flutter",
+            "options": {
+                "analyzeTargetName": "analyze",
+                "cleanTargetName": "clean",
+                "formatTargetName": "format",
+                "testTargetName": "test",
+                "doctorTargetName": "doctor",
+                "assembleTargetName": "assemble",
+                "attachTargetName": "attach",
+                "driveTargetName": "drive",
+                "genL10nTargetName": "gen-l10n",
+                "installTargetName": "install",
+                "runTargetName": "run",
+                "buildAarTargetName": "build-aar",
+                "buildApkTargetName": "build-apk",
+                "buildAppbundleTargetName": "build-appbundle",
+                "buildBundleTargetName": "build-bundle",
+                "buildIosTargetName": "build-ios",
+                "buildIosFrameworkTargetName": "build-ios-framework",
+                "buildIpaTargetName": "build-ipa"
+            }
         }
     ],
     "generators": {
