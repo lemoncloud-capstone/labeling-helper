@@ -15,6 +15,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@labeling-helper/models": ["libs/models/src/index.ts"],
             "@labeling-helper/utils": ["libs/utils/src/index.ts"]
         }
     },
