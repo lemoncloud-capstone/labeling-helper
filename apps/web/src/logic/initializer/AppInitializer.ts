@@ -1,11 +1,11 @@
-import { updateWindowSize } from '../../store/general/actionCreators';
-import { ContextManager } from '../context/ContextManager';
-import { store } from '../../main';
-import { PlatformUtil } from '../../utils/PlatformUtil';
-import { PlatformModel } from '../../staticModels/PlatformModel';
 import { EventType } from '../../data/enums/EventType';
+import { store } from '../../main';
+import { PlatformModel } from '../../staticModels/PlatformModel';
+import { updateWindowSize } from '../../store/general/actionCreators';
 import { GeneralSelector } from '../../store/selectors/GeneralSelector';
 import { EnvironmentUtil } from '../../utils/EnvironmentUtil';
+import { PlatformUtil } from '../../utils/PlatformUtil';
+import { ContextManager } from '../context/ContextManager';
 
 export class AppInitializer {
     public static inti(): void {

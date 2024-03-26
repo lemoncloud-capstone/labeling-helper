@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './SizeItUpView.scss';
 import { Settings } from '../../settings/Settings';
 

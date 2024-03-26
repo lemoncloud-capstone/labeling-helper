@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
+
 import './LabelControlPanel.scss';
-import { updatePreventCustomCursorStatus } from '../../../store/general/actionCreators';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { IPoint } from '../../../interfaces/IPoint';
+
 import classNames from 'classnames';
-import { LabelName, LabelPoint, LabelRect } from '../../../store/labels/types';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
-import { LabelActions } from '../../../logic/actions/LabelActions';
-import { ImageData } from '../../../store/labels/types';
-import { LabelStatus } from '../../../data/enums/LabelStatus';
-import { updateImageDataById } from '../../../store/labels/actionCreators';
 import { findLast } from 'lodash';
+import { connect } from 'react-redux';
+
+import { LabelStatus } from '../../../data/enums/LabelStatus';
+import { IPoint } from '../../../interfaces/IPoint';
+import { LabelActions } from '../../../logic/actions/LabelActions';
+import { AppState } from '../../../store';
+import { updatePreventCustomCursorStatus } from '../../../store/general/actionCreators';
+import { updateImageDataById } from '../../../store/labels/actionCreators';
+import { LabelName, LabelPoint, LabelRect } from '../../../store/labels/types';
+import { ImageData } from '../../../store/labels/types';
 import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
 
 interface IProps {
     position: IPoint;

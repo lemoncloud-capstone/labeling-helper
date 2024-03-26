@@ -1,30 +1,30 @@
-import { IRect } from '../../interfaces/IRect';
-import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
+import { BaseRenderEngine } from './BaseRenderEngine';
+import { EditorData } from '../../data/EditorData';
+import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { LabelType } from '../../data/enums/LabelType';
 import { IPoint } from '../../interfaces/IPoint';
-import { CanvasUtil } from '../../utils/CanvasUtil';
+import { IRect } from '../../interfaces/IRect';
 import { store } from '../../main';
-import { ImageData, LabelPoint } from '../../store/labels/types';
+import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
+import { Settings } from '../../settings/Settings';
+import { EditorModel } from '../../staticModels/EditorModel';
+import { updateCustomCursorStyle } from '../../store/general/actionCreators';
 import {
     updateActiveLabelId,
     updateFirstLabelCreatedFlag,
     updateHighlightedLabelId,
     updateImageDataById,
 } from '../../store/labels/actionCreators';
-import { RectUtil } from '../../utils/RectUtil';
-import { DrawUtil } from '../../utils/DrawUtil';
-import { updateCustomCursorStyle } from '../../store/general/actionCreators';
-import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { EditorData } from '../../data/EditorData';
-import { BaseRenderEngine } from './BaseRenderEngine';
-import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
-import { LabelType } from '../../data/enums/LabelType';
-import { EditorActions } from '../actions/EditorActions';
-import { EditorModel } from '../../staticModels/EditorModel';
+import { ImageData, LabelPoint } from '../../store/labels/types';
 import { GeneralSelector } from '../../store/selectors/GeneralSelector';
-import { LabelStatus } from '../../data/enums/LabelStatus';
-import { Settings } from '../../settings/Settings';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { CanvasUtil } from '../../utils/CanvasUtil';
+import { DrawUtil } from '../../utils/DrawUtil';
 import { LabelUtil } from '../../utils/LabelUtil';
+import { RectUtil } from '../../utils/RectUtil';
+import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
+import { EditorActions } from '../actions/EditorActions';
 
 export class PointRenderEngine extends BaseRenderEngine {
     // =================================================================================================================

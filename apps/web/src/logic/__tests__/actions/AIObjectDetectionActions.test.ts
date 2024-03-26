@@ -1,5 +1,6 @@
-import { LabelName } from '../../../store/labels/types';
 import { DetectedObject } from '@tensorflow-models/coco-ssd';
+
+import { LabelName } from '../../../store/labels/types';
 import { AISSDObjectDetectionActions } from '../../actions/AISSDObjectDetectionActions';
 
 describe('AIObjectDetectionActions extractNewSuggestedLabelNames method', () => {

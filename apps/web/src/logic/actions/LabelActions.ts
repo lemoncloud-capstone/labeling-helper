@@ -1,9 +1,10 @@
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { ImageData, LabelLine, LabelName, LabelPoint, LabelPolygon, LabelRect } from '../../store/labels/types';
 import { filter } from 'lodash';
+
+import { LabelType } from '../../data/enums/LabelType';
 import { store } from '../../main';
 import { updateImageData, updateImageDataById } from '../../store/labels/actionCreators';
-import { LabelType } from '../../data/enums/LabelType';
+import { ImageData, LabelLine, LabelName, LabelPoint, LabelPolygon, LabelRect } from '../../store/labels/types';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 import { LabelUtil } from '../../utils/LabelUtil';
 
 export class LabelActions {

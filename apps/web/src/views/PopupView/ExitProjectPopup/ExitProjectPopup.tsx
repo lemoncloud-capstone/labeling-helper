@@ -1,6 +1,12 @@
 import React from 'react';
+
 import './ExitProjectPopup.scss';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
+import { connect } from 'react-redux';
+
+import { PopupActions } from '../../../logic/actions/PopupActions';
+import { AppState } from '../../../store';
+import { updateProjectData as storeUpdateProjectData } from '../../../store/general/actionCreators';
+import { ProjectData } from '../../../store/general/types';
 import {
     updateActiveImageIndex as storeUpdateActiveImageIndex,
     updateActiveLabelNameId as storeUpdateActiveLabelNameId,
@@ -8,12 +14,8 @@ import {
     updateImageData as storeUpdateImageData,
     updateLabelNames as storeUpdateLabelNames,
 } from '../../../store/labels/actionCreators';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
 import { ImageData, LabelName } from '../../../store/labels/types';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import { ProjectData } from '../../../store/general/types';
-import { updateProjectData as storeUpdateProjectData } from '../../../store/general/actionCreators';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface IProps {
     updateActiveImageIndex: (activeImageIndex: number) => any;

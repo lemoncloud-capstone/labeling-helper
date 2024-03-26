@@ -1,11 +1,11 @@
-import { LabelType } from '../../data/enums/LabelType';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { AISSDObjectDetectionActions } from './AISSDObjectDetectionActions';
 import { AIPoseDetectionActions } from './AIPoseDetectionActions';
+import { AIRoboflowAPIObjectDetectionActions } from './AIRoboflowAPIObjectDetectionActions';
+import { AISSDObjectDetectionActions } from './AISSDObjectDetectionActions';
+import { AIYOLOObjectDetectionActions } from './AIYOLOObjectDetectionActions';
+import { LabelType } from '../../data/enums/LabelType';
 import { ImageData } from '../../store/labels/types';
 import { AISelector } from '../../store/selectors/AISelector';
-import { AIYOLOObjectDetectionActions } from './AIYOLOObjectDetectionActions';
-import { AIRoboflowAPIObjectDetectionActions } from './AIRoboflowAPIObjectDetectionActions';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 
 export class AIActions {
     public static excludeRejectedLabelNames(suggestedLabels: string[], rejectedLabels: string[]): string[] {

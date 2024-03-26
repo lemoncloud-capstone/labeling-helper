@@ -1,6 +1,6 @@
+import { UnitUtil } from './UnitUtil';
 import { IPoint } from '../interfaces/IPoint';
 import { IRect } from '../interfaces/IRect';
-import { UnitUtil } from './UnitUtil';
 
 export class DrawUtil {
     public static clearCanvas(canvas: HTMLCanvasElement): void {

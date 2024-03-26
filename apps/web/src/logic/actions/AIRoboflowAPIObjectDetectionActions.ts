@@ -1,16 +1,17 @@
-import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
-import { v4 as uuidv4 } from 'uuid';
-import { LabelStatus } from '../../data/enums/LabelStatus';
-import { DetectedObject, RoboflowAPIObjectDetector } from '../../ai/RoboflowAPIObjectDetector';
 import { findLast } from 'lodash';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { store } from '../../main';
-import { updateImageDataById } from '../../store/labels/actionCreators';
-import { AISelector } from '../../store/selectors/AISelector';
-import { updateActivePopupType } from '../../store/general/actionCreators';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { v4 as uuidv4 } from 'uuid';
+
 import { AIActions } from './AIActions';
+import { DetectedObject, RoboflowAPIObjectDetector } from '../../ai/RoboflowAPIObjectDetector';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { store } from '../../main';
 import { updateSuggestedLabelList } from '../../store/ai/actionCreators';
+import { updateActivePopupType } from '../../store/general/actionCreators';
+import { updateImageDataById } from '../../store/labels/actionCreators';
+import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
+import { AISelector } from '../../store/selectors/AISelector';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 
 export class AIRoboflowAPIObjectDetectionActions {
     public static detectRects(imageData: ImageData): void {

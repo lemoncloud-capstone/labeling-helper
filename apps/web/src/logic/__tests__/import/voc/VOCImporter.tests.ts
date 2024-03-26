@@ -1,8 +1,8 @@
-import { ImageData, LabelName, LabelRect } from '../../../../store/labels/types';
-import { AcceptedFileType } from '../../../../data/enums/AcceptedFileType';
 import { v4 as uuidv4 } from 'uuid';
+
+import { AcceptedFileType } from '../../../../data/enums/AcceptedFileType';
+import { ImageData, LabelName, LabelRect } from '../../../../store/labels/types';
 import { VOCImporter } from '../../../import/voc/VOCImporter';
-import { isEqual } from 'lodash';
 
 const getDummyImageData = (fileName: string): ImageData => {
     return {

@@ -1,13 +1,15 @@
 import React from 'react';
+
 import './LoadMoreImagesPopup.scss';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { addImageData } from '../../../store/labels/actionCreators';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 import { useDropzone } from 'react-dropzone';
-import { ImageData } from '../../../store/labels/types';
+import { connect } from 'react-redux';
+
 import { PopupActions } from '../../../logic/actions/PopupActions';
+import { AppState } from '../../../store';
+import { addImageData } from '../../../store/labels/actionCreators';
+import { ImageData } from '../../../store/labels/types';
 import { ImageDataUtil } from '../../../utils/ImageDataUtil';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface IProps {
     addImageData: (imageData: ImageData[]) => any;

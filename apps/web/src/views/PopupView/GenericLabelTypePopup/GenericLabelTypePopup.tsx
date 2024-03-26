@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+
 import './GenericLabelTypePopup.scss';
-import { LabelType } from '../../../data/enums/LabelType';
-import { AppState } from '../../../store';
 import { connect } from 'react-redux';
+
+import { LabelType } from '../../../data/enums/LabelType';
+import { ProjectType } from '../../../data/enums/ProjectType';
+import { ILabelToolkit, LabelToolkitData } from '../../../data/info/LabelToolkitData';
+import { AppState } from '../../../store';
 import { ImageButton } from '../../Common/ImageButton/ImageButton';
 import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { ILabelToolkit, LabelToolkitData } from '../../../data/info/LabelToolkitData';
-import { ProjectType } from '../../../data/enums/ProjectType';
 
 interface IProps {
     title: string;

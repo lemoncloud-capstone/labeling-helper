@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
+
 import './ExportLabelPopup.scss';
+import { connect } from 'react-redux';
+
 import { AnnotationFormatType } from '../../../data/enums/AnnotationFormatType';
-import { RectLabelsExporter } from '../../../logic/export/RectLabelsExporter';
 import { LabelType } from '../../../data/enums/LabelType';
+import { ExportFormatData } from '../../../data/ExportFormatData';
 import { ILabelFormatData } from '../../../interfaces/ILabelFormatData';
-import { PointLabelsExporter } from '../../../logic/export/PointLabelsExport';
-import { PolygonLabelsExporter } from '../../../logic/export/polygon/PolygonLabelsExporter';
 import { PopupActions } from '../../../logic/actions/PopupActions';
 import { LineLabelsExporter } from '../../../logic/export/LineLabelExport';
+import { PointLabelsExporter } from '../../../logic/export/PointLabelsExport';
+import { PolygonLabelsExporter } from '../../../logic/export/polygon/PolygonLabelsExporter';
+import { RectLabelsExporter } from '../../../logic/export/RectLabelsExporter';
 import { TagLabelsExporter } from '../../../logic/export/TagLabelsExport';
-import GenericLabelTypePopup from '../GenericLabelTypePopup/GenericLabelTypePopup';
-import { ExportFormatData } from '../../../data/ExportFormatData';
 import { AppState } from '../../../store';
-import { connect } from 'react-redux';
+import GenericLabelTypePopup from '../GenericLabelTypePopup/GenericLabelTypePopup';
 
 interface IProps {
     activeLabelType: LabelType;

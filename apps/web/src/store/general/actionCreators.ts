@@ -1,9 +1,9 @@
-import { ISize } from '../../interfaces/ISize';
 import { GeneralActionTypes, ProjectData } from './types';
-import { Action } from '../Actions';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
-import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
 import { ContextType } from '../../data/enums/ContextType';
+import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { ISize } from '../../interfaces/ISize';
+import { Action } from '../Actions';
 
 export function updateWindowSize(windowSize: ISize): GeneralActionTypes {
     return {

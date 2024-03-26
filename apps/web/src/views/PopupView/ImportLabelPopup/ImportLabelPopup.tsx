@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
+
 import './ImportLabelPopup.scss';
-import { LabelType } from '../../../data/enums/LabelType';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import GenericLabelTypePopup from '../GenericLabelTypePopup/GenericLabelTypePopup';
-import { ImportFormatData } from '../../../data/ImportFormatData';
-import { FeatureInProgress } from '../../EditorView/FeatureInProgress/FeatureInProgress';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { ImageData, LabelName } from '../../../store/labels/types';
-import { updateActiveLabelType, updateImageData, updateLabelNames } from '../../../store/labels/actionCreators';
-import { ImporterSpecData } from '../../../data/ImporterSpecData';
+import { connect } from 'react-redux';
+
 import { AnnotationFormatType } from '../../../data/enums/AnnotationFormatType';
+import { LabelType } from '../../../data/enums/LabelType';
+import { Notification } from '../../../data/enums/Notification';
+import { ImporterSpecData } from '../../../data/ImporterSpecData';
+import { ImportFormatData } from '../../../data/ImportFormatData';
+import { NotificationsDataMap } from '../../../data/info/NotificationsData';
 import { ILabelFormatData } from '../../../interfaces/ILabelFormatData';
+import { PopupActions } from '../../../logic/actions/PopupActions';
+import { DocumentParsingError } from '../../../logic/import/voc/VOCImporter';
+import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
+import { AppState } from '../../../store';
+import { updateActiveLabelType, updateImageData, updateLabelNames } from '../../../store/labels/actionCreators';
+import { ImageData, LabelName } from '../../../store/labels/types';
 import { submitNewNotification } from '../../../store/notifications/actionCreators';
 import { NotificationUtil } from '../../../utils/NotificationUtil';
-import { NotificationsDataMap } from '../../../data/info/NotificationsData';
-import { DocumentParsingError } from '../../../logic/import/voc/VOCImporter';
-import { Notification } from '../../../data/enums/Notification';
-import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
+import { FeatureInProgress } from '../../EditorView/FeatureInProgress/FeatureInProgress';
+import GenericLabelTypePopup from '../GenericLabelTypePopup/GenericLabelTypePopup';
 
 interface IProps {
     activeLabelType: LabelType;

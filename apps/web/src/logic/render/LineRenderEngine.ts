@@ -1,29 +1,30 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { BaseRenderEngine } from './BaseRenderEngine';
-import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
-import { LabelType } from '../../data/enums/LabelType';
 import { EditorData } from '../../data/EditorData';
-import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
-import { ImageData, LabelLine } from '../../store/labels/types';
+import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
+import { LabelType } from '../../data/enums/LabelType';
+import { LineAnchorType } from '../../data/enums/LineAnchorType';
+import { ILine } from '../../interfaces/ILine';
 import { IPoint } from '../../interfaces/IPoint';
-import { RectUtil } from '../../utils/RectUtil';
 import { store } from '../../main';
+import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
+import { Settings } from '../../settings/Settings';
+import { updateCustomCursorStyle } from '../../store/general/actionCreators';
 import {
     updateActiveLabelId,
     updateFirstLabelCreatedFlag,
     updateHighlightedLabelId,
     updateImageDataById,
 } from '../../store/labels/actionCreators';
-import { EditorActions } from '../actions/EditorActions';
+import { ImageData, LabelLine } from '../../store/labels/types';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
 import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 import { DrawUtil } from '../../utils/DrawUtil';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
-import { v4 as uuidv4 } from 'uuid';
-import { ILine } from '../../interfaces/ILine';
 import { LineUtil } from '../../utils/LineUtil';
-import { updateCustomCursorStyle } from '../../store/general/actionCreators';
-import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
-import { LineAnchorType } from '../../data/enums/LineAnchorType';
-import { Settings } from '../../settings/Settings';
+import { RectUtil } from '../../utils/RectUtil';
+import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
+import { EditorActions } from '../actions/EditorActions';
 
 export class LineRenderEngine extends BaseRenderEngine {
     // =================================================================================================================

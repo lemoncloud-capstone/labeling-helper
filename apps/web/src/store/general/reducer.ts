@@ -1,7 +1,7 @@
 import { GeneralActionTypes, GeneralState } from './types';
-import { Action } from '../Actions';
 import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
 import { ViewPointSettings } from '../../settings/ViewPointSettings';
+import { Action } from '../Actions';
 
 const initialState: GeneralState = {
     windowSize: null,

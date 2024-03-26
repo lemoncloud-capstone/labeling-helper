@@ -8,7 +8,6 @@
                 "@typescript-eslint/ban-types": "off",
                 "@typescript-eslint/no-empty-function": "off",
                 "@typescript-eslint/ban-ts-comment": "off",
-                "unused-imports/no-unused-imports": "off",
                 "no-extra-boolean-cast": "off",
                 "no-case-declarations": "off",
                 "no-prototype-builtins": "off",

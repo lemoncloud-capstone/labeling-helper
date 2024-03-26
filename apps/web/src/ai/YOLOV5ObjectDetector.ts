@@ -1,16 +1,17 @@
-import { DetectedObject, load, YOLOv5, ModelConfig } from 'yolov5js';
+import { DetectedObject, ModelConfig, YOLOv5, load } from 'yolov5js';
+
+import { LabelType } from '../data/enums/LabelType';
+import { Notification } from '../data/enums/Notification';
+import { NotificationsDataMap } from '../data/info/NotificationsData';
+import { AIYOLOObjectDetectionActions } from '../logic/actions/AIYOLOObjectDetectionActions';
+import { ImageRepository } from '../logic/imageRepository/ImageRepository';
 import { store } from '../main';
 import { updateYOLOV5ObjectDetectorStatus } from '../store/ai/actionCreators';
 import { updateActiveLabelType } from '../store/labels/actionCreators';
-import { LabelType } from '../data/enums/LabelType';
-import { NotificationUtil } from '../utils/NotificationUtil';
-import { NotificationsDataMap } from '../data/info/NotificationsData';
-import { Notification } from '../data/enums/Notification';
+import { ImageData } from '../store/labels/types';
 import { submitNewNotification } from '../store/notifications/actionCreators';
 import { LabelsSelector } from '../store/selectors/LabelsSelector';
-import { AIYOLOObjectDetectionActions } from '../logic/actions/AIYOLOObjectDetectionActions';
-import { ImageData } from '../store/labels/types';
-import { ImageRepository } from '../logic/imageRepository/ImageRepository';
+import { NotificationUtil } from '../utils/NotificationUtil';
 
 export class YOLOV5ObjectDetector {
     private static model: YOLOv5;

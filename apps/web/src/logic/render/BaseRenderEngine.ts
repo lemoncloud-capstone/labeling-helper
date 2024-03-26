@@ -1,11 +1,11 @@
 import { EditorData } from '../../data/EditorData';
-import { MouseEventUtil } from '../../utils/MouseEventUtil';
 import { EventType } from '../../data/enums/EventType';
 import { LabelType } from '../../data/enums/LabelType';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
 import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
 import { LabelName } from '../../store/labels/types';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
 import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { MouseEventUtil } from '../../utils/MouseEventUtil';
 
 export abstract class BaseRenderEngine {
     protected readonly canvas: HTMLCanvasElement;

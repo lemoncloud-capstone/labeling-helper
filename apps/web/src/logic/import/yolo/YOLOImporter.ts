@@ -1,13 +1,14 @@
-import { AnnotationImporter } from '../AnnotationImporter';
-import { ImageData, LabelName } from '../../../store/labels/types';
-import { FileUtil } from '../../../utils/FileUtil';
-import { ArrayUtil } from '../../../utils/ArrayUtil';
+import { find, zip } from 'lodash';
+
 import { NoLabelNamesFileProvidedError } from './YOLOErrors';
-import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
 import { YOLOUtils } from './YOLOUtils';
+import { ImageData, LabelName } from '../../../store/labels/types';
+import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { ArrayUtil } from '../../../utils/ArrayUtil';
+import { FileUtil } from '../../../utils/FileUtil';
 import { ImageDataUtil } from '../../../utils/ImageDataUtil';
-import { zip, find } from 'lodash';
 import { ImageRepository } from '../../imageRepository/ImageRepository';
+import { AnnotationImporter } from '../AnnotationImporter';
 
 export type YOLOFilesSpec = {
     labelNameFile: File;

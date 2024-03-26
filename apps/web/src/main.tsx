@@ -1,9 +1,11 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
+
 import './index.scss';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+
 import App from './App';
 import configureStore from './configureStore';
-import { Provider } from 'react-redux';
 import { AppInitializer } from './logic/initializer/AppInitializer';
 
 export const store = configureStore();

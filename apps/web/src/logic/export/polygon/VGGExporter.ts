@@ -1,7 +1,8 @@
-import { ImageData, LabelName, LabelPolygon } from '../../../store/labels/types';
-import { VGGFileData, VGGObject, VGGPolygon, VGGRegionsData } from '../../../data/labels/VGG';
 import { findLast } from 'lodash';
+
+import { VGGFileData, VGGObject, VGGPolygon, VGGRegionsData } from '../../../data/labels/VGG';
 import { IPoint } from '../../../interfaces/IPoint';
+import { ImageData, LabelName, LabelPolygon } from '../../../store/labels/types';
 import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
 import { ExporterUtil } from '../../../utils/ExporterUtil';
 

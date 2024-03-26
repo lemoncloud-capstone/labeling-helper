@@ -1,14 +1,14 @@
-import { EditorData } from '../data/EditorData';
-import { RectUtil } from './RectUtil';
-import { store } from '../main';
-import { CustomCursorStyle } from '../data/enums/CustomCursorStyle';
-import { updateCustomCursorStyle } from '../store/general/actionCreators';
-import { IPoint } from '../interfaces/IPoint';
-import { PointUtil } from './PointUtil';
-import { IRect } from '../interfaces/IRect';
-import { ILine } from '../interfaces/ILine';
 import { LineUtil } from './LineUtil';
+import { PointUtil } from './PointUtil';
 import { PolygonUtil } from './PolygonUtil';
+import { RectUtil } from './RectUtil';
+import { EditorData } from '../data/EditorData';
+import { CustomCursorStyle } from '../data/enums/CustomCursorStyle';
+import { ILine } from '../interfaces/ILine';
+import { IPoint } from '../interfaces/IPoint';
+import { IRect } from '../interfaces/IRect';
+import { store } from '../main';
+import { updateCustomCursorStyle } from '../store/general/actionCreators';
 
 export class RenderEngineUtil {
     public static calculateImageScale(data: EditorData): number {

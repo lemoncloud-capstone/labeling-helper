@@ -1,6 +1,6 @@
-import { AnnotationFormatType } from '../../../data/enums/AnnotationFormatType';
-import { VGGExporter } from './VGGExporter';
 import { COCOExporter } from './COCOExporter';
+import { VGGExporter } from './VGGExporter';
+import { AnnotationFormatType } from '../../../data/enums/AnnotationFormatType';
 
 export class PolygonLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {

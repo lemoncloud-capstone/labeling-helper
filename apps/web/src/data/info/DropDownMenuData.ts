@@ -1,6 +1,6 @@
+import { store } from '../../main';
 import { updateActivePopupType } from '../../store/general/actionCreators';
 import { PopupWindowType } from '../enums/PopupWindowType';
-import { store } from '../../main';
 
 export type DropDownMenuNode = {
     name: string;

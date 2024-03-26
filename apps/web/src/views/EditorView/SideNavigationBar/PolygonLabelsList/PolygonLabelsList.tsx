@@ -1,19 +1,21 @@
 import React from 'react';
-import { ISize } from '../../../../interfaces/ISize';
+
+import { findLast } from 'lodash';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { ImageData, LabelName, LabelPolygon } from '../../../../store/labels/types';
-import './PolygonLabelsList.scss';
+import { connect } from 'react-redux';
+
+import { ISize } from '../../../../interfaces/ISize';
+import { LabelActions } from '../../../../logic/actions/LabelActions';
+import { AppState } from '../../../../store';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById,
 } from '../../../../store/labels/actionCreators';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
-import LabelInputField from '../LabelInputField/LabelInputField';
+import { ImageData, LabelName, LabelPolygon } from '../../../../store/labels/types';
+import './PolygonLabelsList.scss';
 import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
-import { LabelActions } from '../../../../logic/actions/LabelActions';
-import { findLast } from 'lodash';
+import LabelInputField from '../LabelInputField/LabelInputField';
 
 interface IProps {
     size: ISize;

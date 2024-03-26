@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
+
 import './InsertLabelNamesPopup.scss';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { PopupWindowType } from '../../../data/enums/PopupWindowType';
-import { updateLabelNames } from '../../../store/labels/actionCreators';
-import { updateActivePopupType, updatePerClassColorationStatus } from '../../../store/general/actionCreators';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
+import { filter, reject, sample, uniq } from 'lodash';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
-import { LabelName } from '../../../store/labels/types';
-import { LabelUtil } from '../../../utils/LabelUtil';
-import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
-import { LabelActions } from '../../../logic/actions/LabelActions';
+import { connect } from 'react-redux';
+
 import { ColorSelectorView } from './ColorSelectorView/ColorSelectorView';
-import { Settings } from '../../../settings/Settings';
-import { reject, sample, filter, uniq } from 'lodash';
+import { Notification } from '../../../data/enums/Notification';
+import { PopupWindowType } from '../../../data/enums/PopupWindowType';
 import { ProjectType } from '../../../data/enums/ProjectType';
+import { NotificationsDataMap } from '../../../data/info/NotificationsData';
+import { LabelActions } from '../../../logic/actions/LabelActions';
+import { Settings } from '../../../settings/Settings';
+import { AppState } from '../../../store';
+import { updateActivePopupType, updatePerClassColorationStatus } from '../../../store/general/actionCreators';
+import { updateLabelNames } from '../../../store/labels/actionCreators';
+import { LabelName } from '../../../store/labels/types';
 import { submitNewNotification } from '../../../store/notifications/actionCreators';
 import { INotification } from '../../../store/notifications/types';
+import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { LabelUtil } from '../../../utils/LabelUtil';
 import { NotificationUtil } from '../../../utils/NotificationUtil';
-import { NotificationsDataMap } from '../../../data/info/NotificationsData';
-import { Notification } from '../../../data/enums/Notification';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
 import { StyledTextField } from '../../Common/StyledTextField/StyledTextField';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface IProps {
     updateActivePopupTypeAction: (activePopupType: PopupWindowType) => any;

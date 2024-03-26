@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+
 import './NotificationsView.scss';
-import { AppState } from '../../store';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+
+import { NotificationType } from '../../data/enums/NotificationType';
+import { AppState } from '../../store';
 import { deleteNotificationById } from '../../store/notifications/actionCreators';
 import { INotification } from '../../store/notifications/types';
-import { NotificationType } from '../../data/enums/NotificationType';
 
 interface IProps {
     deleteNotificationByIdAction: (id: string) => void;

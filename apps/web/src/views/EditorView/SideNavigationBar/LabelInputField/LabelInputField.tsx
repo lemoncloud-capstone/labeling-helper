@@ -1,22 +1,25 @@
 import React from 'react';
-import { ISize } from '../../../../interfaces/ISize';
-import './LabelInputField.scss';
+
 import classNames from 'classnames';
-import { ImageButton } from '../../../Common/ImageButton/ImageButton';
-import { IRect } from '../../../../interfaces/IRect';
-import { IPoint } from '../../../../interfaces/IPoint';
-import { RectUtil } from '../../../../utils/RectUtil';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
-import { updateActiveLabelId, updateHighlightedLabelId } from '../../../../store/labels/actionCreators';
+import { truncate } from 'lodash';
 import Scrollbars from 'react-custom-scrollbars-2';
+import { connect } from 'react-redux';
+
+import './LabelInputField.scss';
+
 import { EventType } from '../../../../data/enums/EventType';
+import { PopupWindowType } from '../../../../data/enums/PopupWindowType';
+import { IPoint } from '../../../../interfaces/IPoint';
+import { IRect } from '../../../../interfaces/IRect';
+import { ISize } from '../../../../interfaces/ISize';
+import { Settings } from '../../../../settings/Settings';
+import { AppState } from '../../../../store';
+import { updateActivePopupType } from '../../../../store/general/actionCreators';
+import { updateActiveLabelId, updateHighlightedLabelId } from '../../../../store/labels/actionCreators';
 import { LabelName } from '../../../../store/labels/types';
 import { LabelsSelector } from '../../../../store/selectors/LabelsSelector';
-import { PopupWindowType } from '../../../../data/enums/PopupWindowType';
-import { updateActivePopupType } from '../../../../store/general/actionCreators';
-import { truncate } from 'lodash';
-import { Settings } from '../../../../settings/Settings';
+import { RectUtil } from '../../../../utils/RectUtil';
+import { ImageButton } from '../../../Common/ImageButton/ImageButton';
 
 interface IProps {
     size: ISize;

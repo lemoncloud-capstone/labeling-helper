@@ -1,7 +1,9 @@
 import React from 'react';
+
 import './EmptyLabelList.scss';
-import { AppState } from '../../../../store';
 import { connect } from 'react-redux';
+
+import { AppState } from '../../../../store';
 
 interface IProps {
     firstLabelCreatedFlag: boolean;

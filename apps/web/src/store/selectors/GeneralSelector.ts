@@ -1,8 +1,8 @@
-import { store } from '../../main';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
 import { ContextType } from '../../data/enums/ContextType';
 import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
 import { ProjectType } from '../../data/enums/ProjectType';
+import { store } from '../../main';
 
 export class GeneralSelector {
     public static getActivePopupType(): PopupWindowType {

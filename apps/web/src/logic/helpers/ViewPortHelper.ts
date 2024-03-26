@@ -1,11 +1,11 @@
 import { EditorData } from '../../data/EditorData';
-import { MouseEventUtil } from '../../utils/MouseEventUtil';
-import { EventType } from '../../data/enums/EventType';
-import { store } from '../../main';
-import { updateCustomCursorStyle } from '../../store/general/actionCreators';
 import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
-import { EditorModel } from '../../staticModels/EditorModel';
+import { EventType } from '../../data/enums/EventType';
 import { IPoint } from '../../interfaces/IPoint';
+import { store } from '../../main';
+import { EditorModel } from '../../staticModels/EditorModel';
+import { updateCustomCursorStyle } from '../../store/general/actionCreators';
+import { MouseEventUtil } from '../../utils/MouseEventUtil';
 import { PointUtil } from '../../utils/PointUtil';
 import { ViewPortActions } from '../actions/ViewPortActions';
 

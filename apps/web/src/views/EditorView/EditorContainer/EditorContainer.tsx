@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
+
 import { connect } from 'react-redux';
+
+import { ContextType } from '../../../data/enums/ContextType';
 import { Direction } from '../../../data/enums/Direction';
+import { ProjectType } from '../../../data/enums/ProjectType';
 import { ISize } from '../../../interfaces/ISize';
+import { ContextManager } from '../../../logic/context/ContextManager';
 import { Settings } from '../../../settings/Settings';
 import { AppState } from '../../../store';
 import { ImageData } from '../../../store/labels/types';
+import Editor from '../Editor/Editor';
+import EditorBottomNavigationBar from '../EditorBottomNavigationBar/EditorBottomNavigationBar';
+import EditorTopNavigationBar from '../EditorTopNavigationBar/EditorTopNavigationBar';
 import ImagesList from '../SideNavigationBar/ImagesList/ImagesList';
 import LabelsToolkit from '../SideNavigationBar/LabelsToolkit/LabelsToolkit';
 import { SideNavigationBar } from '../SideNavigationBar/SideNavigationBar';
 import { VerticalEditorButton } from '../VerticalEditorButton/VerticalEditorButton';
 import './EditorContainer.scss';
-import Editor from '../Editor/Editor';
-import { ContextManager } from '../../../logic/context/ContextManager';
-import { ContextType } from '../../../data/enums/ContextType';
-import EditorBottomNavigationBar from '../EditorBottomNavigationBar/EditorBottomNavigationBar';
-import EditorTopNavigationBar from '../EditorTopNavigationBar/EditorTopNavigationBar';
-import { ProjectType } from '../../../data/enums/ProjectType';
 
 interface IProps {
     windowSize: ISize;

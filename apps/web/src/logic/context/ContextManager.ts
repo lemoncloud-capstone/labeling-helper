@@ -1,12 +1,13 @@
+import { isEmpty, xor } from 'lodash';
+
+import { EditorContext } from './EditorContext';
+import { PopupContext } from './PopupContext';
 import { ContextType } from '../../data/enums/ContextType';
+import { EventType } from '../../data/enums/EventType';
 import { HotKeyAction } from '../../data/HotKeyAction';
 import { store } from '../../main';
 import { updateActiveContext } from '../../store/general/actionCreators';
-import { xor, isEmpty } from 'lodash';
-import { EditorContext } from './EditorContext';
-import { PopupContext } from './PopupContext';
 import { GeneralSelector } from '../../store/selectors/GeneralSelector';
-import { EventType } from '../../data/enums/EventType';
 
 export class ContextManager {
     private static activeCombo: string[] = [];

@@ -1,8 +1,9 @@
-import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { ImageData, LabelName } from '../../store/labels/types';
-import { ExporterUtil } from '../../utils/ExporterUtil';
 import { findLast } from 'lodash';
+
+import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
+import { ImageData, LabelName } from '../../store/labels/types';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { ExporterUtil } from '../../utils/ExporterUtil';
 
 export class TagLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {

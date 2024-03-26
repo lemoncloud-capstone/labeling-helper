@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import { AppState } from '../../../store';
+
 import { connect } from 'react-redux';
-import { GenericSideMenuPopup } from '../GenericSideMenuPopup/GenericSideMenuPopup';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
-import { InferenceServerDataMap } from '../../../data/info/InferenceServerData';
-import { InferenceServerType } from '../../../data/enums/InferenceServerType';
-import { INotification, NotificationsActionType } from '../../../store/notifications/types';
-import { submitNewNotification } from '../../../store/notifications/actionCreators';
-import { NotificationUtil } from '../../../utils/NotificationUtil';
-import { NotificationsDataMap } from '../../../data/info/NotificationsData';
-import { Notification } from '../../../data/enums/Notification';
 import './ConnectInferenceServerPopup.scss';
-import { StyledTextField } from '../../Common/StyledTextField/StyledTextField';
-import { AIActionTypes, RoboflowAPIDetails } from '../../../store/ai/types';
-import { RoboflowAPIObjectDetector } from '../../../ai/RoboflowAPIObjectDetector';
 import { ClipLoader } from 'react-spinners';
-import { CSSHelper } from '../../../logic/helpers/CSSHelper';
-import { updateRoboflowAPIDetails } from '../../../store/ai/actionCreators';
+
+import { RoboflowAPIObjectDetector } from '../../../ai/RoboflowAPIObjectDetector';
+import { InferenceServerType } from '../../../data/enums/InferenceServerType';
+import { Notification } from '../../../data/enums/Notification';
+import { InferenceServerDataMap } from '../../../data/info/InferenceServerData';
+import { NotificationsDataMap } from '../../../data/info/NotificationsData';
 import { AIActions } from '../../../logic/actions/AIActions';
+import { PopupActions } from '../../../logic/actions/PopupActions';
+import { CSSHelper } from '../../../logic/helpers/CSSHelper';
 import { ImageRepository } from '../../../logic/imageRepository/ImageRepository';
+import { AppState } from '../../../store';
+import { updateRoboflowAPIDetails } from '../../../store/ai/actionCreators';
+import { AIActionTypes, RoboflowAPIDetails } from '../../../store/ai/types';
 import { ImageData } from '../../../store/labels/types';
+import { submitNewNotification } from '../../../store/notifications/actionCreators';
+import { INotification, NotificationsActionType } from '../../../store/notifications/types';
 import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { NotificationUtil } from '../../../utils/NotificationUtil';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
+import { StyledTextField } from '../../Common/StyledTextField/StyledTextField';
+import { GenericSideMenuPopup } from '../GenericSideMenuPopup/GenericSideMenuPopup';
 
 interface IProps {
     roboflowAPIDetails: RoboflowAPIDetails;

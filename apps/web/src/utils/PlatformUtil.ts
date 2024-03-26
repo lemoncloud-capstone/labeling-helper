@@ -1,5 +1,6 @@
-import { MobileDeviceData } from '../data/MobileDeviceData';
 import MobileDetect from 'mobile-detect';
+
+import { MobileDeviceData } from '../data/MobileDeviceData';
 
 export class PlatformUtil {
     public static getMobileDeviceData(userAgent: string): MobileDeviceData {

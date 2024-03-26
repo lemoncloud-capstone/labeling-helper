@@ -1,17 +1,18 @@
-import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
-import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
-import { ImageRepository } from '../imageRepository/ImageRepository';
-import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { XMLSanitizerUtil } from '../../utils/XMLSanitizerUtil';
-import { ExporterUtil } from '../../utils/ExporterUtil';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
+import JSZip from 'jszip';
 import { findIndex, findLast } from 'lodash';
+
+import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
 import { ISize } from '../../interfaces/ISize';
+import { Settings } from '../../settings/Settings';
+import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { ExporterUtil } from '../../utils/ExporterUtil';
 import { NumberUtil } from '../../utils/NumberUtil';
 import { RectUtil } from '../../utils/RectUtil';
-import { Settings } from '../../settings/Settings';
+import { XMLSanitizerUtil } from '../../utils/XMLSanitizerUtil';
+import { ImageRepository } from '../imageRepository/ImageRepository';
 
 export class RectLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {
@@ -67,6 +68,7 @@ export class RectLabelsExporter {
             rectSize.height / imageSize.height,
         ];
 
+        // eslint-disable-next-line prefer-const
         let [x, y, width, height] = rawBBox.map((value: number) => parseFloat(snapAndFix(value)));
 
         if (x + width / 2 > 1) {

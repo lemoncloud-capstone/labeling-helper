@@ -1,4 +1,4 @@
-import { LabelsActionTypes, LabelsState, ImageData } from './types';
+import { ImageData, LabelsActionTypes, LabelsState } from './types';
 import { Action } from '../Actions';
 
 const initialState: LabelsState = {

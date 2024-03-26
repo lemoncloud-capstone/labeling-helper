@@ -1,5 +1,6 @@
-import { COCOUtils } from '../../../import/coco/COCOUtils';
 import { isEqual } from 'lodash';
+
+import { COCOUtils } from '../../../import/coco/COCOUtils';
 
 describe('COCOUtils bbox2rect method', () => {
     it('should return valid IRect', () => {

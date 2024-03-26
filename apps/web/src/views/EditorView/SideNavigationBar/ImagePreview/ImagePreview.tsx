@@ -1,10 +1,13 @@
-import classNames from 'classnames';
 import React from 'react';
+
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
-import { ImageLoadManager } from '../../../../logic/imageRepository/ImageLoadManager';
+
 import { IRect } from '../../../../interfaces/IRect';
 import { ISize } from '../../../../interfaces/ISize';
+import { CSSHelper } from '../../../../logic/helpers/CSSHelper';
+import { ImageLoadManager } from '../../../../logic/imageRepository/ImageLoadManager';
 import { ImageRepository } from '../../../../logic/imageRepository/ImageRepository';
 import { AppState } from '../../../../store';
 import { updateImageDataById } from '../../../../store/labels/actionCreators';
@@ -12,7 +15,6 @@ import { ImageData } from '../../../../store/labels/types';
 import { FileUtil } from '../../../../utils/FileUtil';
 import { RectUtil } from '../../../../utils/RectUtil';
 import './ImagePreview.scss';
-import { CSSHelper } from '../../../../logic/helpers/CSSHelper';
 
 interface IProps {
     imageData: ImageData;

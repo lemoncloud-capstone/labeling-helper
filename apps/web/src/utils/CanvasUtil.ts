@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { IPoint } from '../interfaces/IPoint';
 import { IRect } from '../interfaces/IRect';
 import { ISize } from '../interfaces/ISize';

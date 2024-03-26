@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+
 import './MobileMainView.scss';
-import Scrollbars from 'react-custom-scrollbars-2';
-import { ISize } from '../../interfaces/ISize';
-import { AppState } from '../../store';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
+import Scrollbars from 'react-custom-scrollbars-2';
+import { connect } from 'react-redux';
+
 import { EditorFeatureData, IEditorFeature } from '../../data/info/EditorFeatureData';
 import { ISocialMedia, SocialMediaData } from '../../data/info/SocialMediaData';
+import { ISize } from '../../interfaces/ISize';
+import { AppState } from '../../store';
 import { ImageButton } from '../Common/ImageButton/ImageButton';
 
 interface IProps {

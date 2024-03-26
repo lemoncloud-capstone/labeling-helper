@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import crypto from 'crypto';
 
+import { unmountComponentAtNode } from 'react-dom';
+
 jest.mock('./App.tsx', () => 'App');
 
 Object.defineProperty(global.self, 'crypto', {
@@ -8,8 +10,6 @@ Object.defineProperty(global.self, 'crypto', {
         getRandomValues: arr => crypto.randomBytes(arr.length),
     },
 });
-
-import { unmountComponentAtNode } from 'react-dom';
 
 let container = null;
 beforeEach(() => {

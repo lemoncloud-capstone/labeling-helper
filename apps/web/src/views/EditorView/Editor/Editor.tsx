@@ -1,33 +1,35 @@
 import React from 'react';
+
 import './Editor.scss';
-import { ISize } from '../../../interfaces/ISize';
-import { ImageData, LabelPoint, LabelRect } from '../../../store/labels/types';
-import { FileUtil } from '../../../utils/FileUtil';
-import { AppState } from '../../../store';
+import { isEqual } from 'lodash';
+import Scrollbars from 'react-custom-scrollbars-2';
 import { connect } from 'react-redux';
-import { updateImageDataById } from '../../../store/labels/actionCreators';
-import { ImageRepository } from '../../../logic/imageRepository/ImageRepository';
+
+import { EditorData } from '../../../data/EditorData';
+import { ContextType } from '../../../data/enums/ContextType';
+import { CustomCursorStyle } from '../../../data/enums/CustomCursorStyle';
+import { EventType } from '../../../data/enums/EventType';
+import { LabelStatus } from '../../../data/enums/LabelStatus';
 import { LabelType } from '../../../data/enums/LabelType';
 import { PopupWindowType } from '../../../data/enums/PopupWindowType';
-import { CanvasUtil } from '../../../utils/CanvasUtil';
-import { CustomCursorStyle } from '../../../data/enums/CustomCursorStyle';
-import { ImageLoadManager } from '../../../logic/imageRepository/ImageLoadManager';
-import { EventType } from '../../../data/enums/EventType';
-import { EditorData } from '../../../data/EditorData';
-import { EditorModel } from '../../../staticModels/EditorModel';
-import { EditorActions } from '../../../logic/actions/EditorActions';
-import { EditorUtil } from '../../../utils/EditorUtil';
-import { ContextManager } from '../../../logic/context/ContextManager';
-import { ContextType } from '../../../data/enums/ContextType';
-import Scrollbars from 'react-custom-scrollbars-2';
-import { ViewPortActions } from '../../../logic/actions/ViewPortActions';
-import { PlatformModel } from '../../../staticModels/PlatformModel';
-import LabelControlPanel from '../LabelControlPanel/LabelControlPanel';
 import { IPoint } from '../../../interfaces/IPoint';
-import { RenderEngineUtil } from '../../../utils/RenderEngineUtil';
-import { LabelStatus } from '../../../data/enums/LabelStatus';
-import { isEqual } from 'lodash';
+import { ISize } from '../../../interfaces/ISize';
 import { AIActions } from '../../../logic/actions/AIActions';
+import { EditorActions } from '../../../logic/actions/EditorActions';
+import { ViewPortActions } from '../../../logic/actions/ViewPortActions';
+import { ContextManager } from '../../../logic/context/ContextManager';
+import { ImageLoadManager } from '../../../logic/imageRepository/ImageLoadManager';
+import { ImageRepository } from '../../../logic/imageRepository/ImageRepository';
+import { EditorModel } from '../../../staticModels/EditorModel';
+import { PlatformModel } from '../../../staticModels/PlatformModel';
+import { AppState } from '../../../store';
+import { updateImageDataById } from '../../../store/labels/actionCreators';
+import { ImageData, LabelPoint, LabelRect } from '../../../store/labels/types';
+import { CanvasUtil } from '../../../utils/CanvasUtil';
+import { EditorUtil } from '../../../utils/EditorUtil';
+import { FileUtil } from '../../../utils/FileUtil';
+import { RenderEngineUtil } from '../../../utils/RenderEngineUtil';
+import LabelControlPanel from '../LabelControlPanel/LabelControlPanel';
 
 interface IProps {
     size: ISize;

@@ -1,6 +1,6 @@
-import { LabelName, LabelRect } from '../../../store/labels/types';
 import { LabelStatus } from '../../../data/enums/LabelStatus';
 import { ISize } from '../../../interfaces/ISize';
+import { LabelName, LabelRect } from '../../../store/labels/types';
 import { RectLabelsExporter } from '../../export/RectLabelsExporter';
 
 const imageSize: ISize = {

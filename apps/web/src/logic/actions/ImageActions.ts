@@ -1,17 +1,18 @@
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { remove } from 'lodash';
+
+import { ViewPortActions } from './ViewPortActions';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { LabelType } from '../../data/enums/LabelType';
 import { store } from '../../main';
+import { EditorModel } from '../../staticModels/EditorModel';
 import {
     updateActiveImageIndex,
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById,
 } from '../../store/labels/actionCreators';
-import { ViewPortActions } from './ViewPortActions';
-import { EditorModel } from '../../staticModels/EditorModel';
-import { LabelType } from '../../data/enums/LabelType';
 import { ImageData, LabelLine, LabelPoint, LabelPolygon, LabelRect } from '../../store/labels/types';
-import { LabelStatus } from '../../data/enums/LabelStatus';
-import { remove } from 'lodash';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 
 export class ImageActions {
     public static getPreviousImage(): void {
@@ -52,7 +53,7 @@ export class ImageActions {
     private static mapNewImageData(imageData: ImageData, labelIndex: number): ImageData {
         const labelType: LabelType = LabelsSelector.getActiveLabelType();
         const labelNames = LabelsSelector.getLabelNames();
-        let newImageData: ImageData = {
+        const newImageData: ImageData = {
             ...imageData,
         };
         switch (labelType) {

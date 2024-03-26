@@ -1,8 +1,8 @@
-import { IRect } from '../../interfaces/IRect';
-import { LabelUtil } from '../LabelUtil';
-import { LabelPoint, LabelPolygon, LabelRect } from '../../store/labels/types';
 import { LabelStatus } from '../../data/enums/LabelStatus';
 import { IPoint } from '../../interfaces/IPoint';
+import { IRect } from '../../interfaces/IRect';
+import { LabelPoint, LabelPolygon, LabelRect } from '../../store/labels/types';
+import { LabelUtil } from '../LabelUtil';
 
 const mockUUID: string = '123e4567-e89b-12d3-a456-426614174000';
 

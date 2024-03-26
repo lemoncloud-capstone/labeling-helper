@@ -1,18 +1,19 @@
 import { DetectedObject } from '@tensorflow-models/coco-ssd';
-import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { v4 as uuidv4 } from 'uuid';
-import { store } from '../../main';
-import { updateImageDataById } from '../../store/labels/actionCreators';
-import { SSDObjectDetector } from '../../ai/SSDObjectDetector';
-import { ImageRepository } from '../imageRepository/ImageRepository';
-import { LabelStatus } from '../../data/enums/LabelStatus';
 import { findLast } from 'lodash';
-import { updateSuggestedLabelList } from '../../store/ai/actionCreators';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
-import { updateActivePopupType } from '../../store/general/actionCreators';
-import { AISelector } from '../../store/selectors/AISelector';
+import { v4 as uuidv4 } from 'uuid';
+
 import { AIActions } from './AIActions';
+import { SSDObjectDetector } from '../../ai/SSDObjectDetector';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { store } from '../../main';
+import { updateSuggestedLabelList } from '../../store/ai/actionCreators';
+import { updateActivePopupType } from '../../store/general/actionCreators';
+import { updateImageDataById } from '../../store/labels/actionCreators';
+import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
+import { AISelector } from '../../store/selectors/AISelector';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { ImageRepository } from '../imageRepository/ImageRepository';
 
 export class AISSDObjectDetectionActions {
     public static detectRectsForActiveImage(): void {

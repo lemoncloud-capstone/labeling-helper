@@ -1,16 +1,17 @@
 import * as posenet from '@tensorflow-models/posenet';
 import { PoseNet } from '@tensorflow-models/posenet';
 import { Pose } from '@tensorflow-models/posenet';
+
+import { LabelType } from '../data/enums/LabelType';
+import { Notification } from '../data/enums/Notification';
+import { NotificationsDataMap } from '../data/info/NotificationsData';
+import { AIPoseDetectionActions } from '../logic/actions/AIPoseDetectionActions';
 import { store } from '../main';
 import { updatePoseDetectorStatus } from '../store/ai/actionCreators';
-import { AIPoseDetectionActions } from '../logic/actions/AIPoseDetectionActions';
-import { LabelType } from '../data/enums/LabelType';
-import { LabelsSelector } from '../store/selectors/LabelsSelector';
 import { updateActiveLabelType } from '../store/labels/actionCreators';
 import { submitNewNotification } from '../store/notifications/actionCreators';
+import { LabelsSelector } from '../store/selectors/LabelsSelector';
 import { NotificationUtil } from '../utils/NotificationUtil';
-import { NotificationsDataMap } from '../data/info/NotificationsData';
-import { Notification } from '../data/enums/Notification';
 
 export class PoseDetector {
     private static model: PoseNet;

@@ -1,15 +1,16 @@
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
 import { DetectedObject, ObjectDetection } from '@tensorflow-models/coco-ssd';
+
+import { LabelType } from '../data/enums/LabelType';
+import { Notification } from '../data/enums/Notification';
+import { NotificationsDataMap } from '../data/info/NotificationsData';
+import { AISSDObjectDetectionActions } from '../logic/actions/AISSDObjectDetectionActions';
 import { store } from '../main';
 import { updateSSDObjectDetectorStatus } from '../store/ai/actionCreators';
-import { LabelType } from '../data/enums/LabelType';
-import { LabelsSelector } from '../store/selectors/LabelsSelector';
-import { AISSDObjectDetectionActions } from '../logic/actions/AISSDObjectDetectionActions';
 import { updateActiveLabelType } from '../store/labels/actionCreators';
 import { submitNewNotification } from '../store/notifications/actionCreators';
+import { LabelsSelector } from '../store/selectors/LabelsSelector';
 import { NotificationUtil } from '../utils/NotificationUtil';
-import { NotificationsDataMap } from '../data/info/NotificationsData';
-import { Notification } from '../data/enums/Notification';
 
 export class SSDObjectDetector {
     private static model: ObjectDetection;

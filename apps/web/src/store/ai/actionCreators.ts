@@ -1,5 +1,5 @@
-import { Action } from '../Actions';
 import { AIActionTypes, RoboflowAPIDetails } from './types';
+import { Action } from '../Actions';
 
 export function updateSuggestedLabelList(labelList: string[]): AIActionTypes {
     return {

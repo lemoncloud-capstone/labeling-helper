@@ -1,16 +1,19 @@
-import { ISize } from '../../../../interfaces/ISize';
-import { ImageData, LabelName } from '../../../../store/labels/types';
 import React from 'react';
-import Scrollbars from 'react-custom-scrollbars-2';
-import { updateImageDataById } from '../../../../store/labels/actionCreators';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
-import { remove } from 'lodash';
-import './TagLabelsList.scss';
+
 import classNames from 'classnames';
-import { ImageButton } from '../../../Common/ImageButton/ImageButton';
+import { remove } from 'lodash';
+import Scrollbars from 'react-custom-scrollbars-2';
+import { connect } from 'react-redux';
+
 import { PopupWindowType } from '../../../../data/enums/PopupWindowType';
+import { ISize } from '../../../../interfaces/ISize';
+import { AppState } from '../../../../store';
 import { updateActivePopupType } from '../../../../store/general/actionCreators';
+import { updateImageDataById } from '../../../../store/labels/actionCreators';
+import { ImageData, LabelName } from '../../../../store/labels/types';
+import './TagLabelsList.scss';
+import { ImageButton } from '../../../Common/ImageButton/ImageButton';
+
 interface IProps {
     size: ISize;
     imageData: ImageData;

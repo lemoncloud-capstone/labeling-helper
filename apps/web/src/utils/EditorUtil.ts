@@ -1,5 +1,6 @@
-import { CustomCursorStyle } from '../data/enums/CustomCursorStyle';
 import classNames from 'classnames';
+
+import { CustomCursorStyle } from '../data/enums/CustomCursorStyle';
 
 export class EditorUtil {
     public static getIndicator = (cursorStyle: CustomCursorStyle): string => {

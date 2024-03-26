@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
+
 import './LoadYOLOv5ModelPopup.scss';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
+import { useDropzone } from 'react-dropzone';
+import { connect } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
 import {
     ModelConfig,
     YOLO_V5_M_COCO_MODEL_CONFIG,
     YOLO_V5_N_COCO_MODEL_CONFIG,
     YOLO_V5_S_COCO_MODEL_CONFIG,
 } from 'yolov5js';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { PopupWindowType } from '../../../data/enums/PopupWindowType';
-import { GeneralActionTypes } from '../../../store/general/types';
+
 import { YOLOV5ObjectDetector } from '../../../ai/YOLOV5ObjectDetector';
+import { Notification } from '../../../data/enums/Notification';
+import { PopupWindowType } from '../../../data/enums/PopupWindowType';
+import { NotificationsDataMap } from '../../../data/info/NotificationsData';
+import { PopupActions } from '../../../logic/actions/PopupActions';
+import { CSSHelper } from '../../../logic/helpers/CSSHelper';
+import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
+import { YOLOUtils } from '../../../logic/import/yolo/YOLOUtils';
+import { AppState } from '../../../store';
 import { updateActivePopupType } from '../../../store/general/actionCreators';
+import { GeneralActionTypes } from '../../../store/general/types';
+import { LabelName } from '../../../store/labels/types';
 import { submitNewNotification } from '../../../store/notifications/actionCreators';
 import { INotification, NotificationsActionType } from '../../../store/notifications/types';
 import { NotificationUtil } from '../../../utils/NotificationUtil';
-import { NotificationsDataMap } from '../../../data/info/NotificationsData';
-import { Notification } from '../../../data/enums/Notification';
-import { CSSHelper } from '../../../logic/helpers/CSSHelper';
-import { ClipLoader } from 'react-spinners';
-import { useDropzone } from 'react-dropzone';
-import { YOLOUtils } from '../../../logic/import/yolo/YOLOUtils';
-import { LabelName } from '../../../store/labels/types';
-import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 enum ModelSource {
     DOWNLOAD = 'DOWNLOAD',

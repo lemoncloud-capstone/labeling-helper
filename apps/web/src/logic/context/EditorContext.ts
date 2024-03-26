@@ -1,16 +1,16 @@
+import { BaseContext } from './BaseContext';
+import { EditorData } from '../../data/EditorData';
+import { Direction } from '../../data/enums/Direction';
+import { LabelType } from '../../data/enums/LabelType';
 import { HotKeyAction } from '../../data/HotKeyAction';
 import { EditorModel } from '../../staticModels/EditorModel';
-import { LabelType } from '../../data/enums/LabelType';
-import { EditorData } from '../../data/EditorData';
-import { EditorActions } from '../actions/EditorActions';
-import { PolygonRenderEngine } from '../render/PolygonRenderEngine';
-import { BaseContext } from './BaseContext';
-import { ImageActions } from '../actions/ImageActions';
-import { ViewPortActions } from '../actions/ViewPortActions';
-import { Direction } from '../../data/enums/Direction';
 import { PlatformUtil } from '../../utils/PlatformUtil';
+import { EditorActions } from '../actions/EditorActions';
+import { ImageActions } from '../actions/ImageActions';
 import { LabelActions } from '../actions/LabelActions';
+import { ViewPortActions } from '../actions/ViewPortActions';
 import { LineRenderEngine } from '../render/LineRenderEngine';
+import { PolygonRenderEngine } from '../render/PolygonRenderEngine';
 
 export class EditorContext extends BaseContext {
     public static actions: HotKeyAction[] = [

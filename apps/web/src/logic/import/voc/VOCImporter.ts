@@ -1,7 +1,7 @@
 import { ImageData, LabelName, LabelRect } from '../../../store/labels/types';
+import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
 import { LabelUtil } from '../../../utils/LabelUtil';
 import { AnnotationImporter } from '../AnnotationImporter';
-import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
 
 type FileParseResult = {
     filename: string;

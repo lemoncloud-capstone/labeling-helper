@@ -1,5 +1,5 @@
-import { ISize } from '../interfaces/ISize';
 import { Settings } from './Settings';
+import { ISize } from '../interfaces/ISize';
 
 export class RenderEngineSettings {
     public static readonly LINE_THICKNESS: number = 2;

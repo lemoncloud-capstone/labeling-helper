@@ -1,8 +1,9 @@
-import { LabelName, LabelRect } from '../../../store/labels/types';
-import { LabelUtil } from '../../../utils/LabelUtil';
+import { uniq } from 'lodash';
+
 import { AnnotationsParsingError, LabelNamesNotUniqueError } from './YOLOErrors';
 import { ISize } from '../../../interfaces/ISize';
-import { uniq } from 'lodash';
+import { LabelName, LabelRect } from '../../../store/labels/types';
+import { LabelUtil } from '../../../utils/LabelUtil';
 
 export class YOLOUtils {
     public static parseLabelsNamesFromString(content: string): LabelName[] {

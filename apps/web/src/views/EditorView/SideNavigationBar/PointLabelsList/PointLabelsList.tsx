@@ -1,20 +1,22 @@
 import React from 'react';
-import { ISize } from '../../../../interfaces/ISize';
+
+import { findLast } from 'lodash';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { ImageData, LabelName, LabelPoint } from '../../../../store/labels/types';
-import './PointLabelsList.scss';
+import { connect } from 'react-redux';
+
+import { LabelStatus } from '../../../../data/enums/LabelStatus';
+import { ISize } from '../../../../interfaces/ISize';
+import { LabelActions } from '../../../../logic/actions/LabelActions';
+import { AppState } from '../../../../store';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById,
 } from '../../../../store/labels/actionCreators';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
-import LabelInputField from '../LabelInputField/LabelInputField';
+import { ImageData, LabelName, LabelPoint } from '../../../../store/labels/types';
+import './PointLabelsList.scss';
 import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
-import { LabelActions } from '../../../../logic/actions/LabelActions';
-import { findLast } from 'lodash';
-import { LabelStatus } from '../../../../data/enums/LabelStatus';
+import LabelInputField from '../LabelInputField/LabelInputField';
 
 interface IProps {
     size: ISize;

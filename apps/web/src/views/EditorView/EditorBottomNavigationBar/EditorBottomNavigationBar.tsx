@@ -1,13 +1,15 @@
 import React from 'react';
+
 import './EditorBottomNavigationBar.scss';
-import { ImageData } from '../../../store/labels/types';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
-import { ISize } from '../../../interfaces/ISize';
-import { ContextType } from '../../../data/enums/ContextType';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+
+import { ContextType } from '../../../data/enums/ContextType';
+import { ISize } from '../../../interfaces/ISize';
 import { ImageActions } from '../../../logic/actions/ImageActions';
+import { AppState } from '../../../store';
+import { ImageData } from '../../../store/labels/types';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
 
 interface IProps {
     size: ISize;

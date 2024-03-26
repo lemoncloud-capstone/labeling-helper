@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { ISize } from '../../../interfaces/ISize';
-import './ImageButton.scss';
+
 import classNames from 'classnames';
-import { LegacyRef } from 'react';
+
+import { ISize } from '../../../interfaces/ISize';
+
+import './ImageButton.scss';
 
 export interface ImageButtonProps extends React.HTMLProps<HTMLDivElement> {
     buttonSize: ISize;
@@ -17,7 +19,7 @@ export interface ImageButtonProps extends React.HTMLProps<HTMLDivElement> {
     externalClassName?: string;
 }
 
-export const ImageButton = React.forwardRef((props: ImageButtonProps, ref: LegacyRef<HTMLDivElement>) => {
+export const ImageButton = React.forwardRef((props: ImageButtonProps, ref: React.LegacyRef<HTMLDivElement>) => {
     const { buttonSize, padding, image, imageAlt, href, onClick, style, isActive, isDisabled, externalClassName } =
         props;
     const imagePadding: number = !!padding ? padding : 10;

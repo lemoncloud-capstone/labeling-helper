@@ -1,6 +1,6 @@
 import { COCOCategory, COCOInfo } from '../../../../data/labels/COCO';
-import { COCOExporter } from '../../../export/polygon/COCOExporter';
 import { LabelName } from '../../../../store/labels/types';
+import { COCOExporter } from '../../../export/polygon/COCOExporter';
 
 describe('COCOExporter produces correct COCO label', () => {
     it('should produce correct info component', () => {

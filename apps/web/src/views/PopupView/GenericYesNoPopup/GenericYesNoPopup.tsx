@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+
 import './GenericYesNoPopup.scss';
-import { TextButton } from '../../Common/TextButton/TextButton';
-import { ContextManager } from '../../../logic/context/ContextManager';
 import { ContextType } from '../../../data/enums/ContextType';
+import { ContextManager } from '../../../logic/context/ContextManager';
+import { TextButton } from '../../Common/TextButton/TextButton';
 
 interface IProps {
     title: string;

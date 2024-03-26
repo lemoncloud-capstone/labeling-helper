@@ -1,5 +1,5 @@
-import { ImageData, LabelName } from '../../store/labels/types';
 import { LabelType } from '../../data/enums/LabelType';
+import { ImageData, LabelName } from '../../store/labels/types';
 
 export type ImportResult = {
     imagesData: ImageData[];

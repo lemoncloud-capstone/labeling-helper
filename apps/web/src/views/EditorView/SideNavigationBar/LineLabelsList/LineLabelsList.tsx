@@ -1,19 +1,21 @@
 import React from 'react';
+
 import './LineLabelsList.scss';
-import { ISize } from '../../../../interfaces/ISize';
-import { ImageData, LabelLine, LabelName } from '../../../../store/labels/types';
-import { LabelActions } from '../../../../logic/actions/LabelActions';
-import LabelInputField from '../LabelInputField/LabelInputField';
 import { findLast } from 'lodash';
-import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
 import Scrollbars from 'react-custom-scrollbars-2';
+import { connect } from 'react-redux';
+
+import { ISize } from '../../../../interfaces/ISize';
+import { LabelActions } from '../../../../logic/actions/LabelActions';
+import { AppState } from '../../../../store';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById,
 } from '../../../../store/labels/actionCreators';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
+import { ImageData, LabelLine, LabelName } from '../../../../store/labels/types';
+import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
+import LabelInputField from '../LabelInputField/LabelInputField';
 
 interface IProps {
     size: ISize;

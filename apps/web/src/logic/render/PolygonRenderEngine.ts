@@ -1,32 +1,32 @@
-import { store } from '../../main';
-import { RectUtil } from '../../utils/RectUtil';
-import { updateCustomCursorStyle } from '../../store/general/actionCreators';
-import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
-import { EditorData } from '../../data/EditorData';
 import { BaseRenderEngine } from './BaseRenderEngine';
-import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
-import { IPoint } from '../../interfaces/IPoint';
+import { EditorData } from '../../data/EditorData';
+import { CustomCursorStyle } from '../../data/enums/CustomCursorStyle';
+import { EventType } from '../../data/enums/EventType';
+import { LabelType } from '../../data/enums/LabelType';
 import { ILine } from '../../interfaces/ILine';
-import { DrawUtil } from '../../utils/DrawUtil';
+import { IPoint } from '../../interfaces/IPoint';
 import { IRect } from '../../interfaces/IRect';
-import { ImageData, LabelPolygon } from '../../store/labels/types';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { store } from '../../main';
+import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
+import { Settings } from '../../settings/Settings';
+import { updateCustomCursorStyle } from '../../store/general/actionCreators';
 import {
     updateActiveLabelId,
     updateFirstLabelCreatedFlag,
     updateHighlightedLabelId,
     updateImageDataById,
 } from '../../store/labels/actionCreators';
+import { ImageData, LabelPolygon } from '../../store/labels/types';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { DrawUtil } from '../../utils/DrawUtil';
+import { LabelUtil } from '../../utils/LabelUtil';
 import { LineUtil } from '../../utils/LineUtil';
 import { MouseEventUtil } from '../../utils/MouseEventUtil';
-import { EventType } from '../../data/enums/EventType';
-import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
-import { LabelType } from '../../data/enums/LabelType';
-import { EditorActions } from '../actions/EditorActions';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
-import { Settings } from '../../settings/Settings';
-import { LabelUtil } from '../../utils/LabelUtil';
 import { PolygonUtil } from '../../utils/PolygonUtil';
+import { RectUtil } from '../../utils/RectUtil';
+import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
+import { EditorActions } from '../actions/EditorActions';
 
 export class PolygonRenderEngine extends BaseRenderEngine {
     // =================================================================================================================

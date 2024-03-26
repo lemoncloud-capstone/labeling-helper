@@ -1,9 +1,10 @@
+import { findLast } from 'lodash';
+
 import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
 import { ImageData, LabelName, LabelPoint } from '../../store/labels/types';
-import { ImageRepository } from '../imageRepository/ImageRepository';
 import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 import { ExporterUtil } from '../../utils/ExporterUtil';
-import { findLast } from 'lodash';
+import { ImageRepository } from '../imageRepository/ImageRepository';
 
 export class PointLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {

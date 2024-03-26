@@ -1,18 +1,19 @@
-import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
-import { ImageRepository } from '../imageRepository/ImageRepository';
-import { AISelector } from '../../store/selectors/AISelector';
-import { DetectedObject } from 'yolov5js';
 import { findLast } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { LabelStatus } from '../../data/enums/LabelStatus';
-import { store } from '../../main';
-import { updateImageDataById } from '../../store/labels/actionCreators';
-import { updateActivePopupType } from '../../store/general/actionCreators';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { DetectedObject } from 'yolov5js';
+
 import { AIActions } from './AIActions';
-import { updateSuggestedLabelList } from '../../store/ai/actionCreators';
 import { YOLOV5ObjectDetector } from '../../ai/YOLOV5ObjectDetector';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { store } from '../../main';
+import { updateSuggestedLabelList } from '../../store/ai/actionCreators';
+import { updateActivePopupType } from '../../store/general/actionCreators';
+import { updateImageDataById } from '../../store/labels/actionCreators';
+import { ImageData, LabelName, LabelRect } from '../../store/labels/types';
+import { AISelector } from '../../store/selectors/AISelector';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { ImageRepository } from '../imageRepository/ImageRepository';
 
 export class AIYOLOObjectDetectionActions {
     public static detectRectsForActiveImage(): void {

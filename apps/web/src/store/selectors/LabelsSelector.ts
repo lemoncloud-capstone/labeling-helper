@@ -1,7 +1,8 @@
+import { find } from 'lodash';
+
+import { LabelType } from '../../data/enums/LabelType';
 import { store } from '../../main';
 import { ImageData, LabelLine, LabelName, LabelPoint, LabelPolygon, LabelRect } from '../labels/types';
-import { find } from 'lodash';
-import { LabelType } from '../../data/enums/LabelType';
 
 export class LabelsSelector {
     public static getLabelNames(): LabelName[] {

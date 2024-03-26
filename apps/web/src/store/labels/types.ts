@@ -1,9 +1,9 @@
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { LabelType } from '../../data/enums/LabelType';
+import { ILine } from '../../interfaces/ILine';
+import { IPoint } from '../../interfaces/IPoint';
 import { IRect } from '../../interfaces/IRect';
 import { Action } from '../Actions';
-import { LabelType } from '../../data/enums/LabelType';
-import { IPoint } from '../../interfaces/IPoint';
-import { LabelStatus } from '../../data/enums/LabelStatus';
-import { ILine } from '../../interfaces/ILine';
 
 export type Annotation = {
     id: string;

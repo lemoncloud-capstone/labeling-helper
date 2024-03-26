@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+
 import classNames from 'classnames';
-import './DropDownMenu.scss';
-import { DropDownMenuData, DropDownMenuNode } from '../../../../data/info/DropDownMenuData';
-import { EventType } from '../../../../data/enums/EventType';
-import { updatePreventCustomCursorStatus } from '../../../../store/general/actionCreators';
-import { AppState } from '../../../../store';
 import { connect } from 'react-redux';
+import './DropDownMenu.scss';
+
+import { EventType } from '../../../../data/enums/EventType';
+import { DropDownMenuData, DropDownMenuNode } from '../../../../data/info/DropDownMenuData';
+import { AppState } from '../../../../store';
+import { updatePreventCustomCursorStatus } from '../../../../store/general/actionCreators';
 
 interface IProps {
     updatePreventCustomCursorStatusAction: (preventCustomCursor: boolean) => any;

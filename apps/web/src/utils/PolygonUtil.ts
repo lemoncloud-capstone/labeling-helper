@@ -1,5 +1,5 @@
-import { IPoint } from '../interfaces/IPoint';
 import { ILine } from '../interfaces/ILine';
+import { IPoint } from '../interfaces/IPoint';
 
 export class PolygonUtil {
     public static getEdges(vertices: IPoint[], closed: boolean = true): ILine[] {

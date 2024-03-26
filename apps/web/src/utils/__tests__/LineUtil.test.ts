@@ -1,7 +1,7 @@
-import { RectUtil } from '../RectUtil';
 import { ILine } from '../../interfaces/ILine';
-import { LineUtil } from '../LineUtil';
 import { IPoint } from '../../interfaces/IPoint';
+import { LineUtil } from '../LineUtil';
+import { RectUtil } from '../RectUtil';
 
 describe('LineUtil getCenter method', () => {
     it('should return correct value for horizontal line', () => {

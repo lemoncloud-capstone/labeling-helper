@@ -1,6 +1,6 @@
-import { ILabelFormatData } from '../interfaces/ILabelFormatData';
-import { LabelType } from './enums/LabelType';
 import { AnnotationFormatType } from './enums/AnnotationFormatType';
+import { LabelType } from './enums/LabelType';
+import { ILabelFormatData } from '../interfaces/ILabelFormatData';
 
 export type ExportFormatDataMap = Record<LabelType, ILabelFormatData[]>;
 

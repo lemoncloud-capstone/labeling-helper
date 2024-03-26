@@ -1,9 +1,9 @@
-import { IRect } from '../interfaces/IRect';
-import { IPoint } from '../interfaces/IPoint';
-import { ISize } from '../interfaces/ISize';
-import { RectAnchor } from '../data/RectAnchor';
 import { NumberUtil } from './NumberUtil';
 import { Direction } from '../data/enums/Direction';
+import { RectAnchor } from '../data/RectAnchor';
+import { IPoint } from '../interfaces/IPoint';
+import { IRect } from '../interfaces/IRect';
+import { ISize } from '../interfaces/ISize';
 
 export class RectUtil {
     public static getRatio(rect: IRect): number {

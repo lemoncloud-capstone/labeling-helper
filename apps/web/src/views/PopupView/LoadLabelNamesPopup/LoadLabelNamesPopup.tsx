@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
+
 import './LoadLabelNamesPopup.scss';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { updateLabelNames } from '../../../store/labels/actionCreators';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { PopupWindowType } from '../../../data/enums/PopupWindowType';
-import { updateActivePopupType } from '../../../store/general/actionCreators';
 import { useDropzone } from 'react-dropzone';
-import { LabelName } from '../../../store/labels/types';
-import { YOLOUtils } from '../../../logic/import/yolo/YOLOUtils';
-import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
-import { NotificationUtil } from '../../../utils/NotificationUtil';
-import { NotificationsDataMap } from '../../../data/info/NotificationsData';
+import { connect } from 'react-redux';
+
 import { Notification } from '../../../data/enums/Notification';
+import { PopupWindowType } from '../../../data/enums/PopupWindowType';
+import { NotificationsDataMap } from '../../../data/info/NotificationsData';
+import { LabelNamesNotUniqueError } from '../../../logic/import/yolo/YOLOErrors';
+import { YOLOUtils } from '../../../logic/import/yolo/YOLOUtils';
+import { AppState } from '../../../store';
+import { updateActivePopupType } from '../../../store/general/actionCreators';
+import { updateLabelNames } from '../../../store/labels/actionCreators';
+import { LabelName } from '../../../store/labels/types';
 import { submitNewNotification } from '../../../store/notifications/actionCreators';
 import { INotification } from '../../../store/notifications/types';
+import { NotificationUtil } from '../../../utils/NotificationUtil';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface IProps {
     updateActivePopupTypeAction: (activePopupType: PopupWindowType) => any;

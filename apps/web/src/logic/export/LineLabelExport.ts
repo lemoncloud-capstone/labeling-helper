@@ -1,9 +1,10 @@
+import { findLast } from 'lodash';
+
 import { AnnotationFormatType } from '../../data/enums/AnnotationFormatType';
-import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 import { ImageData, LabelLine, LabelName } from '../../store/labels/types';
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
 import { ExporterUtil } from '../../utils/ExporterUtil';
 import { ImageRepository } from '../imageRepository/ImageRepository';
-import { findLast } from 'lodash';
 
 export class LineLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {

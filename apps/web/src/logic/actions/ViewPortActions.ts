@@ -1,19 +1,19 @@
-import { EditorModel } from '../../staticModels/EditorModel';
-import { NumberUtil } from '../../utils/NumberUtil';
-import { ViewPointSettings } from '../../settings/ViewPointSettings';
-import { ISize } from '../../interfaces/ISize';
-import { IRect } from '../../interfaces/IRect';
-import { ImageUtil } from '../../utils/ImageUtil';
-import { RectUtil } from '../../utils/RectUtil';
-import { IPoint } from '../../interfaces/IPoint';
-import { PointUtil } from '../../utils/PointUtil';
-import { SizeUtil } from '../../utils/SizeUtil';
 import { EditorActions } from './EditorActions';
 import { Direction } from '../../data/enums/Direction';
-import { DirectionUtil } from '../../utils/DirectionUtil';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
+import { IPoint } from '../../interfaces/IPoint';
+import { IRect } from '../../interfaces/IRect';
+import { ISize } from '../../interfaces/ISize';
 import { store } from '../../main';
+import { ViewPointSettings } from '../../settings/ViewPointSettings';
+import { EditorModel } from '../../staticModels/EditorModel';
 import { updateZoom } from '../../store/general/actionCreators';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
+import { DirectionUtil } from '../../utils/DirectionUtil';
+import { ImageUtil } from '../../utils/ImageUtil';
+import { NumberUtil } from '../../utils/NumberUtil';
+import { PointUtil } from '../../utils/PointUtil';
+import { RectUtil } from '../../utils/RectUtil';
+import { SizeUtil } from '../../utils/SizeUtil';
 
 export class ViewPortActions {
     public static updateViewPortSize() {

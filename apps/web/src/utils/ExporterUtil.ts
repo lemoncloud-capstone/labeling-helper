@@ -1,6 +1,7 @@
-import moment from 'moment';
-import { GeneralSelector } from '../store/selectors/GeneralSelector';
 import { saveAs } from 'file-saver';
+import moment from 'moment';
+
+import { GeneralSelector } from '../store/selectors/GeneralSelector';
 
 export class ExporterUtil {
     public static getExportFileName(): string {

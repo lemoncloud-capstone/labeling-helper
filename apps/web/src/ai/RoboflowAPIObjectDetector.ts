@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { FileUtil } from '../utils/FileUtil';
-import { ImageData } from '../store/labels/types';
-import { RoboflowAPIDetails } from '../store/ai/types';
+
+import { LabelType } from '../data/enums/LabelType';
 import { store } from '../main';
 import { updateRoboflowAPIDetails } from '../store/ai/actionCreators';
+import { RoboflowAPIDetails } from '../store/ai/types';
 import { updateActiveLabelType } from '../store/labels/actionCreators';
-import { LabelType } from '../data/enums/LabelType';
-import { LabelsSelector } from '../store/selectors/LabelsSelector';
+import { ImageData } from '../store/labels/types';
 import { AISelector } from '../store/selectors/AISelector';
+import { LabelsSelector } from '../store/selectors/LabelsSelector';
+import { FileUtil } from '../utils/FileUtil';
 
 interface RoboflowPrediction {
     x: number;

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+
 import './MainView.scss';
-import { TextButton } from '../Common/TextButton/TextButton';
+import { Tooltip, TooltipProps, styled, tooltipClasses } from '@mui/material';
+import Fade from '@mui/material/Fade';
 import classNames from 'classnames';
+
+import ImagesDropZone from './ImagesDropZone/ImagesDropZone';
+import { EditorFeatureData, IEditorFeature } from '../../data/info/EditorFeatureData';
+import { ISocialMedia, SocialMediaData } from '../../data/info/SocialMediaData';
 import { ISize } from '../../interfaces/ISize';
 import { ImageButton } from '../Common/ImageButton/ImageButton';
-import { ISocialMedia, SocialMediaData } from '../../data/info/SocialMediaData';
-import { EditorFeatureData, IEditorFeature } from '../../data/info/EditorFeatureData';
-import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
-import Fade from '@mui/material/Fade';
-import ImagesDropZone from './ImagesDropZone/ImagesDropZone';
+import { TextButton } from '../Common/TextButton/TextButton';
 
 const MainView: React.FC = () => {
     const [projectInProgress, setProjectInProgress] = useState(false);

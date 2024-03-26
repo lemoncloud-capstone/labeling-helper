@@ -1,15 +1,17 @@
 import React from 'react';
+
 import './TopNavigationBar.scss';
-import StateBar from '../StateBar/StateBar';
-import { PopupWindowType } from '../../../data/enums/PopupWindowType';
-import { AppState } from '../../../store';
 import { connect } from 'react-redux';
-import { updateActivePopupType, updateProjectData } from '../../../store/general/actionCreators';
-import TextInput from '../../Common/TextInput/TextInput';
-import { ImageButton } from '../../Common/ImageButton/ImageButton';
-import { Settings } from '../../../settings/Settings';
-import { ProjectData } from '../../../store/general/types';
+
 import DropDownMenu from './DropDownMenu/DropDownMenu';
+import { PopupWindowType } from '../../../data/enums/PopupWindowType';
+import { Settings } from '../../../settings/Settings';
+import { AppState } from '../../../store';
+import { updateActivePopupType, updateProjectData } from '../../../store/general/actionCreators';
+import { ProjectData } from '../../../store/general/types';
+import { ImageButton } from '../../Common/ImageButton/ImageButton';
+import TextInput from '../../Common/TextInput/TextInput';
+import StateBar from '../StateBar/StateBar';
 
 interface IProps {
     updateActivePopupTypeAction: (activePopupType: PopupWindowType) => any;

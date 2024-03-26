@@ -1,27 +1,30 @@
 import React from 'react';
+
 import './LabelsToolkit.scss';
-import { ImageData } from '../../../../store/labels/types';
+
+import classNames from 'classnames';
+import { find } from 'lodash';
+import { connect } from 'react-redux';
+
+import { ContextType } from '../../../../data/enums/ContextType';
+import { EventType } from '../../../../data/enums/EventType';
+import { LabelType } from '../../../../data/enums/LabelType';
+import { ProjectType } from '../../../../data/enums/ProjectType';
+import { ILabelToolkit, LabelToolkitData } from '../../../../data/info/LabelToolkitData';
+import { ISize } from '../../../../interfaces/ISize';
+import { ContextManager } from '../../../../logic/context/ContextManager';
+import { Settings } from '../../../../settings/Settings';
+import { AppState } from '../../../../store';
 import {
     updateActiveLabelId,
     updateActiveLabelType,
     updateImageDataById,
 } from '../../../../store/labels/actionCreators';
-import { AppState } from '../../../../store';
-import { connect } from 'react-redux';
-import { LabelType } from '../../../../data/enums/LabelType';
-import { ProjectType } from '../../../../data/enums/ProjectType';
-import { ISize } from '../../../../interfaces/ISize';
-import classNames from 'classnames';
-import { find } from 'lodash';
-import { ILabelToolkit, LabelToolkitData } from '../../../../data/info/LabelToolkitData';
-import { Settings } from '../../../../settings/Settings';
-import RectLabelsList from '../RectLabelsList/RectLabelsList';
+import { ImageData } from '../../../../store/labels/types';
+import LineLabelsList from '../LineLabelsList/LineLabelsList';
 import PointLabelsList from '../PointLabelsList/PointLabelsList';
 import PolygonLabelsList from '../PolygonLabelsList/PolygonLabelsList';
-import { ContextManager } from '../../../../logic/context/ContextManager';
-import { ContextType } from '../../../../data/enums/ContextType';
-import { EventType } from '../../../../data/enums/EventType';
-import LineLabelsList from '../LineLabelsList/LineLabelsList';
+import RectLabelsList from '../RectLabelsList/RectLabelsList';
 import TagLabelsList from '../TagLabelsList/TagLabelsList';
 
 interface IProps {

@@ -1,9 +1,11 @@
 import React from 'react';
+
 import './StateBar.scss';
-import { ImageData } from '../../../store/labels/types';
-import { AppState } from '../../../store';
 import { connect } from 'react-redux';
+
 import { LabelType } from '../../../data/enums/LabelType';
+import { AppState } from '../../../store';
+import { ImageData } from '../../../store/labels/types';
 
 interface IProps {
     imagesData: ImageData[];

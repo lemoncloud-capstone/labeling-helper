@@ -1,17 +1,19 @@
 import React, { PropsWithChildren } from 'react';
+
 import './ImagesDropZone.scss';
-import { useDropzone, DropzoneOptions } from 'react-dropzone';
-import { TextButton } from '../../Common/TextButton/TextButton';
-import { ImageData } from '../../../store/labels/types';
+import { sortBy } from 'lodash';
+import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { connect } from 'react-redux';
-import { addImageData, updateActiveImageIndex } from '../../../store/labels/actionCreators';
-import { AppState } from '../../../store';
-import { ProjectType } from '../../../data/enums/ProjectType';
+
 import { PopupWindowType } from '../../../data/enums/PopupWindowType';
+import { ProjectType } from '../../../data/enums/ProjectType';
+import { AppState } from '../../../store';
 import { updateActivePopupType, updateProjectData } from '../../../store/general/actionCreators';
 import { ProjectData } from '../../../store/general/types';
+import { addImageData, updateActiveImageIndex } from '../../../store/labels/actionCreators';
+import { ImageData } from '../../../store/labels/types';
 import { ImageDataUtil } from '../../../utils/ImageDataUtil';
-import { sortBy } from 'lodash';
+import { TextButton } from '../../Common/TextButton/TextButton';
 
 interface IProps {
     updateActiveImageIndexAction: (activeImageIndex: number) => any;

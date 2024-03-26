@@ -1,10 +1,11 @@
-import { YOLOUtils } from '../../../import/yolo/YOLOUtils';
 import { isEqual } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
+
+import { IRect } from '../../../../interfaces/IRect';
+import { ISize } from '../../../../interfaces/ISize';
 import { LabelName, LabelRect } from '../../../../store/labels/types';
 import { AnnotationsParsingError, LabelNamesNotUniqueError } from '../../../import/yolo/YOLOErrors';
-import { v4 as uuidv4 } from 'uuid';
-import { ISize } from '../../../../interfaces/ISize';
-import { IRect } from '../../../../interfaces/IRect';
+import { YOLOUtils } from '../../../import/yolo/YOLOUtils';
 
 describe('YOLOUtils parseLabelsFile method', () => {
     it('should return list of label names', () => {

@@ -1,10 +1,12 @@
 import React from 'react';
-import { ISize } from '../../../interfaces/ISize';
-import { IRect } from '../../../interfaces/IRect';
+
 import Scrollbars from 'react-custom-scrollbars-2';
-import { VirtualListUtil } from '../../../utils/VirtualListUtil';
+
 import { IPoint } from '../../../interfaces/IPoint';
+import { IRect } from '../../../interfaces/IRect';
+import { ISize } from '../../../interfaces/ISize';
 import { RectUtil } from '../../../utils/RectUtil';
+import { VirtualListUtil } from '../../../utils/VirtualListUtil';
 
 interface IProps {
     size: ISize;

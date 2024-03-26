@@ -1,6 +1,6 @@
-import { LabelsActionTypes, ImageData, LabelName } from './types';
-import { Action } from '../Actions';
+import { ImageData, LabelName, LabelsActionTypes } from './types';
 import { LabelType } from '../../data/enums/LabelType';
+import { Action } from '../Actions';
 
 export function updateActiveImageIndex(activeImageIndex: number): LabelsActionTypes {
     return {

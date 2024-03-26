@@ -1,17 +1,19 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+
+import { ContextType } from '../../../../data/enums/ContextType';
+import { EventType } from '../../../../data/enums/EventType';
+import { LabelStatus } from '../../../../data/enums/LabelStatus';
 import { LabelType } from '../../../../data/enums/LabelType';
 import { ISize } from '../../../../interfaces/ISize';
+import { ImageActions } from '../../../../logic/actions/ImageActions';
+import { ContextManager } from '../../../../logic/context/ContextManager';
 import { AppState } from '../../../../store';
 import { ImageData, LabelPoint, LabelRect } from '../../../../store/labels/types';
 import { VirtualList } from '../../../Common/VirtualList/VirtualList';
 import ImagePreview from '../ImagePreview/ImagePreview';
 import './ImagesList.scss';
-import { ContextManager } from '../../../../logic/context/ContextManager';
-import { ContextType } from '../../../../data/enums/ContextType';
-import { ImageActions } from '../../../../logic/actions/ImageActions';
-import { EventType } from '../../../../data/enums/EventType';
-import { LabelStatus } from '../../../../data/enums/LabelStatus';
 
 interface IProps {
     activeImageIndex: number;

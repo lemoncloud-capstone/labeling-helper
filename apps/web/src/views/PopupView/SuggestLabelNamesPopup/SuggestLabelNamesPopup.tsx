@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
+
 import './SuggestLabelNamesPopup.scss';
-import { AppState } from '../../../store';
-import { connect } from 'react-redux';
-import { updateRejectedSuggestedLabelList, updateSuggestedLabelList } from '../../../store/ai/actionCreators';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import { AISelector } from '../../../store/selectors/AISelector';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { LabelName } from '../../../store/labels/types';
-import { updateLabelNames } from '../../../store/labels/actionCreators';
-import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { ArrayUtil } from '../../../utils/ArrayUtil';
+
+import { PopupActions } from '../../../logic/actions/PopupActions';
 import { Settings } from '../../../settings/Settings';
+import { AppState } from '../../../store';
+import { updateRejectedSuggestedLabelList, updateSuggestedLabelList } from '../../../store/ai/actionCreators';
+import { updateLabelNames } from '../../../store/labels/actionCreators';
+import { LabelName } from '../../../store/labels/types';
+import { AISelector } from '../../../store/selectors/AISelector';
+import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { ArrayUtil } from '../../../utils/ArrayUtil';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface SelectableName {
     name: string;

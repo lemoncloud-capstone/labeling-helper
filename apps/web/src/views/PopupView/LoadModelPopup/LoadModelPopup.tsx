@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { PopupActions } from '../../../logic/actions/PopupActions';
-import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
-import { SSDObjectDetector } from '../../../ai/SSDObjectDetector';
-import './LoadModelPopup.scss';
-import { ClipLoader } from 'react-spinners';
-import { AIModel } from '../../../data/enums/AIModel';
-import { PoseDetector } from '../../../ai/PoseDetector';
+
 import { findLast } from 'lodash';
-import { CSSHelper } from '../../../logic/helpers/CSSHelper';
-import { updateActivePopupType as storeUpdateActivePopupType } from '../../../store/general/actionCreators';
-import { AppState } from '../../../store';
 import { connect } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
+
+import { PoseDetector } from '../../../ai/PoseDetector';
+import { SSDObjectDetector } from '../../../ai/SSDObjectDetector';
+import { AIModel } from '../../../data/enums/AIModel';
 import { PopupWindowType } from '../../../data/enums/PopupWindowType';
+import { PopupActions } from '../../../logic/actions/PopupActions';
+import './LoadModelPopup.scss';
+import { CSSHelper } from '../../../logic/helpers/CSSHelper';
+import { AppState } from '../../../store';
+import { updateActivePopupType as storeUpdateActivePopupType } from '../../../store/general/actionCreators';
 import { GeneralActionTypes } from '../../../store/general/types';
+import { GenericYesNoPopup } from '../GenericYesNoPopup/GenericYesNoPopup';
 
 interface SelectableModel {
     model: AIModel;

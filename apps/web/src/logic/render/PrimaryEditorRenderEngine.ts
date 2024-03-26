@@ -1,15 +1,15 @@
-import { IRect } from '../../interfaces/IRect';
 import { BaseRenderEngine } from './BaseRenderEngine';
 import { EditorData } from '../../data/EditorData';
+import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { ProjectType } from '../../data/enums/ProjectType';
+import { IPoint } from '../../interfaces/IPoint';
+import { IRect } from '../../interfaces/IRect';
+import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
 import { EditorModel } from '../../staticModels/EditorModel';
-import { ViewPortActions } from '../actions/ViewPortActions';
+import { GeneralSelector } from '../../store/selectors/GeneralSelector';
 import { DrawUtil } from '../../utils/DrawUtil';
 import { RenderEngineUtil } from '../../utils/RenderEngineUtil';
-import { RenderEngineSettings } from '../../settings/RenderEngineSettings';
-import { IPoint } from '../../interfaces/IPoint';
-import { GeneralSelector } from '../../store/selectors/GeneralSelector';
-import { ProjectType } from '../../data/enums/ProjectType';
-import { PopupWindowType } from '../../data/enums/PopupWindowType';
+import { ViewPortActions } from '../actions/ViewPortActions';
 
 export class PrimaryEditorRenderEngine extends BaseRenderEngine {
     public constructor(canvas: HTMLCanvasElement) {

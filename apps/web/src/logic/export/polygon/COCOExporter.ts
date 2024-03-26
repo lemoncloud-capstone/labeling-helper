@@ -1,8 +1,5 @@
-import { ImageData, LabelName, LabelPolygon } from '../../../store/labels/types';
-import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
-import { GeneralSelector } from '../../../store/selectors/GeneralSelector';
-import { ImageRepository } from '../../imageRepository/ImageRepository';
-import { ExporterUtil } from '../../../utils/ExporterUtil';
+import { flatten } from 'lodash';
+
 import {
     COCOAnnotation,
     COCOBBox,
@@ -12,8 +9,12 @@ import {
     COCOObject,
     COCOSegmentation,
 } from '../../../data/labels/COCO';
-import { flatten } from 'lodash';
 import { IPoint } from '../../../interfaces/IPoint';
+import { ImageData, LabelName, LabelPolygon } from '../../../store/labels/types';
+import { GeneralSelector } from '../../../store/selectors/GeneralSelector';
+import { LabelsSelector } from '../../../store/selectors/LabelsSelector';
+import { ExporterUtil } from '../../../utils/ExporterUtil';
+import { ImageRepository } from '../../imageRepository/ImageRepository';
 
 export type LabelDataMap = { [key: string]: number };
 
