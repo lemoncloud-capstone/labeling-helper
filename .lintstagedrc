@@ -1,5 +1,5 @@
 {
-    "*.{ts.tsx}": [
+    "{apps,libs}/**/*.{ts,tsx}": [
         "nx affected --target lint --uncommitted --fix true",
         "nx format:write --uncommitted"
     ],

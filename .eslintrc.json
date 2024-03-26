@@ -32,21 +32,22 @@
                 "unused-imports/no-unused-imports": "error",
                 "@nx/enforce-module-boundaries": "off",
                 "import/order": [
-                    "error",
+                    "warn",
                     {
-                        "groups": ["builtin", "external", ["parent", "sibling"], "index"],
+                        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+                        "newlines-between": "always",
+                        "pathGroupsExcludedImportTypes": ["builtin"],
                         "alphabetize": {
                             "order": "asc",
                             "caseInsensitive": true
-                        },
-                        "newlines-between": "always"
+                        }
                     }
                 ],
                 "sort-imports": [
                     "error",
                     {
                         "ignoreCase": false,
-                        "ignoreDeclarationSort": true, // don"t want to sort import lines, use eslint-plugin-import instead
+                        "ignoreDeclarationSort": true,
                         "ignoreMemberSort": false,
                         "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
                         "allowSeparatedGroups": true
