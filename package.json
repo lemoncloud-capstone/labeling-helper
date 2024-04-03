@@ -69,7 +69,7 @@
         "@nx/vite": "18.1.2",
         "@nx/web": "18.1.2",
         "@nx/workspace": "18.1.2",
-        "@nxrocks/nx-flutter": "^0.0.0-e2e",
+        "@nxrocks/nx-flutter": "^9.0.0",
         "@redux-devtools/core": "^4.0.0",
         "@swc-node/register": "~1.8.0",
         "@swc/cli": "~0.1.62",
