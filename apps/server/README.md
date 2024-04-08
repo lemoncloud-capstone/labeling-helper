@@ -14,5 +14,13 @@
 
 접속: `$ ssh ec2-user@3.39.51.135`
 
+- AccessKey: `AKIARHYTUBQ5OR7MSKBW`
+아래의 명령 실행으로 성공가능해야함
+
+```sh
+$ aws s3 ls s3://lemonade-sandbox/
+    PRE a1000-jpeg/
+```
+
 ### 상세 서버 설정 정보
 
