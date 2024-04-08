@@ -12,7 +12,12 @@ dotenv.config();
 
 // Zod를 사용한 코드 검증
 const CodeSchema = z.object({
-    code: z.string().min(1, { message: 'Code is required' }),
+    code: z.string().min(1),
+});
+
+const UpdateRoleSchema = z.object({
+    userId: z.string().min(1),
+    role: z.nativeEnum(UserRole),
 });
 
 export class UserController {
@@ -20,7 +25,7 @@ export class UserController {
         // Zod를 사용한 req 검사
         const validationResult = CodeSchema.safeParse(req.query);
         if (!validationResult.success) {
-            res.status(400).json({ message: 'Code is required' });
+            sendResponse(res, 400, 'Validation failed');
             return;
         }
 
@@ -56,7 +61,25 @@ export class UserController {
             sendResponse(res, 200, 'User successfully logged in', { user, accessToken: jwtToken });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Internal Server Error' });
+            sendResponse(res, 500, 'Internal Server Error');
+        }
+    }
+
+    public static async updateRole(req: Request, res: Response): Promise<void> {
+        const validationResult = UpdateRoleSchema.safeParse(req.body);
+        if (!validationResult.success) {
+            sendResponse(res, 400, 'Validation failed');
+            return;
+        }
+
+        const { userId, role } = validationResult.data;
+
+        try {
+            await UserService.updateRole(userId, role);
+            sendResponse(res, 200, 'User role updated successfully');
+        } catch (error) {
+            console.error('Error updating user role:', error);
+            sendResponse(res, 500, 'Failed to update user role');
         }
     }
 }

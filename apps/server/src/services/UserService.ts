@@ -36,4 +36,8 @@ export class UserService {
     ): Promise<UserType> {
         return userRepository.addUser(kakaoId, nickname, profile_image, role);
     }
+
+    static async updateRole(userId: string, role: UserRole) {
+        return userRepository.updateRole(userId, role);
+    }
 }
