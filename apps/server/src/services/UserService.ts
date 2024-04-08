@@ -2,19 +2,14 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 import { userRepository } from '../repositories/UserRepository';
+import { UserRole, UserType } from '../types/user.types';
 
 dotenv.config();
-
-interface KakaoProfile {
-    id: string;
-    nickname?: string;
-    profile_image?: string;
-}
 
 export class UserService {
     private static kakaoUserInfoUrl = 'https://kapi.kakao.com/v2/user/me';
 
-    public static async getKakaoUserInfo(accessToken: string): Promise<KakaoProfile> {
+    public static async getKakaoUserInfo(accessToken: string): Promise<UserType> {
         try {
             const response = await axios.get(this.kakaoUserInfoUrl, {
                 headers: {
@@ -33,7 +28,12 @@ export class UserService {
         }
     }
 
-    public static async addUserIfNotExist(kakaoId: string, nickname: string, profile_image: string) {
-        return userRepository.addUser(kakaoId, nickname, profile_image);
+    public static async addUserIfNotExist(
+        kakaoId: string,
+        nickname: string,
+        profile_image: string,
+        role: UserRole
+    ): Promise<UserType> {
+        return userRepository.addUser(kakaoId, nickname, profile_image, role);
     }
 }
