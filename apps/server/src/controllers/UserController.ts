@@ -16,7 +16,6 @@ const CodeSchema = z.object({
 });
 
 const UpdateRoleSchema = z.object({
-    userId: z.string().min(1),
     role: z.nativeEnum(UserRole),
 });
 
@@ -72,10 +71,10 @@ export class UserController {
             return;
         }
 
-        const { userId, role } = validationResult.data;
+        const { role } = validationResult.data;
 
         try {
-            await UserService.updateRole(userId, role);
+            await UserService.updateRole(req.userid, role);
             sendResponse(res, 200, 'User role updated successfully');
         } catch (error) {
             console.error('Error updating user role:', error);

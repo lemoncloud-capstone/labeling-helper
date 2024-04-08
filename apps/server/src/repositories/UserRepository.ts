@@ -35,7 +35,7 @@ export class UserRepository {
         }
     }
 
-    public async updateRole(userId: string, newRole: UserRole): Promise<void> {
+    public async updateRole(userId: number, newRole: UserRole): Promise<void> {
         try {
             await this.ddbClient.send(
                 new UpdateCommand({
