@@ -11,8 +11,10 @@
 | class   | Amazon Linux(x86) 64bit |
 | type    | t2.large |
 | IP      | 3.39.51.135 |
+| 접속계정  | `Jack`에게 요청하기 |
 
-접속: `$ ssh ec2-user@3.39.51.135`
+
+접속방법: `$ ssh ec2-user@3.39.51.135`
 
 - AccessKey: `AKIARHYTUBQ5OR7MSKBW`
 아래의 명령 실행으로 성공가능해야함
