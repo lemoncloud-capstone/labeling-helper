@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import { z } from 'zod';
 
-import { JWTService } from '../services/JWTService';
-import { UserService } from '../services/UserService';
+import { JwtService } from '../services/jwt.service';
+import { UserService } from '../services/user.service';
 import { UserRole } from '../types/user.types';
 import { sendResponse } from '../utils/response';
 
@@ -55,7 +55,7 @@ export class UserController {
             const internalUserId = parseInt(userInfo.id);
 
             // JWT accessToken 생성
-            const jwtToken = JWTService.generateToken(internalUserId);
+            const jwtToken = JwtService.generateToken(internalUserId);
 
             sendResponse(res, 200, 'User successfully logged in', { user, accessToken: jwtToken });
         } catch (error) {

@@ -15,7 +15,7 @@ type JWTData = {
     userid: number;
 };
 
-export class JWTService {
+export class JwtService {
     static generateToken(userid: number): string {
         const data: JWTData = {
             userid: userid,

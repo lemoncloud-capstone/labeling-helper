@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-import { userRepository } from '../repositories/UserRepository';
+import { userRepository } from '../repositories/user.repository';
 import { UserRole, UserType } from '../types/user.types';
 
 dotenv.config();

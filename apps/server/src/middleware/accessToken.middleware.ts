@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { JWTService } from '../services/JWTService';
+import { JwtService } from '../services/jwt.service';
 
 export const authenticateMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -14,7 +14,7 @@ export const authenticateMiddleware = (req: Request, res: Response, next: NextFu
     }
 
     const token = parts[1];
-    const { ok, userid } = JWTService.parseToken(token);
+    const { ok, userid } = JwtService.parseToken(token);
 
     if (!ok) {
         return res.status(403).json({ message: 'Invalid or expired authorization token.' });
