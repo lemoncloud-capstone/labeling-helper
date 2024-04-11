@@ -20,7 +20,10 @@ jobs:
               with:
                   node-version: '20'
                   cache: 'npm'
-              run: npm install --legacy-peer-deps
+
+            - name: npm install
+              run: |
+                  npm install --legacy-peer-deps
 
     build:
         needs: install-node
