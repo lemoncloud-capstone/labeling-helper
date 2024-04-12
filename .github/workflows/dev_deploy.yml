@@ -3,8 +3,6 @@ name: dev_deploy
 on:
     push:
         branches: [develop]
-    pull_request:
-        branches: [develop]
     workflow_dispatch:
 
 jobs:
@@ -53,7 +51,7 @@ jobs:
                   username: ${{ secrets.EC2_USERNAME }} # ec2 접속 유저네임
                   key: ${{ secrets.KEY }} # ssh 공개키
                   port: 22
-                  source: './docker-compose.yml'
+                  source: './docker-compose.yml,./.env'
                   target: './'
 
             - name: Deploy to server
