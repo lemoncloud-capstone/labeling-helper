@@ -8,27 +8,25 @@ on:
     workflow_dispatch:
 
 jobs:
-    install-node:
+    build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+            - uses: actions/checkout@v2
 
             - name: Setup Node.js and npm
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v2
               with:
                   node-version: '20'
                   cache: 'npm'
+
+            - name: Create .env file
+              run: |
+                  echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
 
             - name: npm install
               run: |
                   npm install --legacy-peer-deps
 
-    build:
-        needs: install-node
-        runs-on: ubuntu-latest
-        steps:
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
 
@@ -40,31 +38,32 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  docker-compose up -d
-
-            - name: Tag Docker image
-              run: |
-                  docker tag labeling-helper-web:latest "${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-web:latest"
-                  docker tag labeling-helper-server:latest "${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-server:latest"
+                  docker-compose up -d --build
 
             - name: Push Docker Image to Docker hub
               run: |
-                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-web:web
-                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-server:server
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/web
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/server
+                  docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx
 
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Deploy to server
-              uses: appleboy/ssh-action@master
+            - name: Copy docker-compose.yml to EC2
+              uses: appleboy/scp-action@master
               with:
                   host: ${{ secrets.HOST }} # aws ip 주소
                   username: ${{ secrets.EC2_USERNAME }} # ec2 접속 유저네임
                   key: ${{ secrets.KEY }} # ssh 공개키
+                  port: 22
+                  source: './docker-compose.yml'
+                  target: './'
+
+            - name: Deploy to server
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.KEY }}
+                  port: 22
                   script: |
-                      sudo docker rm -f $(docker ps -qa)
-                      sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-web:web
-                      sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/labeling-helper-server:server
-                      docker-compose up -d --build
-                      docker image prune -f
+                      sudo docker-compose down
+                      sudo docker-compose up -d
+                      sudo docker image prune -f
