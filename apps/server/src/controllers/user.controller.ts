@@ -54,10 +54,15 @@ export class UserController {
 
             const internalUserId = parseInt(userInfo.id);
 
-            // JWT accessToken 생성
-            const jwtToken = JwtService.generateToken(internalUserId);
+            // JWT accessToken, refreshToken 생성
+            const jwtToken = JwtService.generateAccessToken(internalUserId);
+            const refreshToken = JwtService.generateRefreshToken(internalUserId);
 
-            sendResponse(res, 200, 'User successfully logged in', { user, accessToken: jwtToken });
+            sendResponse(res, 200, 'User successfully logged in', {
+                user,
+                accessToken: jwtToken,
+                refreshToken: refreshToken,
+            });
         } catch (error) {
             console.error(error);
             sendResponse(res, 500, 'Internal Server Error');

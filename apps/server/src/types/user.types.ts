@@ -11,8 +11,6 @@ export type UserType = {
     role?: UserRole;
 };
 
-export type KakaoProfile = {
-    id: string;
-    nickname?: string;
-    profile_image?: string;
+export type JWTData = {
+    userid: number;
 };
