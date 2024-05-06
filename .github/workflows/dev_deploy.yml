@@ -2,7 +2,7 @@ name: dev_deploy
 
 on:
     push:
-        branches: [develop]
+        branches: [main]
     workflow_dispatch:
 
 jobs:
@@ -17,13 +17,22 @@ jobs:
                   node-version: '20'
                   cache: 'npm'
 
-            - name: Create .env file
+            - name: Create docker .env file
               run: |
                   echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
 
             - name: npm install
               run: |
                   npm install --legacy-peer-deps
+
+            - name: Build apps
+              run: |
+                  npm run build:web
+                  npm run build:server
+
+            - name: Create JWT .env file
+              run: |
+                  echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" > ./dist/apps/app/server/.env
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
@@ -63,5 +72,6 @@ jobs:
                   port: 22
                   script: |
                       sudo docker-compose down
+                      sudo docker-compose pull
                       sudo docker-compose up -d
                       sudo docker image prune -f

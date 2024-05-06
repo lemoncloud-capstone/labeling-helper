@@ -1,0 +1,14 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+COPY ./dist .
+COPY package*.json ./
+COPY ./.env .
+
+
+#RUN npm install source-map-support
+RUN npm install --legacy-peer-deps
+#RUN npm install --legacy-peer-deps --prefix apps/server
+#RUN npm install --legacy-peer-deps --prefix libs/models
+
