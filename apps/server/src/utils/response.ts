@@ -1,19 +1,13 @@
 import { Response } from 'express';
 
-// 공통 응답 포맷 정의
-interface ApiResponse<T> {
-    is_success: boolean;
-    code: number;
-    message: string;
-    result: T;
-}
+import { BaseResponseCode, BaseResponseMessages, BaseResponseStatus } from './errors';
 
 // 응답 유틸리티 함수 구현
-export function sendResponse<T>(res: Response, code: number, message: string, result?: T, is_success: boolean = true) {
-    const response: ApiResponse<T> = {
-        is_success: is_success,
+export function sendResponse<T>(res: Response, code: BaseResponseCode, result?: T, is_success: boolean = true) {
+    const response: BaseResponseStatus = {
+        isSuccess: is_success,
         code: code,
-        message: message,
+        message: BaseResponseMessages[code],
         result: result ? result : ({} as T), // result가 제공되지 않은 경우, 빈 객체를 기본값으로 설정
     };
 

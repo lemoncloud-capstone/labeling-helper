@@ -5,10 +5,12 @@ export enum UserRole {
 }
 
 export type UserType = {
-    id: string;
+    userID: string;
     nickname: string;
     profile_image?: string;
     role?: UserRole;
+    refreshToken?: string;
+    accessToken?: string;
 };
 
 export type JWTData = {
