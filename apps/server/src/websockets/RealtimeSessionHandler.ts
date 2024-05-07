@@ -1,23 +1,25 @@
 import { Socket } from 'socket.io';
 
-import * as CommentActivityEvent from './events/commentActivity';
-import * as ConnectionEvent from './events/connection';
-import * as LabelActivityEvent from './events/labelActivity';
-
 export class RealtimeSessionHandler {
-    public static handleConnection(socket: Socket): void {
-        ConnectionEvent.handleConnection(socket);
+    private sessions = new Map<string, Socket>();
 
-        socket.on('labelActivity', data => {
-            LabelActivityEvent.handleLabelActivity(socket, data);
-        });
-
-        socket.on('commentActivity', data => {
-            CommentActivityEvent.handleCommentActivity(socket, data);
-        });
+    addSession(socket: Socket) {
+        this.sessions.set(socket.id, socket);
+        console.log(`Session added: ${socket.id}`);
     }
 
-    public static handleDisconnection(socket: Socket): void {
-        ConnectionEvent.handleDisconnection(socket);
+    removeSession(socket: Socket) {
+        this.sessions.delete(socket.id);
+        console.log(`Session removed: ${socket.id}`);
+    }
+
+    getSession(socketId: string) {
+        return this.sessions.get(socketId);
+    }
+
+    broadcast(message: string) {
+        this.sessions.forEach(socket => {
+            socket.emit('broadcast', message);
+        });
     }
 }
