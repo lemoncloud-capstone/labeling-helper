@@ -1,6 +1,6 @@
 import { ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
 
-import { db } from './database';
+import { ddbDocumentClient } from './index';
 import { WorkerListType, WorkerProjectType, WorkerType } from '../types/worker.types';
 
 export class WorkerRepository {
@@ -32,7 +32,7 @@ export class WorkerRepository {
             const command = new ScanCommand(params);
 
             // 커맨드 디비에 전송
-            const response = await db.send(command);
+            const response = await ddbDocumentClient.send(command);
 
             // 변환
             const workerTypes: WorkerType[] = [];
@@ -78,7 +78,7 @@ export class WorkerRepository {
             const command = new ScanCommand(params);
 
             // 커맨드 디비에 전송
-            const response = await db.send(command);
+            const response = await ddbDocumentClient.send(command);
 
             // 변환
             const workerProjects = response.Items;

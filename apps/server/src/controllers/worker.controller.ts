@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 
 import { WorkerService } from '../services/worker.service';
+import { BaseResponseCode } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 dotenv.config();
@@ -22,7 +23,7 @@ export class WorkerController {
         const queryValidationResult = WorkerListQuerySchema.safeParse(req.query);
 
         if (!bodyValidationResult.success || !queryValidationResult.success) {
-            sendResponse(res, 400, 'Validation failed');
+            sendResponse(res, BaseResponseCode.ValidationError, 'Validation failed');
             return;
         }
 
@@ -33,10 +34,10 @@ export class WorkerController {
             // 유저 목록
             // 유저에 따른 프로젝트 목록
             const workerList = await WorkerService.getWorkerList(exclusiveStartKey, nickname);
-            sendResponse(res, 200, 'Worker list successfully inquiry', workerList);
+            sendResponse(res, BaseResponseCode.SUCCESS, workerList);
         } catch (error) {
             console.error(error);
-            sendResponse(res, 500, 'Internal Server Error');
+            sendResponse(res, BaseResponseCode.BAD_REQUEST);
         }
     }
 }
