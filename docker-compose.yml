@@ -1,55 +1,67 @@
 services:
     # React App
+    #    web:
+    #        image: ${DOCKERHUB_USERNAME}/web:latest
+    #        container_name: docker-web
+    #        restart: always
+    #        build:
+    #            context: .
+    #            dockerfile: Dockerfile
+    #        command: npm run start:web
+    #        ports:
+    #            - 4201:4201
     web:
-        container_name: labeling-helper-web
+        image: ${DOCKERHUB_USERNAME}/web:latest
+        container_name: docker-web
         restart: always
         build:
             context: .
-            dockerfile: Dockerfile
-        command: npm run start:web
+            dockerfile: Dockerfile_web
+        command: npx serve -s ./apps/web -l 4201
         ports:
             - 4201:4201
-        networks:
-            - internal
 
     # Express App
     server:
-        container_name: labeling-helper-server
+        image: ${DOCKERHUB_USERNAME}/server:latest
+        container_name: docker-server
         restart: always
         build:
             context: .
-            dockerfile: Dockerfile
-        command: npm run start:server
+            dockerfile: Dockerfile_server
+        command: node ./apps/server/main.js
         ports:
             - 3000:3000
-        networks:
-            - internal
 
-    # Flutter App
-    #    mobile:
-    #        extends:
-    #            file: docker-compose.base.yml
-    #            service: nx-app-base
-    #        command: npm run start:mobile
+    #    server:
+    #        image: ${DOCKERHUB_USERNAME}/server:latest
+    #        container_name: docker-server
+    #        restart: always
+    #        build:
+    #            context: .
+    #            dockerfile: Dockerfile
+    #        command: npm run start:server
     #        ports:
     #            - 3000:3000
-
+    #
+    #    # Flutter App
+    #    #    mobile:
+    #    #        extends:
+    #    #            file: docker-compose.base.yml
+    #    #            service: nx-app-base
+    #    #        command: npm run start:mobile
+    #    #        ports:
+    #    #            - 3000:3000
+    #
     nginx:
-        container_name: nginx
-        image: nginx
-        volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        image: ${DOCKERHUB_USERNAME}/nginx:latest
+        container_name: docker-nginx
+        build:
+            context: .
+            dockerfile: ./nginx/Dockerfile
         restart: always
         depends_on:
             - web
             - server
         ports:
             - 80:80
-        networks:
-            - internal
-
-networks:
-    internal:
-
-volumes:
-    mono-node-modules: null
