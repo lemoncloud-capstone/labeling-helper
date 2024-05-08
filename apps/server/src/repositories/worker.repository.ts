@@ -7,25 +7,33 @@ export class WorkerRepository {
     public async searchWorkers(exclusiveStartKey = null, nickname = null) {
         // 파라미터
         const params: ScanCommandInput = {
-            TableName: 'Users', // 유저 테이블 이름
+            TableName: 'LemonSandbox',
             // Limit: 3,
         };
 
         // exclusiveStartKey 가 null 이 아니면 ExclusiveStartKey에 입력
         if (exclusiveStartKey) {
-            params.ExclusiveStartKey = { userID: exclusiveStartKey };
+            params.ExclusiveStartKey = { pkey: exclusiveStartKey };
         }
+
+        // FilterExpression 초기화
+        const filterExpressions: string[] = [];
+        const expressionAttributeValues = {};
+
+        // skey가 "USER"인 항목으로 필터링
+        filterExpressions.push('skey = :skey');
+        expressionAttributeValues[':skey'] = 'USER';
 
         // nickname으로 필터링
         if (nickname) {
             // 닉네임이 포함되는 것으로 필터링
-            params.FilterExpression = 'contains(nickname, :nickname)';
-
-            // 필터 표현식에서 사용될 실제 값을 매핑
-            params.ExpressionAttributeValues = {
-                ':nickname': nickname,
-            };
+            filterExpressions.push('contains(nickname, :nickname)');
+            expressionAttributeValues[':nickname'] = nickname;
         }
+
+        // FilterExpression과 ExpressionAttributeValues 설정
+        params.FilterExpression = filterExpressions.join(' and ');
+        params.ExpressionAttributeValues = expressionAttributeValues;
 
         try {
             // 스캔 커맨드에 파라미터 적용
@@ -42,10 +50,10 @@ export class WorkerRepository {
 
             for (const worker of workers) {
                 const workerType: WorkerType = {
-                    userID: worker.userID,
+                    userID: worker.pkey,
                     nickname: worker.nickname,
                     profile_image: worker.profileImage,
-                    projectsInvolved: await this.findProjects(worker.userID),
+                    projectsInvolved: await this.findProjects(worker.pkey),
                 };
                 workerTypes.push(workerType);
             }
@@ -57,7 +65,7 @@ export class WorkerRepository {
 
             return workerListType;
         } catch (error) {
-            console.error('Error get all workers to DynamoDB:', error);
+            console.error('Error get workers to DynamoDB:', error);
             throw error;
         }
     }
@@ -65,10 +73,11 @@ export class WorkerRepository {
     public async findProjects(userID: string) {
         // 파라미터
         const params: ScanCommandInput = {
-            TableName: 'Projects', // 유저 테이블 이름
-            FilterExpression: 'contains(workers, :userID)',
+            TableName: 'LemonSandbox',
+            FilterExpression: 'contains(workers, :userID) and skey = :skey',
             ExpressionAttributeValues: {
                 ':userID': userID,
+                ':skey': 'PROJECT',
             },
             Limit: 2,
         };
@@ -89,7 +98,7 @@ export class WorkerRepository {
                 const workerProjectType: WorkerProjectType = {
                     imgURL: workerProject.imgUrls[0],
                     progress: workerProject.progress,
-                    title: workerProject.title,
+                    title: workerProject.pkey.substring(1),
                     category: workerProject.category,
                 };
                 projectsInvolved.push(workerProjectType);
@@ -97,7 +106,7 @@ export class WorkerRepository {
 
             return projectsInvolved;
         } catch (error) {
-            console.error('Error get all workers to DynamoDB:', error);
+            console.error('Error get worker projects to DynamoDB:', error);
             throw error;
         }
     }
