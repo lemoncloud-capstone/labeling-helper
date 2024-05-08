@@ -29,13 +29,13 @@ jobs:
             - name: Create .env file
               run: |
                   echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
-                  echo "KAKAO_REST_API_KEY=${{ secrets.TOKEN_SECRET }}" > ./dist/apps/app/server/.env
-                  echo "KAKAO_REDIRECT_URI=${{ secrets.TOKEN_SECRET }}" > ./dist/apps/app/server/.env
-                  echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" > ./dist/apps/app/server/.env
-                  echo "ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" >> ./dist/apps/app/server/.env
-                  echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> ./dist/apps/app/server/.env
-                  echo "REGION=${{ secrets.REGION }}" >> ./dist/apps/app/server/.env
-                  echo "LOCAL_ENDPOINT=${{ secrets.LOCAL_ENDPOINT }}" >> ./dist/apps/app/server/.env
+                  echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" > ./dist/apps/server/.env
+                  echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> ./dist/apps/server/.env
+                  echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> ./dist/apps/server/.env
+                  echo "ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" >> ./dist/apps/server/.env
+                  echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> ./dist/apps/server/.env
+                  echo "REGION=${{ secrets.REGION }}" >> ./dist/apps/server/.env
+                  echo "LOCAL_ENDPOINT=${{ secrets.LOCAL_ENDPOINT }}" >> ./dist/apps/server/.env
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
