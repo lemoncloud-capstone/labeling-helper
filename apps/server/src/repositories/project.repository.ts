@@ -5,7 +5,7 @@ import { ProjectListType, ProjectQueryParams, ProjectType } from '../types/proje
 
 export class ProjectRepository {
     private ddbClient;
-    private tableName = 'LemonSanbox';
+    private tableName = 'LemonSandbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
@@ -83,7 +83,7 @@ export class ProjectRepository {
         return items.map(item => ({
             imgURL: item.imgUrls ? item.imgUrls[0] : '',
             progress: item.progress,
-            title: item.title,
+            title: item.pkey,
             category: item.category,
         }));
     }

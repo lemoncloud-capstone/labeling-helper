@@ -4,7 +4,7 @@ import { ddbDocumentClient } from './index';
 
 export class ImgRepository {
     private ddbClient;
-    private tableName = 'LemonSanbox';
+    private tableName = 'LemonSandbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;

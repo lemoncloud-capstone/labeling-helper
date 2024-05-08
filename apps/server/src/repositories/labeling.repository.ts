@@ -2,7 +2,7 @@ import { ddbDocumentClient } from './index';
 
 export class LabelingRepository {
     private ddbClient;
-    private tableName = 'LemonSanbox';
+    private tableName = 'LemonSandbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;

@@ -16,7 +16,7 @@ export class ImageRepository {
         try {
             await ddbDocumentClient.send(
                 new PutCommand({
-                    TableName: 'ProjectImages', // 이미지 테이블 이름
+                    TableName: 'LemonSandbox', // 이미지 테이블 이름
                     Item: newImageType,
                 })
             );
