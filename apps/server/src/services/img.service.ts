@@ -9,9 +9,9 @@ export class ImgService {
         }
     }
 
-    static async updateStatus(title: string, imgURL: string, status: any) {
+    static async updateStatus(title: string, imgURL: string, status: any, labelPoint: any) {
         try {
-            return await imgRepository.updateImageStatus(title, imgURL, status);
+            return await imgRepository.updateImageStatus(title, imgURL, status, labelPoint);
         } catch (error) {
             throw new Error('Failed to update image status');
         }
