@@ -4,7 +4,7 @@ import { ddbDocumentClient } from './index';
 
 export class ImgRepository {
     private ddbClient;
-    private tableName = 'ProjectImages';
+    private tableName = 'LemonSanbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
@@ -13,9 +13,9 @@ export class ImgRepository {
     public async getProjectImages(title: string, lastEvaluatedKey?: string): Promise<any> {
         const queryParams: QueryCommandInput = {
             TableName: this.tableName,
-            KeyConditionExpression: 'title = :title',
+            KeyConditionExpression: 'pkey = :pkey',
             ExpressionAttributeValues: {
-                ':title': title,
+                ':pkey': title,
             },
             Limit: 10,
             ExclusiveStartKey: lastEvaluatedKey ? JSON.parse(lastEvaluatedKey) : undefined,
@@ -26,11 +26,11 @@ export class ImgRepository {
             return {
                 lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
                 workers: Items.map((item: any) => item.workers).flat(),
-                labels: Items.map((item: any) => item.labels).flat(),
+                labelPoint: Items.map((item: any) => item.labelPoint).flat(),
                 img: Items.map((item: any) => ({
                     imgURL: item.imageURL,
                     status: item.status,
-                    labels: item.labels,
+                    labelPoint: item.labelPoint,
                 })),
             };
         } catch (error) {
@@ -39,19 +39,21 @@ export class ImgRepository {
         }
     }
 
-    public async updateImageStatus(title: string, imageURL: string, status: string): Promise<void> {
+    public async updateImageStatus(title: string, imageURL: string, status: string, labelPoint): Promise<void> {
         const params = {
             TableName: this.tableName,
             Key: {
-                title: { S: title },
-                imageURL: { S: imageURL },
+                pkey: { S: title },
+                skey: { S: imageURL },
             },
             UpdateExpression: 'SET #status = :status',
             ExpressionAttributeNames: {
                 '#status': 'status',
+                '#labelPoint': 'labelPoint',
             },
             ExpressionAttributeValues: {
                 ':status': { S: status },
+                ':labelPoint': { S: labelPoint },
             },
         };
 

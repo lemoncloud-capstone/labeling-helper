@@ -5,7 +5,7 @@ import { UserRole, UserType } from '../types/user.types';
 
 export class UserRepository {
     private ddbClient;
-    private tableName = 'Users';
+    private tableName = 'LemonSanbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
@@ -19,7 +19,8 @@ export class UserRepository {
         refreshToken: string
     ): Promise<UserType> {
         const newUser: UserType = {
-            userID: String(kakaoId),
+            pkey: String(kakaoId),
+            skey: 'USER',
             nickname: nickname,
             profile_image: profileImage,
             role: role,
@@ -44,7 +45,7 @@ export class UserRepository {
             await this.ddbClient.send(
                 new UpdateCommand({
                     TableName: this.tableName,
-                    Key: { userID: String(userId) },
+                    Key: { pkey: String(userId), skey: 'USER' },
                     UpdateExpression: 'set #role = :r',
                     ExpressionAttributeNames: { '#role': 'role' },
                     ExpressionAttributeValues: { ':r': newRole },
@@ -56,17 +57,13 @@ export class UserRepository {
     }
 
     async getUser(kakaoId: string) {
-        try {
-            const { Item } = await this.ddbClient.send(
-                new GetCommand({
-                    TableName: this.tableName,
-                    Key: { userID: String(kakaoId) },
-                })
-            );
-            return Item;
-        } catch (error) {
-            throw new Error('Failed to get user from DynamoDB');
-        }
+        const { Item } = await this.ddbClient.send(
+            new GetCommand({
+                TableName: this.tableName,
+                Key: { pkey: String(kakaoId), skey: 'USER' },
+            })
+        );
+        return Item;
     }
 }
 

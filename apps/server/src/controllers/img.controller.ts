@@ -19,7 +19,7 @@ export class ImgController {
             const { title } = req.params;
             const { lastEvaluatedKey } = GetImagesInputSchema.parse(req.body);
 
-            const result = await ImgService.getProjectImages(title, lastEvaluatedKey);
+            const result = await ImgService.getProjectImages('I' + title, lastEvaluatedKey);
             sendResponse(res, BaseResponseCode.SUCCESS, result);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_GET_IMAGES, error.message);
@@ -28,10 +28,10 @@ export class ImgController {
 
     public static async updateStatus(req: Request, res: Response): Promise<void> {
         try {
-            const { title, imgURL } = req.params;
+            const { title, imgURL, labelPoint } = req.params;
             const { status } = req.body;
 
-            await ImgService.updateStatus(title, imgURL, status);
+            await ImgService.updateStatus('I' + title, imgURL, status, labelPoint);
             sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_UPDATE_STATUS, error.message);

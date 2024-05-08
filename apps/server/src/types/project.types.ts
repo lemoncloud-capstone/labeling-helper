@@ -9,7 +9,9 @@ export enum status {
 
 export type ProjectType = {
     imgUrls: string[];
-    title: string;
+    title?: string;
+    skey?: string;
+    pkey?: string;
     category: string;
     labels: string[];
     progress: number;
@@ -17,9 +19,11 @@ export type ProjectType = {
 };
 
 export type ProjectListType = {
-    imgURL: string;
+    imgURL?: string;
     progress: number;
-    title: string;
+    title?: string;
+    skey?: string;
+    pkey?: string;
     category: string;
 };
 
