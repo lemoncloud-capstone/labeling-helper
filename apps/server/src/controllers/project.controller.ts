@@ -43,7 +43,7 @@ export class ProjectController {
 
             const projectType: ProjectType = {
                 imgUrls: imgUrls,
-                title: 'P' + title,
+                pkey: 'P' + title,
                 category: category,
                 labels: labels,
                 workers: workers,
