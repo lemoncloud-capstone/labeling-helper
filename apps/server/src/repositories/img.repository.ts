@@ -21,22 +21,17 @@ export class ImgRepository {
             ExclusiveStartKey: lastEvaluatedKey ? JSON.parse(lastEvaluatedKey) : undefined,
         };
 
-        try {
-            const { Items, LastEvaluatedKey } = await this.ddbClient.send(new QueryCommand(queryParams));
-            return {
-                lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
-                workers: Items.map((item: any) => item.workers).flat(),
-                labelPoint: Items.map((item: any) => item.labelPoint).flat(),
-                img: Items.map((item: any) => ({
-                    imgURL: item.imageURL,
-                    status: item.status,
-                    labelPoint: item.labelPoint,
-                })),
-            };
-        } catch (error) {
-            console.error('Error in repository while fetching project images :', error);
-            throw error;
-        }
+        const { Items, LastEvaluatedKey } = await this.ddbClient.send(new QueryCommand(queryParams));
+        return {
+            lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
+            workers: Items.map((item: any) => item.workers).flat(),
+            labelPoint: Items.map((item: any) => item.labelPoint).flat(),
+            img: Items.map((item: any) => ({
+                imgURL: item.imageURL,
+                status: item.status,
+                labelPoint: item.labelPoint,
+            })),
+        };
     }
 
     public async updateImageStatus(title: string, imageURL: string, status: string, labelPoint): Promise<void> {
@@ -57,13 +52,7 @@ export class ImgRepository {
             },
         };
 
-        try {
-            await this.ddbClient.send(new UpdateCommand(params));
-            console.log('Status updated successfully.');
-        } catch (error) {
-            console.error('Error in repository while updating status:', error);
-            throw error;
-        }
+        await this.ddbClient.send(new UpdateCommand(params));
     }
 }
 export const imgRepository = new ImgRepository(ddbDocumentClient);

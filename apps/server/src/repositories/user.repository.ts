@@ -27,33 +27,25 @@ export class UserRepository {
             refreshToken: refreshToken,
         };
 
-        try {
-            await this.ddbClient.send(
-                new PutCommand({
-                    TableName: this.tableName,
-                    Item: newUser,
-                })
-            );
-            return newUser;
-        } catch (error) {
-            throw new Error('Failed to add user to DynamoDB');
-        }
+        await this.ddbClient.send(
+            new PutCommand({
+                TableName: this.tableName,
+                Item: newUser,
+            })
+        );
+        return newUser;
     }
 
     public async updateRole(userId: number, newRole: UserRole): Promise<void> {
-        try {
-            await this.ddbClient.send(
-                new UpdateCommand({
-                    TableName: this.tableName,
-                    Key: { pkey: String(userId), skey: 'USER' },
-                    UpdateExpression: 'set #role = :r',
-                    ExpressionAttributeNames: { '#role': 'role' },
-                    ExpressionAttributeValues: { ':r': newRole },
-                })
-            );
-        } catch (error) {
-            throw new Error('Failed to update user role');
-        }
+        await this.ddbClient.send(
+            new UpdateCommand({
+                TableName: this.tableName,
+                Key: { pkey: String(userId), skey: 'USER' },
+                UpdateExpression: 'set #role = :r',
+                ExpressionAttributeNames: { '#role': 'role' },
+                ExpressionAttributeValues: { ':r': newRole },
+            })
+        );
     }
 
     async getUser(kakaoId: string) {
