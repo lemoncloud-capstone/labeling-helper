@@ -43,7 +43,7 @@ export class ProjectController {
 
             const projectType: ProjectType = {
                 imgUrls: imgUrls,
-                title: title,
+                title: 'P' + title,
                 category: category,
                 labels: labels,
                 workers: workers,
@@ -66,7 +66,9 @@ export class ProjectController {
             }
 
             const query = Object.fromEntries(Object.entries(validationResult.data).filter(([_, v]) => v !== undefined));
-
+            if (query.keyword) {
+                query.keyword = 'P' + query.keyword;
+            }
             const result = await ProjectService.getProjects(query);
 
             sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {

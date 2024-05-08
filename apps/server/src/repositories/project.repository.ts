@@ -5,7 +5,7 @@ import { ProjectListType, ProjectQueryParams, ProjectType } from '../types/proje
 
 export class ProjectRepository {
     private ddbClient;
-    private tableName = 'Projects';
+    private tableName = 'LemonSanbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
@@ -14,19 +14,16 @@ export class ProjectRepository {
     public async createProject(projectType: ProjectType): Promise<any> {
         const newProject = {
             ...projectType,
+            skey: 'PROJECT',
         };
 
-        try {
-            await this.ddbClient.send(
-                new PutCommand({
-                    TableName: this.tableName,
-                    Item: newProject,
-                })
-            );
-            return newProject;
-        } catch (error) {
-            throw new Error('Failed to add project to DynamoDB');
-        }
+        await this.ddbClient.send(
+            new PutCommand({
+                TableName: this.tableName,
+                Item: newProject,
+            })
+        );
+        return newProject;
     }
 
     public async getProjects(
@@ -34,11 +31,10 @@ export class ProjectRepository {
     ): Promise<{ projectList: ProjectListType[]; lastEvaluatedKey: any }> {
         const { status, category, keyword, lastEvaluatedKey } = projectQueryParams;
         const queryParams = this.buildQueryParams(20, lastEvaluatedKey);
-        console.log('queryParams:', projectQueryParams);
 
         this.addFilter(queryParams, 'status', status, '#status = :status');
         this.addFilter(queryParams, 'category', category, '#category = :category');
-        this.addFilter(queryParams, 'title', keyword, 'contains(#title, :title)');
+        this.addFilter(queryParams, 'pkey', keyword, 'contains(#pkey, :pkey)');
 
         if (queryParams.FilterExpression === '') {
             delete queryParams.FilterExpression;
@@ -46,21 +42,17 @@ export class ProjectRepository {
             delete queryParams.ExpressionAttributeValues;
         }
 
-        try {
-            const command = queryParams.FilterExpression
-                ? new ScanCommand(queryParams)
-                : new ScanCommand({
-                      TableName: queryParams.TableName,
-                      Limit: queryParams.Limit,
-                      ExclusiveStartKey: queryParams.ExclusiveStartKey,
-                  });
+        const command = queryParams.FilterExpression
+            ? new ScanCommand(queryParams)
+            : new ScanCommand({
+                  TableName: queryParams.TableName,
+                  Limit: queryParams.Limit,
+                  ExclusiveStartKey: queryParams.ExclusiveStartKey,
+              });
 
-            const { Items, LastEvaluatedKey } = await this.ddbClient.send(command);
-            const formattedItems: ProjectListType[] = this.formatItems(Items);
-            return { projectList: formattedItems, lastEvaluatedKey: LastEvaluatedKey };
-        } catch (error) {
-            throw new Error('Failed to get projects from DynamoDB');
-        }
+        const { Items, LastEvaluatedKey } = await this.ddbClient.send(command);
+        const formattedItems: ProjectListType[] = this.formatItems(Items);
+        return { projectList: formattedItems, lastEvaluatedKey: LastEvaluatedKey };
     }
 
     private buildQueryParams(size: number, lastEvaluatedKey?: any): any {
@@ -77,31 +69,23 @@ export class ProjectRepository {
     }
 
     private addFilter(queryParams: any, attribute: string, value?: string, expression?: string) {
-        try {
-            if (value) {
-                if (queryParams.FilterExpression.length > 0) {
-                    queryParams.FilterExpression += ' AND ';
-                }
-                queryParams.ExpressionAttributeNames[`#${attribute}`] = attribute;
-                queryParams.ExpressionAttributeValues[`:${attribute}`] = value;
-                queryParams.FilterExpression += expression;
+        if (value) {
+            if (queryParams.FilterExpression.length > 0) {
+                queryParams.FilterExpression += ' AND ';
             }
-        } catch (error) {
-            throw new Error('Failed to add filter');
+            queryParams.ExpressionAttributeNames[`#${attribute}`] = attribute;
+            queryParams.ExpressionAttributeValues[`:${attribute}`] = value;
+            queryParams.FilterExpression += expression;
         }
     }
 
     private formatItems(items: any[]): ProjectListType[] {
-        try {
-            return items.map(item => ({
-                imgURL: item.imgUrls ? item.imgUrls[0] : '',
-                progress: item.progress,
-                title: item.title,
-                category: item.category,
-            }));
-        } catch (error) {
-            throw new Error('Failed to format items');
-        }
+        return items.map(item => ({
+            imgURL: item.imgUrls ? item.imgUrls[0] : '',
+            progress: item.progress,
+            title: item.title,
+            category: item.category,
+        }));
     }
 }
 
