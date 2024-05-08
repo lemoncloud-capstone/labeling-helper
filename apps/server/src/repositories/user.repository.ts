@@ -5,7 +5,7 @@ import { UserRole, UserType } from '../types/user.types';
 
 export class UserRepository {
     private ddbClient;
-    private tableName = 'LemonSanbox';
+    private tableName = 'LemonSandbox';
 
     constructor(ddbClient) {
         this.ddbClient = ddbClient;

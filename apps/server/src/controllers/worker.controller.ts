@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 
 import { WorkerService } from '../services/worker.service';
-import { BaseResponseCode } from '../utils/errors';
+import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 dotenv.config();
@@ -34,7 +34,7 @@ export class WorkerController {
             // 유저 목록
             // 유저에 따른 프로젝트 목록
             const workerList = await WorkerService.getWorkerList(exclusiveStartKey, nickname);
-            sendResponse(res, BaseResponseCode.SUCCESS, workerList);
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], workerList);
         } catch (error) {
             console.error(error);
             sendResponse(res, BaseResponseCode.BAD_REQUEST);

@@ -6,7 +6,7 @@ dotenv.config();
 
 const dynamoDBClient = new DynamoDBClient({
     region: process.env.REGION,
-    endpoint: process.env.LOCAL_ENDPOINT,
+    // endpoint: process.env.LOCAL_ENDPOINT,
     credentials: {
         accessKeyId: process.env.ACCESS_KEY_ID,
         secretAccessKey: process.env.SECRET_ACCESS_KEY,
