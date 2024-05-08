@@ -23,11 +23,9 @@ export class ProjectRepository {
                     Item: newProject,
                 })
             );
-            console.log('Project added to DB:', newProject);
             return newProject;
         } catch (error) {
-            console.error('Error in repository while creating projects:', error);
-            throw error;
+            throw new Error('Failed to add project to DynamoDB');
         }
     }
 
@@ -61,8 +59,7 @@ export class ProjectRepository {
             const formattedItems: ProjectListType[] = this.formatItems(Items);
             return { projectList: formattedItems, lastEvaluatedKey: LastEvaluatedKey };
         } catch (error) {
-            console.error('Error in repository while fetching projects:', error);
-            throw error;
+            throw new Error('Failed to get projects from DynamoDB');
         }
     }
 
@@ -80,24 +77,31 @@ export class ProjectRepository {
     }
 
     private addFilter(queryParams: any, attribute: string, value?: string, expression?: string) {
-        console.log('addFilter:', attribute, value, expression);
-        if (value) {
-            if (queryParams.FilterExpression.length > 0) {
-                queryParams.FilterExpression += ' AND ';
+        try {
+            if (value) {
+                if (queryParams.FilterExpression.length > 0) {
+                    queryParams.FilterExpression += ' AND ';
+                }
+                queryParams.ExpressionAttributeNames[`#${attribute}`] = attribute;
+                queryParams.ExpressionAttributeValues[`:${attribute}`] = value;
+                queryParams.FilterExpression += expression;
             }
-            queryParams.ExpressionAttributeNames[`#${attribute}`] = attribute;
-            queryParams.ExpressionAttributeValues[`:${attribute}`] = value;
-            queryParams.FilterExpression += expression;
+        } catch (error) {
+            throw new Error('Failed to add filter');
         }
     }
 
     private formatItems(items: any[]): ProjectListType[] {
-        return items.map(item => ({
-            imgURL: item.imgUrls ? item.imgUrls[0] : '',
-            progress: item.progress,
-            title: item.title,
-            category: item.category,
-        }));
+        try {
+            return items.map(item => ({
+                imgURL: item.imgUrls ? item.imgUrls[0] : '',
+                progress: item.progress,
+                title: item.title,
+                category: item.category,
+            }));
+        } catch (error) {
+            throw new Error('Failed to format items');
+        }
     }
 }
 

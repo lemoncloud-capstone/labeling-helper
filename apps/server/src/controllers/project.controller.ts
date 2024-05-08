@@ -3,9 +3,10 @@ import { z } from 'zod';
 
 import { ProjectService } from '../services/project.service';
 import { ProjectType } from '../types/project.types';
+import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
-// Zod를 사용한 코드 검증
+//Zod를 사용한 코드 검증
 const ProjectInputSchema = z.object({
     imgUrls: z.array(z.string()),
     title: z.string(),
@@ -34,7 +35,7 @@ export class ProjectController {
         try {
             const validationResult = ProjectInputSchema.safeParse(req.body);
             if (!validationResult.success) {
-                sendResponse(res, 2002);
+                sendResponse(res, BaseResponseCode.ValidationError);
                 return;
             }
 
@@ -50,10 +51,9 @@ export class ProjectController {
             };
 
             const result = await ProjectService.createProject(projectType);
-            sendResponse(res, 1000);
+            sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
-            console.error('Error in controller while creating projects:', error);
-            sendResponse(res, 4000);
+            sendResponse(res, BaseResponseCode.FAIL_TO_CREATE_PROJECT, error.message);
         }
     }
 
@@ -61,7 +61,7 @@ export class ProjectController {
         try {
             const validationResult = getProjectsInputSchema.safeParse(req.body);
             if (!validationResult.success) {
-                sendResponse(res, 2002);
+                sendResponse(res, BaseResponseCode.ValidationError);
                 return;
             }
 
@@ -69,12 +69,11 @@ export class ProjectController {
 
             const result = await ProjectService.getProjects(query);
 
-            sendResponse(res, 1000, {
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
                 result,
             });
         } catch (error) {
-            console.error('Error in controller while getting projects:', error);
-            sendResponse(res, 4001);
+            sendResponse(res, BaseResponseCode.FAIL_TO_GET_PROJECTS, error.message);
         }
     }
 }

@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 import { UserService } from '../services/user.service';
 import { UserRole } from '../types/user.types';
+import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 dotenv.config();
@@ -23,7 +24,7 @@ export class UserController {
         // Zod를 사용한 req 검사
         const validationResult = CodeSchema.safeParse(req.query);
         if (!validationResult.success) {
-            sendResponse(res, 2002);
+            sendResponse(res, BaseResponseCode.ValidationError);
             return;
         }
 
@@ -42,28 +43,47 @@ export class UserController {
                 },
             });
 
-            const accessToken = tokenResponse.data.access_token;
-            const userInfo = await UserService.getKakaoUserInfo(accessToken);
+            const kakaoToken = tokenResponse.data.access_token;
+
+            const userInfo = await UserService.getKakaoUserInfo(kakaoToken);
             const user = await UserService.addUserIfNotExist(
                 userInfo.userID,
                 userInfo.nickname || '',
                 userInfo.profile_image || 'None',
                 UserRole.None
             );
-
-            sendResponse(res, 1000, {
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
                 user,
+                kakaoToken,
             });
         } catch (error) {
-            console.error(error);
-            sendResponse(res, 2001);
+            sendResponse(res, BaseResponseCode.GET_OAUTH_INFO_FAILED, error.message);
         }
+    }
+
+    public static async getKakaoToken(req: Request, res: Response): Promise<void> {
+        const validationResult = CodeSchema.safeParse(req.body);
+        if (!validationResult.success) {
+            sendResponse(res, BaseResponseCode.ValidationError);
+            return;
+        }
+        const { code } = validationResult.data;
+        const userInfo = await UserService.getKakaoUserInfo(code);
+        const user = await UserService.addUserIfNotExist(
+            userInfo.userID,
+            userInfo.nickname || '',
+            userInfo.profile_image || 'None',
+            UserRole.None
+        );
+        sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
+            user,
+        });
     }
 
     public static async updateRole(req: Request, res: Response): Promise<void> {
         const validationResult = UpdateRoleSchema.safeParse(req.body);
         if (!validationResult.success) {
-            sendResponse(res, 2002);
+            sendResponse(res, BaseResponseCode.ValidationError);
             return;
         }
 
@@ -71,10 +91,9 @@ export class UserController {
 
         try {
             await UserService.updateRole(req.userid, role);
-            sendResponse(res, 1000);
+            sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
-            console.error('Error updating user role:', error);
-            sendResponse(res, 3003);
+            sendResponse(res, BaseResponseCode.FAIL_TO_UPDATE_ROLE, error.message);
         }
     }
 }

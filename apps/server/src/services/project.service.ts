@@ -6,8 +6,7 @@ export class ProjectService {
         try {
             return await projectRepository.createProject(projectType);
         } catch (error) {
-            console.error('Error in service while creating projects:', error);
-            throw error;
+            throw new Error('Failed to create project');
         }
     }
 
@@ -15,8 +14,7 @@ export class ProjectService {
         try {
             return await projectRepository.getProjects(projectQueryParams);
         } catch (error) {
-            console.error('Error in service while fetching projects:', error);
-            throw error;
+            throw new Error('Failed to get projects');
         }
     }
 }

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 
 import { ImgService } from '../services/img.service';
+import { BaseResponseCode } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 // Zod를 사용한 코드 검증
@@ -19,10 +20,9 @@ export class ImgController {
             const { lastEvaluatedKey } = GetImagesInputSchema.parse(req.body);
 
             const result = await ImgService.getProjectImages(title, lastEvaluatedKey);
-            sendResponse(res, 1000, result);
+            sendResponse(res, BaseResponseCode.SUCCESS, result);
         } catch (error) {
-            console.error('Error in controller while fetching project images:', error);
-            sendResponse(res, 4002);
+            sendResponse(res, BaseResponseCode.FAIL_TO_GET_IMAGES, error.message);
         }
     }
 
@@ -32,10 +32,9 @@ export class ImgController {
             const { status } = req.body;
 
             await ImgService.updateStatus(title, imgURL, status);
-            sendResponse(res, 1000);
+            sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
-            console.error('Error in controller while updating project status:', error);
-            sendResponse(res, 4003);
+            sendResponse(res, BaseResponseCode.FAIL_TO_UPDATE_STATUS, error.message);
         }
     }
 }

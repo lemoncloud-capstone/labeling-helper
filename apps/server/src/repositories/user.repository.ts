@@ -33,11 +33,9 @@ export class UserRepository {
                     Item: newUser,
                 })
             );
-            console.log('User added to DynamoDB:', newUser);
             return newUser;
         } catch (error) {
-            console.error('Error adding user to DynamoDB:', error);
-            throw error;
+            throw new Error('Failed to add user to DynamoDB');
         }
     }
 
@@ -52,10 +50,8 @@ export class UserRepository {
                     ExpressionAttributeValues: { ':r': newRole },
                 })
             );
-            console.log(`User role updated: ${userId} -> ${newRole}`);
         } catch (error) {
-            console.error('Error updating user role in DynamoDB:', error);
-            throw error;
+            throw new Error('Failed to update user role');
         }
     }
 
@@ -69,8 +65,7 @@ export class UserRepository {
             );
             return Item;
         } catch (error) {
-            console.error('Error fetching user from DynamoDB:', error);
-            throw error;
+            throw new Error('Failed to get user from DynamoDB');
         }
     }
 }

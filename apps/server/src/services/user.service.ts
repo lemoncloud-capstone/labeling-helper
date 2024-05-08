@@ -24,7 +24,6 @@ export class UserService {
                 profile_image: response.data.properties.profile_image,
             };
         } catch (error) {
-            console.error('Error fetching user info from Kakao:', error);
             throw new Error('Failed to fetch user info from Kakao');
         }
     }
@@ -52,6 +51,10 @@ export class UserService {
     }
 
     static async updateRole(userId: number, role: UserRole) {
-        return userRepository.updateRole(userId, role);
+        try {
+            return userRepository.updateRole(userId, role);
+        } catch {
+            throw new Error('Failed to update role');
+        }
     }
 }
