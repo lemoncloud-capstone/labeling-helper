@@ -72,7 +72,11 @@ export class UserController {
             return;
         }
 
+        console.log(validationResult.data.code);
+
         const { code } = validationResult.data;
+
+        console.log('카카오 api 호출');
 
         try {
             const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', null, {
@@ -90,6 +94,7 @@ export class UserController {
             const kakaoToken = tokenResponse.data.access_token;
 
             const userInfo = await UserService.getKakaoUserInfo(kakaoToken);
+            console.log(userInfo);
             const user = await UserService.addUserIfNotExist(
                 userInfo.userID,
                 userInfo.nickname || '',
