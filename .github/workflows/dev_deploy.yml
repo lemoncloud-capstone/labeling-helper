@@ -2,7 +2,7 @@ name: dev_deploy
 
 on:
     push:
-        branches: [main]
+        branches: [develop]
     workflow_dispatch:
 
 jobs:
@@ -29,11 +29,13 @@ jobs:
             - name: Create .env file
               run: |
                   echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
-                  echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" > ./dist/apps/app/server/.env
-                  echo "ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" >> ./dist/apps/app/server/.env
-                  echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> ./dist/apps/app/server/.env
-                  echo "REGION=${{ secrets.REGION }}" >> ./dist/apps/app/server/.env
-                  echo "LOCAL_ENDPOINT=${{ secrets.LOCAL_ENDPOINT }}" >> ./dist/apps/app/server/.env
+                  echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+                  echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }}" >> .env
+                  echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> .env
+                  echo "ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" >> .env
+                  echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
+                  echo "REGION=${{ secrets.REGION }}" >> .env
+                  echo "LOCAL_ENDPOINT=${{ secrets.LOCAL_ENDPOINT }}" >> .env
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3

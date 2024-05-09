@@ -7,8 +7,10 @@ export enum Status {
 }
 
 export type ImageType = {
-    title: string;
-    imageURL: string;
+    pkey?: string;
+    skey?: string;
+    title?: string;
+    imageURL?: string;
     status?: Status;
     latestTimestamp: Date;
     labels: string[];

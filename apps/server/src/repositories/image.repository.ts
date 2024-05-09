@@ -4,10 +4,10 @@ import { ddbDocumentClient } from './index';
 import { ImageType, Status } from '../types/image.types';
 
 export class ImageRepository {
-    public async addImage(imageUrl: string, title: string, status: Status, labels: string[]): Promise<ImageType> {
+    public async addImage(imageUrl: string, title: string, status: Status, labels: string[]): Promise<any> {
         const newImageType: ImageType = {
-            title: title,
-            imageURL: imageUrl,
+            pkey: 'I' + title,
+            skey: imageUrl,
             status: status,
             latestTimestamp: new Date(Date.now()),
             labels: labels,
@@ -21,9 +21,9 @@ export class ImageRepository {
                 })
             );
             console.log('Image added to DynamoDB:', newImageType);
-            return newImageType;
+            return;
         } catch (error) {
-            console.error('Error adding user to DynamoDB:', error);
+            console.error('Error adding Image to DynamoDB:', error);
             throw error;
         }
     }
