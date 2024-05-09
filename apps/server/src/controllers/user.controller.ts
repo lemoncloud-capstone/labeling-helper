@@ -29,6 +29,50 @@ export class UserController {
         }
 
         const { code } = validationResult.data;
+        sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
+            code,
+        });
+        /*
+        try {
+            const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', null, {
+                params: {
+                    grant_type: 'authorization_code',
+                    client_id: process.env.KAKAO_REST_API_KEY,
+                    redirect_uri: process.env.KAKAO_REDIRECT_URI,
+                    code,
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            });
+
+            const kakaoToken = tokenResponse.data.access_token;
+
+            const userInfo = await UserService.getKakaoUserInfo(kakaoToken);
+            const user = await UserService.addUserIfNotExist(
+                userInfo.userID,
+                userInfo.nickname || '',
+                userInfo.profile_image || 'None',
+                UserRole.None
+            );
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
+                code
+            });
+         } catch (error) {
+             sendResponse(res, BaseResponseCode.GET_OAUTH_INFO_FAILED, error.message);
+         }
+        */
+    }
+
+    public static async getKakaoToken(req: Request, res: Response): Promise<void> {
+        // Zod를 사용한 req 검사
+        const validationResult = CodeSchema.safeParse(req.query);
+        if (!validationResult.success) {
+            sendResponse(res, BaseResponseCode.ValidationError);
+            return;
+        }
+
+        const { code } = validationResult.data;
 
         try {
             const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', null, {
@@ -54,30 +98,10 @@ export class UserController {
             );
             sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
                 user,
-                kakaoToken,
             });
         } catch (error) {
             sendResponse(res, BaseResponseCode.GET_OAUTH_INFO_FAILED, error.message);
         }
-    }
-
-    public static async getKakaoToken(req: Request, res: Response): Promise<void> {
-        const validationResult = CodeSchema.safeParse(req.body);
-        if (!validationResult.success) {
-            sendResponse(res, BaseResponseCode.ValidationError);
-            return;
-        }
-        const { code } = validationResult.data;
-        const userInfo = await UserService.getKakaoUserInfo(code);
-        const user = await UserService.addUserIfNotExist(
-            userInfo.userID,
-            userInfo.nickname || '',
-            userInfo.profile_image || 'None',
-            UserRole.None
-        );
-        sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
-            user,
-        });
     }
 
     public static async updateRole(req: Request, res: Response): Promise<void> {
