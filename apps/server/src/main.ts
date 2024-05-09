@@ -18,16 +18,13 @@ const app = express();
 const httpServer = createServer(app); // HTTP 서버 생성
 const io = new SocketIOServer(httpServer, {
     cors: {
-        origin: 'http://sandbox.lemoncloud.io',
+        origin: ['http://sandbox.lemoncloud.io', 'http://localhost:3000'],
         methods: ['GET', 'POST'],
     },
 });
 
-app.use(
-    cors({
-        origin: ' http://sandbox.lemoncloud.io',
-    })
-);
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
