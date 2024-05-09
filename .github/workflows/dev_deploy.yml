@@ -2,7 +2,7 @@ name: dev_deploy
 
 on:
     push:
-        branches: [BE_day]
+        branches: [develop]
     workflow_dispatch:
 
 jobs:
@@ -20,10 +20,12 @@ jobs:
             - name: npm install
               run: |
                   npm install --legacy-peer-deps
+
             - name: Build apps
               run: |
                   npm run build:web
                   npm run build:server
+
             - name: Create .env file
               run: |
                   echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
@@ -47,11 +49,13 @@ jobs:
             - name: Build Docker image
               run: |
                   docker-compose up -d --build
+
             - name: Push Docker Image to Docker hub
               run: |
                   docker push ${{ secrets.DOCKERHUB_USERNAME }}/web
                   docker push ${{ secrets.DOCKERHUB_USERNAME }}/server
                   docker push ${{ secrets.DOCKERHUB_USERNAME }}/nginx
+
             - name: Copy docker-compose.yml to EC2
               uses: appleboy/scp-action@master
               with:
