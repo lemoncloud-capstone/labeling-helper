@@ -37,7 +37,7 @@ export enum BaseResponseCode {
     /**
      * 5XXX : ProjectImage
      */
-
+    FAIL_TO_GET_S3_IMAGES = 5000,
     /**
      * 6XXX : Websocket
      */
@@ -75,7 +75,7 @@ export const BaseResponseMessages: Record<BaseResponseCode, string> = {
     /**
      * 5XXX : ProjectImage
      */
-
+    [BaseResponseCode.FAIL_TO_GET_S3_IMAGES]: 'S3 이미지 조회에 실패했습니다.',
     /**
      * 6XXX : Websocket
      */
