@@ -36,6 +36,7 @@ jobs:
                   echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
                   echo "REGION=${{ secrets.REGION }}" >> .env
                   echo "LOCAL_ENDPOINT=${{ secrets.LOCAL_ENDPOINT }}" >> .env
+                  echo "BUCKET_NAME=${{secrets.BUCKET_NAME}}" >> .env
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
