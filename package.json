@@ -37,6 +37,7 @@
         "@tensorflow/tfjs-core": "^3.19.0",
         "@tensorflow/tfjs-node": "^3.19.0",
         "@types/socket.io": "^3.0.2",
+        "aws-sdk": "^2.1616.0",
         "axios": "^1.6.0",
         "body-parse": "^0.1.0",
         "classnames": "^2.5.1",
