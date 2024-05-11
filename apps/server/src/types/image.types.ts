@@ -12,6 +12,6 @@ export type ImageType = {
     title?: string;
     imageURL?: string;
     status?: Status;
-    latestTimestamp: Date;
+    latestTimestamp: number;
     labels: string[];
 };

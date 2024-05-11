@@ -9,15 +9,10 @@ dotenv.config();
 
 export class ImageService {
     // db에 이미지 저장
-    public static async addImageList(
-        imageUrls: string[],
-        title: string,
-        status: Status = Status.Available,
-        labels: string[] = null
-    ): Promise<any> {
+    public static async addImageList(imageUrls: string[], title: string, labels: string[] = null): Promise<any> {
         try {
             for (const imageUrl of imageUrls) {
-                await imageRepository.addImage(imageUrl, title, status, labels);
+                await imageRepository.addImage(imageUrl, title, Status.Available, labels);
             }
             return;
         } catch (error) {

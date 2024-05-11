@@ -9,7 +9,7 @@ export class ImageRepository {
             pkey: 'I' + title,
             skey: imageUrl,
             status: status,
-            latestTimestamp: new Date(Date.now()),
+            latestTimestamp: Date.now(),
             labels: labels,
         };
 

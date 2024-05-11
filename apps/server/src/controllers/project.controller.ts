@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
 
+import { ImageService } from '../services/image.service';
 import { ProjectService } from '../services/project.service';
 import { ProjectType } from '../types/project.types';
 import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
@@ -51,6 +52,8 @@ export class ProjectController {
             };
 
             const result = await ProjectService.createProject(projectType);
+            await ImageService.addImageList(imgUrls, title, labels);
+
             sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_CREATE_PROJECT, error.message);
