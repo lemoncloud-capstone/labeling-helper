@@ -17,4 +17,12 @@ export class ProjectService {
             throw new Error('Failed to get projects');
         }
     }
+    //work 리스트 받아서 저장
+    static async assignWorkers(title: string, workers: Record<string, string>[]) {
+        try {
+            return await projectRepository.assignWorkers(title, workers);
+        } catch (error) {
+            throw new Error('Failed to assign workers');
+        }
+    }
 }

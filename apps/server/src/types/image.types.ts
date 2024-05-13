@@ -6,6 +6,22 @@ export enum Status {
     Rework = 'rework',
 }
 
+export type Point = {
+    x: number | null;
+    y: number | null;
+};
+
+export type LabelData = {
+    leftTop: Point;
+    rightTop: Point;
+    leftBottom: Point;
+    rightBottom: Point;
+};
+
+export type LabelPoints = {
+    [label: string]: LabelData[];
+};
+
 export type ImageType = {
     pkey?: string;
     skey?: string;
@@ -13,5 +29,5 @@ export type ImageType = {
     imageURL?: string;
     status?: Status;
     latestTimestamp: number;
-    labels: string[];
+    labelPoints: LabelPoints;
 };
