@@ -1,4 +1,4 @@
-import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
 import { ProjectListType, ProjectQueryParams, ProjectType } from '../types/project.types';
@@ -31,6 +31,8 @@ export class ProjectRepository {
     ): Promise<{ projectList: ProjectListType[]; lastEvaluatedKey: any }> {
         const { status, category, keyword, lastEvaluatedKey } = projectQueryParams;
         const queryParams = this.buildQueryParams(20, lastEvaluatedKey);
+
+        this.addFilter(queryParams, 'skey', 'PROJECT', '#skey = :skey');
 
         this.addFilter(queryParams, 'status', status, '#status = :status');
         this.addFilter(queryParams, 'category', category, '#category = :category');
@@ -89,16 +91,26 @@ export class ProjectRepository {
     }
 
     public async assignWorkers(title: string, workers: Record<string, string>[]) {
-        await this.ddbClient.send(
-            new PutCommand({
+        try {
+            const updateCommand = new UpdateCommand({
                 TableName: this.tableName,
-                Item: {
+                Key: {
                     pkey: title,
                     skey: 'PROJECT',
-                    workers: workers,
                 },
-            })
-        );
+                UpdateExpression: 'set workers = :workers',
+                ExpressionAttributeValues: {
+                    ':workers': workers,
+                },
+                ReturnValues: 'UPDATED_NEW',
+            });
+
+            const result = await this.ddbClient.send(updateCommand);
+            console.log('Workers assigned successfully:', result);
+        } catch (error) {
+            console.error('Error assigning workers:', error);
+            throw error;
+        }
     }
 }
 
