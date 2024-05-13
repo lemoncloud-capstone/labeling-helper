@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 
 import { ImgService } from '../services/img.service';
-import { BaseResponseCode } from '../utils/errors';
+import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 // Zod를 사용한 코드 검증
@@ -16,11 +16,11 @@ const GetImagesInputSchema = z.object({
 export class ImgController {
     public static async getProjectImages(req: Request, res: Response): Promise<void> {
         try {
-            const { title } = req.params;
+            const { title } = req.query;
             const { lastEvaluatedKey } = GetImagesInputSchema.parse(req.body);
 
             const result = await ImgService.getProjectImages('I' + title, lastEvaluatedKey);
-            sendResponse(res, BaseResponseCode.SUCCESS, result);
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], result);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_GET_IMAGES, error.message);
         }
@@ -28,8 +28,7 @@ export class ImgController {
 
     public static async updateStatus(req: Request, res: Response): Promise<void> {
         try {
-            const { title, imgURL, labelPoint } = req.params;
-            const { status } = req.body;
+            const { title, imgURL, status, labelPoint } = req.body;
 
             await ImgService.updateStatus('I' + title, imgURL, status, labelPoint);
             sendResponse(res, BaseResponseCode.SUCCESS);

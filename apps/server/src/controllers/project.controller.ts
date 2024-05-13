@@ -22,7 +22,8 @@ const ProjectInputSchema = z.object({
 });
 
 const lastEvaluatedKeySchema = z.object({
-    title: z.string(),
+    pkey: z.string(),
+    skey: z.string(),
 });
 
 const getProjectsInputSchema = z.object({
@@ -84,9 +85,7 @@ export class ProjectController {
             }
             const result = await ProjectService.getProjects(query);
 
-            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
-                result,
-            });
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], result);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_GET_PROJECTS, error.message);
         }

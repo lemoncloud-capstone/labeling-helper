@@ -1,4 +1,4 @@
-import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
 import { ProjectListType, ProjectQueryParams, ProjectType } from '../types/project.types';
@@ -10,6 +10,12 @@ export class ProjectRepository {
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
     }
+    // imgUrls,
+    // pkey: title,
+    // category,
+    // labels,
+    // workers: workers as workerType[],
+    // progress: 0,
 
     public async createProject(projectType: ProjectType): Promise<any> {
         const newProject = {
@@ -30,29 +36,36 @@ export class ProjectRepository {
         projectQueryParams: ProjectQueryParams
     ): Promise<{ projectList: ProjectListType[]; lastEvaluatedKey: any }> {
         const { status, category, keyword, lastEvaluatedKey } = projectQueryParams;
-        const queryParams = this.buildQueryParams(20, lastEvaluatedKey);
+        const queryParams = this.buildQueryParams(200, lastEvaluatedKey);
 
-        this.addFilter(queryParams, 'status', status, '#status = :status');
-        this.addFilter(queryParams, 'category', category, '#category = :category');
-        this.addFilter(queryParams, 'pkey', keyword, 'contains(#pkey, :pkey)');
+        // skey가 'PROJECT'인 항목만 필터링
+        this.addFilter(queryParams, 'skey', 'PROJECT', '#skey = :skey');
 
-        if (queryParams.FilterExpression === '') {
+        if (category) {
+            this.addFilter(queryParams, 'category', category, '#category = :category');
+        }
+
+        if (keyword) {
+            // 키워드가 pkey에 포함되어 있어야 하는 경우
+            this.addFilter(queryParams, 'pkey', keyword, 'contains(#pkey, :pkey)');
+        }
+
+        if (!queryParams.FilterExpression) {
             delete queryParams.FilterExpression;
             delete queryParams.ExpressionAttributeNames;
             delete queryParams.ExpressionAttributeValues;
         }
 
-        const command = queryParams.FilterExpression
-            ? new ScanCommand(queryParams)
-            : new ScanCommand({
-                  TableName: queryParams.TableName,
-                  Limit: queryParams.Limit,
-                  ExclusiveStartKey: queryParams.ExclusiveStartKey,
-              });
+        const command = new ScanCommand(queryParams);
 
-        const { Items, LastEvaluatedKey } = await this.ddbClient.send(command);
-        const formattedItems: ProjectListType[] = this.formatItems(Items);
-        return { projectList: formattedItems, lastEvaluatedKey: LastEvaluatedKey };
+        try {
+            const { Items, LastEvaluatedKey } = await this.ddbClient.send(command);
+            const formattedItems: ProjectListType[] = this.formatItems(Items);
+            return { projectList: formattedItems, lastEvaluatedKey: LastEvaluatedKey };
+        } catch (error) {
+            console.error('Error getting projects:', error);
+            throw error;
+        }
     }
 
     private buildQueryParams(size: number, lastEvaluatedKey?: any): any {
@@ -69,8 +82,10 @@ export class ProjectRepository {
     }
 
     private addFilter(queryParams: any, attribute: string, value?: string, expression?: string) {
-        if (value) {
+        if (value != null) {
+            console.log('value:', value);
             if (queryParams.FilterExpression.length > 0) {
+                console.log('AND');
                 queryParams.FilterExpression += ' AND ';
             }
             queryParams.ExpressionAttributeNames[`#${attribute}`] = attribute;
@@ -89,16 +104,26 @@ export class ProjectRepository {
     }
 
     public async assignWorkers(title: string, workers: Record<string, string>[]) {
-        await this.ddbClient.send(
-            new PutCommand({
+        try {
+            const updateCommand = new UpdateCommand({
                 TableName: this.tableName,
-                Item: {
+                Key: {
                     pkey: title,
                     skey: 'PROJECT',
-                    workers: workers,
                 },
-            })
-        );
+                UpdateExpression: 'set workers = :workers',
+                ExpressionAttributeValues: {
+                    ':workers': workers,
+                },
+                ReturnValues: 'UPDATED_NEW',
+            });
+
+            const result = await this.ddbClient.send(updateCommand);
+            console.log('Workers assigned successfully:', result);
+        } catch (error) {
+            console.error('Error assigning workers:', error);
+            throw error;
+        }
     }
 }
 
