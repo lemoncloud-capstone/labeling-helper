@@ -8,6 +8,7 @@ export function usersRouter(): Router {
 
     router.get('/auth/kakao/callback', UserController.kakaoCallback);
     router.get('/auth/kakao/token', UserController.getKakaoToken);
+    router.get('/auth/kakao/accessToken', UserController.getKakaoUserByAccessToken);
 
     router.post('/role', authenticateMiddleware, UserController.updateRole);
 

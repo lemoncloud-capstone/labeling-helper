@@ -57,4 +57,33 @@ export class UserService {
             throw new Error('Failed to update role');
         }
     }
+
+    static async getKakaoUserInfoByToken(accessToken: any) {
+        try {
+            // 카카오 API를 통해 사용자 정보 요청
+            const userInfoResponse = await axios.get('https://kapi.kakao.com/v2/user/me', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            /*
+            const { id, properties } = userInfoResponse.data;
+            const { nickname, profile_image } = properties;
+
+            // 사용자가 존재하지 않을 경우 시스템에 추가
+            const user = await UserService.addUserIfNotExist(
+                id,
+                nickname || '',
+                profile_image || 'None',
+                UserRole.None
+            );
+            return user;
+            */
+            console.log(userInfoResponse.data);
+            return userInfoResponse.data;
+        } catch (error) {
+            console.error('Failed to verify Kakao token:', error);
+            throw new Error('Failed to fetch user info from Kakao');
+        }
+    }
 }

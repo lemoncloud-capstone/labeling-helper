@@ -117,6 +117,31 @@ export class UserController {
         }
     }
 
+    public static async getKakaoUserByAccessToken(req: Request, res: Response): Promise<void> {
+        const { accessToken, idToken } = req.query;
+        console.log(accessToken, idToken);
+        try {
+            // idToken 검증
+            // const decodedIdToken = UserService.verifyIdToken(idToken);
+
+            // accessToken으로 사용자 정보 요청
+            const userInfo = await UserService.getKakaoUserInfoByToken(accessToken);
+
+            // 로그인 로직
+            const user = await UserService.addUserIfNotExist(
+                userInfo.id,
+                userInfo.properties.nickname || '',
+                userInfo.properties.profile_image || 'None',
+                UserRole.None
+            );
+            sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], {
+                user,
+            });
+        } catch (error) {
+            sendResponse(res, BaseResponseCode.GET_OAUTH_INFO_FAILED, error.message);
+        }
+    }
+
     public static async updateRole(req: Request, res: Response): Promise<void> {
         const validationResult = UpdateRoleSchema.safeParse(req.body);
         if (!validationResult.success) {
