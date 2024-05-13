@@ -3,22 +3,52 @@ import dotenv from 'dotenv';
 
 import { imageRepository } from '../repositories/image.repository';
 import { s3 } from '../s3/s3Config';
-import { Status } from '../types/image.types';
+import { ImageType, LabelPoints, Status } from '../types/image.types';
 
 dotenv.config();
 
 export class ImageService {
     // db에 이미지 저장
-    public static async addImageList(imageUrls: string[], title: string, labels: string[] = null): Promise<any> {
+    // Service.ts
+    public static async addImageList(imageUrls: string[], title: string, labels: string[] = []): Promise<any> {
         try {
+            const labelsData = this.initializeLabelData(labels);
+            const modifiedTitle = 'I' + title.slice(0);
+
             for (const imageUrl of imageUrls) {
-                await imageRepository.addImage(imageUrl, title, Status.Available, labels);
+                const newImageType: ImageType = {
+                    pkey: modifiedTitle,
+                    skey: imageUrl,
+                    status: Status.Available,
+                    latestTimestamp: Date.now(),
+                    labelPoints: labelsData,
+                };
+                await imageRepository.addImage(newImageType);
             }
             return;
         } catch (error) {
-            console.error('Error in service while add images:', error);
+            console.error('Error in service while adding images:', error);
             throw error;
         }
+    }
+
+    // 라벨데이터 초기화
+    private static initializeLabelData(labels: string[]): LabelPoints {
+        const labelStructure = {
+            leftTop: { x: null, y: null },
+            rightTop: { x: null, y: null },
+            leftBottom: { x: null, y: null },
+            rightBottom: { x: null, y: null },
+        };
+
+        const labelsData: LabelPoints = {};
+        for (const label of labels) {
+            labelsData[label] = [
+                JSON.parse(JSON.stringify(labelStructure)),
+                JSON.parse(JSON.stringify(labelStructure)),
+            ];
+        }
+        return labelsData;
     }
 
     // s3에서 이미지 가져오기

@@ -1,29 +1,21 @@
 import { PutCommand } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
-import { ImageType, Status } from '../types/image.types';
+import { ImageType } from '../types/image.types';
 
 export class ImageRepository {
-    public async addImage(imageUrl: string, title: string, status: Status, labels: string[]): Promise<any> {
-        const newImageType: ImageType = {
-            pkey: 'I' + title,
-            skey: imageUrl,
-            status: status,
-            latestTimestamp: Date.now(),
-            labels: labels,
-        };
-
+    public async addImage(image: ImageType): Promise<void> {
         try {
             await ddbDocumentClient.send(
                 new PutCommand({
-                    TableName: 'LemonSandbox', // 이미지 테이블 이름
-                    Item: newImageType,
+                    TableName: 'LemonSandbox',
+                    Item: image,
                 })
             );
-            console.log('Image added to DynamoDB:', newImageType);
+            console.log('Image added to DynamoDB:', image);
             return;
         } catch (error) {
-            console.error('Error adding Image to DynamoDB:', error);
+            console.error('Error adding image to DynamoDB:', error);
             throw error;
         }
     }

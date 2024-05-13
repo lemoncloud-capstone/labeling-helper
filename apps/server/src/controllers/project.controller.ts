@@ -54,7 +54,7 @@ export class ProjectController {
 
             const projectType: ProjectType = {
                 imgUrls,
-                pkey: 'P' + title,
+                pkey: title,
                 category,
                 labels,
                 workers: workers as workerType[],
