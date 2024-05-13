@@ -87,6 +87,19 @@ export class ProjectRepository {
             category: item.category,
         }));
     }
+
+    public async assignWorkers(title: string, workers: Record<string, string>[]) {
+        await this.ddbClient.send(
+            new PutCommand({
+                TableName: this.tableName,
+                Item: {
+                    pkey: title,
+                    skey: 'PROJECT',
+                    workers: workers,
+                },
+            })
+        );
+    }
 }
 
 export const projectRepository = new ProjectRepository(ddbDocumentClient);

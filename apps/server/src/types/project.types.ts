@@ -6,7 +6,10 @@ export enum status {
     completed = 'completed',
     rework = 'rework',
 }
-
+export type workerType = {
+    id: string;
+    nickname: string;
+};
 export type ProjectType = {
     imgUrls: string[];
     title?: string;
@@ -15,7 +18,7 @@ export type ProjectType = {
     category: string;
     labels: string[];
     progress: number;
-    workers: string[];
+    workers?: workerType[];
 };
 
 export type ProjectListType = {

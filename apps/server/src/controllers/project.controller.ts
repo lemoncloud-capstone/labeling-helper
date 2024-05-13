@@ -3,17 +3,22 @@ import { z } from 'zod';
 
 import { ImageService } from '../services/image.service';
 import { ProjectService } from '../services/project.service';
-import { ProjectType } from '../types/project.types';
+import { ProjectType, workerType } from '../types/project.types';
 import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
 //Zod를 사용한 코드 검증
+const WorkerSchema = z.object({
+    id: z.string(),
+    nickname: z.string(),
+});
+
 const ProjectInputSchema = z.object({
     imgUrls: z.array(z.string()),
     title: z.string(),
     category: z.string(),
     labels: z.array(z.string()),
-    workers: z.array(z.string()),
+    workers: z.array(WorkerSchema).optional().default([]),
 });
 
 const lastEvaluatedKeySchema = z.object({
@@ -31,6 +36,11 @@ const GetImagesInputSchema = z.object({
     lastEvaluatedKey: z.string().optional(),
 });
 
+const AssignWorkersSchema = z.object({
+    workers: z.array(WorkerSchema),
+    title: z.string(),
+});
+
 export class ProjectController {
     public static async createProject(req: Request, res: Response): Promise<void> {
         try {
@@ -43,11 +53,11 @@ export class ProjectController {
             const { imgUrls, title, category, labels, workers } = validationResult.data;
 
             const projectType: ProjectType = {
-                imgUrls: imgUrls,
+                imgUrls,
                 pkey: 'P' + title,
-                category: category,
-                labels: labels,
-                workers: workers,
+                category,
+                labels,
+                workers: workers as workerType[],
                 progress: 0,
             };
 
@@ -79,6 +89,21 @@ export class ProjectController {
             });
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_GET_PROJECTS, error.message);
+        }
+    }
+
+    public static async assignWorkers(req: Request, res: Response): Promise<void> {
+        const validationResult = AssignWorkersSchema.safeParse(req.body);
+        if (!validationResult.success) {
+            sendResponse(res, BaseResponseCode.ValidationError);
+            return;
+        }
+        const { workers, title } = validationResult.data;
+        try {
+            await ProjectService.assignWorkers('P' + title, workers);
+            sendResponse(res, BaseResponseCode.SUCCESS);
+        } catch (error) {
+            sendResponse(res, BaseResponseCode.FAIL_TO_ASSIGN_WORKERS, error.message);
         }
     }
 }
