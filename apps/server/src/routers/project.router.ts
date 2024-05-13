@@ -9,8 +9,10 @@ export function projectsRouter(): Router {
 
     router.post('/', authenticateMiddleware, ProjectController.createProject);
     router.post('/fetchProjects', ProjectController.getProjects);
-    router.post('/:title/images', authenticateMiddleware, ImgController.getProjectImages);
-    router.post('/:title/images/:imgURL', authenticateMiddleware, ImgController.updateStatus);
+    router.post('/:title/images', ImgController.getProjectImages);
+    router.post('/:title/images/:imgURL', ImgController.updateStatus);
+    // router.post('/:title/images', authenticateMiddleware, ImgController.getProjectImages);
+    // router.post('/:title/images/:imgURL', authenticateMiddleware, ImgController.updateStatus);
 
     return router;
 }
