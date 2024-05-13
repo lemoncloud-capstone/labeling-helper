@@ -6,11 +6,20 @@ export class RealtimeSessionHandler {
     addSession(socket: Socket) {
         this.sessions.set(socket.id, socket);
         console.log(`Session added: ${socket.id}`);
+        socket.emit('socketId', socket.id);
     }
 
     removeSession(socket: Socket) {
         this.sessions.delete(socket.id);
         console.log(`Session removed: ${socket.id}`);
+    }
+
+    public broadcastNickname(nickname: string, senderId: string) {
+        this.sessions.forEach((socket, sessionId) => {
+            if (sessionId !== senderId) {
+                socket.emit('nickname', nickname);
+            }
+        });
     }
 
     getSession(socketId: string) {
