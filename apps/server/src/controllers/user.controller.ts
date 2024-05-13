@@ -14,6 +14,10 @@ dotenv.config();
 const CodeSchema = z.object({
     code: z.string().min(1),
 });
+const KakaoTokenSchema = z.object({
+    code: z.string().min(1),
+    from: z.string().min(1),
+});
 
 const UpdateRoleSchema = z.object({
     role: z.nativeEnum(UserRole),
@@ -66,7 +70,7 @@ export class UserController {
 
     public static async getKakaoToken(req: Request, res: Response): Promise<void> {
         // Zod를 사용한 req 검사
-        const validationResult = CodeSchema.safeParse(req.query);
+        const validationResult = KakaoTokenSchema.safeParse(req.query);
         if (!validationResult.success) {
             sendResponse(res, BaseResponseCode.ValidationError);
             return;
@@ -74,16 +78,20 @@ export class UserController {
 
         console.log(validationResult.data.code);
 
-        const { code } = validationResult.data;
+        const { code, from } = validationResult.data;
 
-        console.log('카카오 api 호출');
+        let redirect_uri = process.env.KAKAO_REDIRECT_URI;
+        console.log(redirect_uri);
+        if (from == 'web') {
+            redirect_uri = process.env.KAKAO_REDIRECT_URI_WEB;
+        }
 
         try {
             const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', null, {
                 params: {
                     grant_type: 'authorization_code',
                     client_id: process.env.KAKAO_REST_API_KEY,
-                    redirect_uri: process.env.KAKAO_REDIRECT_URI,
+                    redirect_uri: redirect_uri,
                     code,
                 },
                 headers: {
