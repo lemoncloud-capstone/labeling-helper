@@ -28,8 +28,7 @@ export class ImgController {
 
     public static async updateStatus(req: Request, res: Response): Promise<void> {
         try {
-            const { title, imgURL, labelPoint } = req.params;
-            const { status } = req.body;
+            const { title, imgURL, status, labelPoint } = req.body;
 
             await ImgService.updateStatus('I' + title, imgURL, status, labelPoint);
             sendResponse(res, BaseResponseCode.SUCCESS);

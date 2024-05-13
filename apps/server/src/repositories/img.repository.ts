@@ -36,25 +36,38 @@ export class ImgRepository {
         };
     }
 
-    public async updateImageStatus(title: string, imageURL: string, status: string, labelPoint): Promise<void> {
+    public async updateImageStatus(title: string, imageURL: string, status: string, labelPoints): Promise<void> {
         const params = {
             TableName: this.tableName,
             Key: {
-                pkey: { S: title },
-                skey: { S: imageURL },
+                pkey: title,
+                skey: imageURL,
             },
-            UpdateExpression: 'SET #status = :status',
+            UpdateExpression: 'SET #status = :status, #labelPoints = :labelPoints',
             ExpressionAttributeNames: {
                 '#status': 'status',
-                '#labelPoint': 'labelPoint',
+                '#labelPoints': 'labelPoints',
             },
             ExpressionAttributeValues: {
-                ':status': { S: status },
-                ':labelPoint': { S: labelPoint },
+                ':status': status,
+                ':labelPoints': this.formatLabelPoints(labelPoints),
             },
         };
 
         await this.ddbClient.send(new UpdateCommand(params));
+    }
+
+    private formatLabelPoints(labelPoints) {
+        const formatted = {};
+        for (const key in labelPoints) {
+            formatted[key] = labelPoints[key].map(point => ({
+                leftTop: { x: String(point.leftTop.x), y: String(point.leftTop.y) },
+                rightTop: { x: String(point.rightTop.x), y: String(point.rightTop.y) },
+                leftBottom: { x: String(point.leftBottom.x), y: String(point.leftBottom.y) },
+                rightBottom: { x: String(point.rightBottom.x), y: String(point.rightBottom.y) },
+            }));
+        }
+        return formatted;
     }
 }
 export const imgRepository = new ImgRepository(ddbDocumentClient);
