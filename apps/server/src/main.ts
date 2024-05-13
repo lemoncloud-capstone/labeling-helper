@@ -10,7 +10,7 @@ import morgan from 'morgan';
 import { Server as SocketIOServer } from 'socket.io';
 
 import routers from './routers';
-import { handleConnection, labelActivity } from './websockets/events/connection';
+import { handleConnection, handleNickname, labelActivity } from './websockets/events/connection';
 
 dotenv.config();
 
@@ -36,6 +36,7 @@ io.on('connection', socket => {
     console.log('New socket connected:', socket.id);
     handleConnection(socket); // 기본 연결 처리
     labelActivity(socket); // 라벨 이벤트 처리
+    handleNickname(socket); // 닉네임 이벤트 처리
 });
 
 const PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 3000;
