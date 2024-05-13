@@ -16,10 +16,9 @@ export class RealtimeSessionHandler {
 
     public broadcastNickname(nickname: string, senderId: string) {
         this.sessions.forEach((socket, sessionId) => {
-            // if (sessionId !== senderId) {
-            //     socket.emit('nickname', nickname);
-            // }
-            socket.emit('nickname', nickname);
+            if (sessionId !== senderId) {
+                socket.emit('nickname', nickname);
+            }
         });
     }
 
