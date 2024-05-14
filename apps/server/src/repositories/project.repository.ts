@@ -1,7 +1,7 @@
 import { PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
-import { ProjectListType, ProjectQueryParams, ProjectType } from '../types/project.types';
+import { ProjectListType, ProjectQueryParams, ProjectType, workerType } from '../types/project.types';
 
 export class ProjectRepository {
     private ddbClient;
@@ -10,6 +10,7 @@ export class ProjectRepository {
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
     }
+
     // imgUrls,
     // pkey: title,
     // category,
@@ -103,7 +104,7 @@ export class ProjectRepository {
         }));
     }
 
-    public async assignWorkers(title: string, workers: Record<string, string>[]) {
+    public async assignWorkers(title: string, workers: workerType[]) {
         try {
             const updateCommand = new UpdateCommand({
                 TableName: this.tableName,
@@ -120,8 +121,36 @@ export class ProjectRepository {
 
             const result = await this.ddbClient.send(updateCommand);
             console.log('Workers assigned successfully:', result);
+            workers.forEach(worker => {
+                this.updateWorkerProjects(worker.id, title);
+            });
         } catch (error) {
             console.error('Error assigning workers:', error);
+            throw error;
+        }
+    }
+
+    public async updateWorkerProjects(workerId: string, projectId: string): Promise<void> {
+        const params = new UpdateCommand({
+            TableName: this.tableName,
+            Key: {
+                pkey: workerId,
+                skey: 'USER',
+            },
+            UpdateExpression:
+                'SET projectsInvolved = list_append(if_not_exists(projectsInvolved, :empty_list), :new_project)',
+            ExpressionAttributeValues: {
+                ':new_project': [projectId],
+                ':empty_list': [],
+            },
+            ReturnValues: 'UPDATED_NEW',
+        });
+
+        try {
+            const result = await this.ddbClient.send(params);
+            console.log('Project added to worker successfully:', result);
+        } catch (error) {
+            console.error('Error updating worker projects:', error);
             throw error;
         }
     }

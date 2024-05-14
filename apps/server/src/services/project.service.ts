@@ -1,5 +1,5 @@
 import { projectRepository } from '../repositories/project.repository';
-import { ProjectQueryParams, ProjectType } from '../types/project.types';
+import { ProjectQueryParams, ProjectType, workerType } from '../types/project.types';
 
 export class ProjectService {
     public static async createProject(projectType: ProjectType): Promise<any> {
@@ -18,7 +18,7 @@ export class ProjectService {
         }
     }
     //work 리스트 받아서 저장
-    static async assignWorkers(title: string, workers: Record<string, string>[]) {
+    static async assignWorkers(title: string, workers: workerType[]) {
         try {
             return await projectRepository.assignWorkers(title, workers);
         } catch (error) {
