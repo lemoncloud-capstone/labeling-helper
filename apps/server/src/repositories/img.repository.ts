@@ -11,7 +11,6 @@ export class ImgRepository {
     }
 
     public async getProjectImages(title: string, lastEvaluatedKey?: string): Promise<any> {
-        console.log('title', title);
         const queryParams: QueryCommandInput = {
             TableName: this.tableName,
             KeyConditionExpression: 'pkey = :pkey',
@@ -27,7 +26,6 @@ export class ImgRepository {
         return {
             lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
             workers: Items.map((item: any) => item.workers).flat(),
-            labelPoint: Items.map((item: any) => item.labelPoint).flat(),
             img: Items.map((item: any) => ({
                 imgURL: item.skey,
                 status: item.status,

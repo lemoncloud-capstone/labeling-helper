@@ -97,9 +97,12 @@ export class ProjectController {
             sendResponse(res, BaseResponseCode.ValidationError);
             return;
         }
+
         const { workers, title } = validationResult.data;
+
         try {
-            await ProjectService.assignWorkers('P' + title, workers);
+            const typedWorkers: workerType[] = workers as workerType[];
+            await ProjectService.assignWorkers('P' + title, typedWorkers);
             sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_ASSIGN_WORKERS, error.message);
