@@ -1,4 +1,5 @@
 import { QueryCommand, QueryCommandInput, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import axios from 'axios';
 
 import { ddbDocumentClient } from './index';
 
@@ -22,16 +23,40 @@ export class ImgRepository {
         };
 
         const { Items, LastEvaluatedKey } = await this.ddbClient.send(new QueryCommand(queryParams));
-        console.log('Items', Items);
-        return {
-            lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
-            workers: Items.map((item: any) => item.workers).flat(),
-            img: Items.map((item: any) => ({
-                imgURL: item.skey,
-                status: item.status,
-                labelPoint: item.labelPoints,
-            })),
-        };
+        try {
+            // 비동기로 모든 이미지 URL을 Blob 형태로 가져오기
+            const imgPromises = Items.map(async (item: any) => {
+                try {
+                    const response = await axios.get(item.skey, { responseType: 'arraybuffer' });
+                    const blob = Buffer.from(response.data, 'binary').toString('base64');
+                    return {
+                        imgURL: item.skey,
+                        status: item.status,
+                        labelPoint: item.labelPoints,
+                        blob: blob,
+                    };
+                } catch (error) {
+                    console.error(`Error fetching image from ${item.skey}:`, error.message);
+                    return {
+                        imgURL: item.skey,
+                        status: item.status,
+                        labelPoint: item.labelPoints,
+                        blob: null,
+                    };
+                }
+            });
+
+            // 모든 이미지를 Blob 형태로 변환할 때까지 기다리기
+            const img = await Promise.all(imgPromises);
+
+            return {
+                lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
+                img: img,
+            };
+        } catch (error) {
+            console.error('Error fetching images:', error);
+            throw error;
+        }
     }
 
     public async updateImageStatus(title: string, imageURL: string, status: string, labelPoints): Promise<void> {
