@@ -1,4 +1,4 @@
-import { GetCommand, PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import { GetCommand, PutCommand, ScanCommand, UpdateCommand, UpdateCommandInput } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
 import { ProjectListType, ProjectQueryParams, ProjectType, workerType } from '../types/project.types';
@@ -23,6 +23,9 @@ export class ProjectRepository {
                 Item: newProject,
             })
         );
+
+        await this.addUserProjectsInvolved(projectType.workers, projectType.pkey);
+
         return newProject;
     }
 
@@ -218,6 +221,27 @@ export class ProjectRepository {
         } catch (error) {
             console.error('Error updating project progress:', error);
             throw error;
+        }
+    }
+
+    public async addUserProjectsInvolved(workers: workerType[], title: string) {
+        for (const worker of workers) {
+            const userID = worker.id;
+            const params: UpdateCommandInput = {
+                TableName: 'LemonSandbox',
+                Key: { pkey: userID, skey: 'USER' },
+                UpdateExpression:
+                    'SET projectsInvolved =  list_append(if_not_exists(projectsInvolved, :empty_list), :new_project)',
+                ExpressionAttributeValues: {
+                    ':new_project': [title],
+                    ':empty_list': [],
+                },
+            };
+
+            const command = new UpdateCommand(params);
+
+            // 커맨드 디비에 전송
+            await ddbDocumentClient.send(command);
         }
     }
 }

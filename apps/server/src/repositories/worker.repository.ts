@@ -1,4 +1,4 @@
-import { ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
+import { GetCommand, GetCommandInput, ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
 import { WorkerListType, WorkerProjectType, WorkerType } from '../types/worker.types';
@@ -53,7 +53,7 @@ export class WorkerRepository {
                     userID: worker.pkey,
                     nickname: worker.nickname,
                     profile_image: worker.profileImage,
-                    projectsInvolved: await this.findProjects(worker.pkey),
+                    projectsInvolved: await this.findProjects(worker.projectsInvolved),
                 };
                 workerTypes.push(workerType);
             }
@@ -70,41 +70,38 @@ export class WorkerRepository {
         }
     }
 
-    public async findProjects(userID: string) {
-        // 파라미터
-        const params: ScanCommandInput = {
-            TableName: 'LemonSandbox',
-            FilterExpression: 'contains(workers, :userID) and skey = :skey',
-            ExpressionAttributeValues: {
-                ':userID': userID,
-                ':skey': 'PROJECT',
-            },
-            Limit: 2,
-        };
+    public async findProjects(projectsInvolved: string[]) {
+        if (!projectsInvolved) {
+            return null;
+        }
 
         try {
-            // 스캔 커맨드에 파라미터 적용
-            const command = new ScanCommand(params);
+            const result: WorkerProjectType[] = [];
 
-            // 커맨드 디비에 전송
-            const response = await ddbDocumentClient.send(command);
+            for (const projectTitle of projectsInvolved) {
+                const params: GetCommandInput = {
+                    TableName: 'LemonSandbox',
+                    Key: { pkey: String(projectTitle), skey: 'PROJECT' },
+                };
 
-            // 변환
-            const workerProjects = response.Items;
+                const command = new GetCommand(params);
 
-            const projectsInvolved: WorkerProjectType[] = [];
+                // 커맨드 디비에 전송
+                const response = await ddbDocumentClient.send(command);
 
-            for (const workerProject of workerProjects) {
+                const workerProject = response.Item;
+
                 const workerProjectType: WorkerProjectType = {
                     imgURL: workerProject.imgUrls[0],
                     progress: workerProject.progress,
                     title: workerProject.pkey.substring(1),
                     category: workerProject.category,
                 };
-                projectsInvolved.push(workerProjectType);
+
+                result.push(workerProjectType);
             }
 
-            return projectsInvolved;
+            return result;
         } catch (error) {
             console.error('Error get worker projects to DynamoDB:', error);
             throw error;
