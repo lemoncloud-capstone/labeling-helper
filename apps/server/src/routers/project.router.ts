@@ -11,6 +11,7 @@ export function projectsRouter(): Router {
     router.post('/images', ImgController.getProjectImages);
     router.post('/images/status', ImgController.updateStatus);
     router.post('/workers', ProjectController.assignWorkers);
+    router.post('/approval', ProjectController.approvalProject);
 
     return router;
 }

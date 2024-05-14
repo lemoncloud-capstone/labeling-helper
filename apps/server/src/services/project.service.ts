@@ -1,5 +1,5 @@
 import { projectRepository } from '../repositories/project.repository';
-import { ProjectQueryParams, ProjectType, workerType } from '../types/project.types';
+import { ProjectQueryParams, ProjectType, status, workerType } from '../types/project.types';
 
 export class ProjectService {
     public static async createProject(projectType: ProjectType): Promise<any> {
@@ -23,6 +23,17 @@ export class ProjectService {
             return await projectRepository.assignWorkers(title, workers);
         } catch (error) {
             throw new Error('Failed to assign workers');
+        }
+    }
+
+    static async approvalProject(title: string, imgURL: string, status: status) {
+        try {
+            if (status == 'completed') {
+                await projectRepository.updateProgress('P' + title);
+            }
+            return await projectRepository.approvalProject('I' + title, imgURL, status);
+        } catch (error) {
+            throw new Error('Failed to approval project');
         }
     }
 }
