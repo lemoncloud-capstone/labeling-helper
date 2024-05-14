@@ -4,7 +4,7 @@ import { RealtimeSessionHandler } from '../RealtimeSessionHandler';
 
 const sessionHandler = new RealtimeSessionHandler();
 
-export function handleConnection(socket: Socket) {
+export function handleSocketEvents(socket: Socket) {
     console.log(`User connected: ${socket.id}`);
     sessionHandler.addSession(socket);
 
@@ -12,18 +12,35 @@ export function handleConnection(socket: Socket) {
         console.log(`User disconnected: ${socket.id}`);
         sessionHandler.removeSession(socket);
     });
-}
 
-export function handleNickname(socket: Socket) {
-    socket.on('nickname', (nickname: string) => {
-        console.log(`Nickname received: ${nickname}`);
-        sessionHandler.broadcastNickname(nickname, socket.id);
+    socket.on('joinRoom', (roomId: string, nickname: string) => {
+        console.log(`User ${socket.id} joining room: ${roomId} with nickname: ${nickname}`);
+        socket.join(roomId);
+        sessionHandler.addSessionToRoom(socket, roomId);
+        sessionHandler.setNickname(socket, nickname, roomId);
+        socket.to(roomId).emit('nickname', { socketId: socket.id, nickname });
     });
-}
 
-export function labelActivity(socket: Socket) {
-    socket.on('label', data => {
-        console.log(`Label received: ${data}`);
-        socket.broadcast.emit('label', data);
+    socket.on('leaveRoom', (roomId: string) => {
+        console.log(`User ${socket.id} leaving room: ${roomId}`);
+        socket.leave(roomId);
+        sessionHandler.removeSessionFromRoom(socket, roomId);
     });
+
+    socket.on(
+        'label',
+        (
+            label: string,
+            points: {
+                rightBottom: { x: string; y: string };
+                leftBottom: { x: string; y: string };
+                leftTop: { x: string; y: string };
+                rightTop: { x: string; y: string };
+            },
+            roomId: string
+        ) => {
+            console.log(`Label received in room ${roomId}:`, label, points);
+            socket.to(roomId).emit('label', { label, points });
+        }
+    );
 }
