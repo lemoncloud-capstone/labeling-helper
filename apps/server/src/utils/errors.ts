@@ -39,6 +39,7 @@ export enum BaseResponseCode {
      */
     FAIL_TO_GET_S3_IMAGES = 5000,
     FAIL_TO_ASSIGN_WORKERS = 5001,
+    FAIL_TO_APPROVAL_PROJECT = 5002,
     /**
      * 6XXX : Websocket
      */
@@ -78,6 +79,7 @@ export const BaseResponseMessages: Record<BaseResponseCode, string> = {
      */
     [BaseResponseCode.FAIL_TO_GET_S3_IMAGES]: 'S3 이미지 조회에 실패했습니다.',
     [BaseResponseCode.FAIL_TO_ASSIGN_WORKERS]: '작업자 할당에 실패했습니다.',
+    [BaseResponseCode.FAIL_TO_APPROVAL_PROJECT]: '프로젝트 승인에 실패했습니다.',
     /**
      * 6XXX : Websocket
      */

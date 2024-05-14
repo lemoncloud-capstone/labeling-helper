@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { ImageService } from '../services/image.service';
 import { ProjectService } from '../services/project.service';
-import { ProjectType, workerType } from '../types/project.types';
+import { ProjectType, status, workerType } from '../types/project.types';
 import { BaseResponseCode, BaseResponseMessages } from '../utils/errors';
 import { sendResponse } from '../utils/response';
 
@@ -33,8 +33,10 @@ const getProjectsInputSchema = z.object({
     keyword: z.string().optional(),
 });
 
-const GetImagesInputSchema = z.object({
-    lastEvaluatedKey: z.string().optional(),
+const approvalBodySchema = z.object({
+    title: z.string(),
+    imgURL: z.string(),
+    status: z.string(),
 });
 
 const AssignWorkersSchema = z.object({
@@ -106,6 +108,24 @@ export class ProjectController {
             sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
             sendResponse(res, BaseResponseCode.FAIL_TO_ASSIGN_WORKERS, error.message);
+        }
+    }
+
+    public static async approvalProject(req: Request, res: Response): Promise<void> {
+        const validationBodyResult = approvalBodySchema.safeParse(req.body);
+        if (!validationBodyResult.success) {
+            sendResponse(res, BaseResponseCode.ValidationError);
+            return;
+        }
+
+        const { title, imgURL, status } = validationBodyResult.data;
+        const typedStatus: status = status as status;
+        try {
+            await ProjectService.approvalProject(title, imgURL, typedStatus);
+
+            sendResponse(res, BaseResponseCode.SUCCESS);
+        } catch (error) {
+            sendResponse(res, BaseResponseCode.FAIL_TO_APPROVAL_PROJECT, error.message);
         }
     }
 }

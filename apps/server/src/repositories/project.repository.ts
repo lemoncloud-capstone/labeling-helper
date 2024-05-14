@@ -1,4 +1,4 @@
-import { PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import { GetCommand, PutCommand, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 import { ddbDocumentClient } from './index';
 import { ProjectListType, ProjectQueryParams, ProjectType, workerType } from '../types/project.types';
@@ -10,13 +10,6 @@ export class ProjectRepository {
     constructor(ddbClient) {
         this.ddbClient = ddbClient;
     }
-
-    // imgUrls,
-    // pkey: title,
-    // category,
-    // labels,
-    // workers: workers as workerType[],
-    // progress: 0,
 
     public async createProject(projectType: ProjectType): Promise<any> {
         const newProject = {
@@ -151,6 +144,79 @@ export class ProjectRepository {
             console.log('Project added to worker successfully:', result);
         } catch (error) {
             console.error('Error updating worker projects:', error);
+            throw error;
+        }
+    }
+
+    public async approvalProject(title: string, imgURL: string, status: string) {
+        try {
+            const updateCommand = new UpdateCommand({
+                TableName: this.tableName,
+                Key: {
+                    pkey: title,
+                    skey: imgURL,
+                },
+                UpdateExpression: 'set #status = :status',
+                ExpressionAttributeValues: {
+                    ':status': status,
+                },
+                ExpressionAttributeNames: {
+                    '#status': 'status',
+                },
+                ReturnValues: 'UPDATED_NEW',
+            });
+
+            const result = await this.ddbClient.send(updateCommand);
+            console.log('Project approved successfully:', result);
+        } catch (error) {
+            console.error('Error approving project:', error);
+            throw error;
+        }
+    }
+
+    public async updateProgress(title: string): Promise<void> {
+        try {
+            // 1. pkey = title이고 skey = "PROJECT"인 항목의 progress 값과 imgUrls[] 값을 가져온다.
+            const projectParams = {
+                TableName: this.tableName,
+                Key: {
+                    pkey: title,
+                    skey: 'PROJECT',
+                },
+            };
+
+            const projectResult = await this.ddbClient.send(new GetCommand(projectParams));
+            if (!projectResult.Item) {
+                throw new Error(`Project with title ${title} not found`);
+            }
+
+            const { imgUrls, progress } = projectResult.Item;
+
+            // 2. progress 값과 imgUrls[] length를 통해 completedCount를 계산한다.
+            const completedCount = Math.round(progress * imgUrls.length);
+
+            // 3. progress를 업데이트한다.
+            const newProgress = (completedCount + 1) / imgUrls.length;
+            const updateProgressParams = new UpdateCommand({
+                TableName: this.tableName,
+                Key: {
+                    pkey: title,
+                    skey: 'PROJECT',
+                },
+                UpdateExpression: 'set #progress = :progress',
+                ExpressionAttributeValues: {
+                    ':progress': newProgress,
+                },
+                ExpressionAttributeNames: {
+                    '#progress': 'progress',
+                },
+                ReturnValues: 'UPDATED_NEW',
+            });
+
+            const updateResult = await this.ddbClient.send(updateProgressParams);
+            console.log('Progress updated successfully:', updateResult);
+        } catch (error) {
+            console.error('Error updating project progress:', error);
             throw error;
         }
     }
