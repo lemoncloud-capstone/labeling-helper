@@ -34,12 +34,9 @@ const getProjectsInputSchema = z.object({
 });
 
 const approvalBodySchema = z.object({
-    status: z.string(),
-});
-
-const approvalQuerySchema = z.object({
     title: z.string(),
     imgURL: z.string(),
+    status: z.string(),
 });
 
 const AssignWorkersSchema = z.object({
@@ -115,21 +112,16 @@ export class ProjectController {
     }
 
     public static async approvalProject(req: Request, res: Response): Promise<void> {
-        const validationQueryResult = approvalQuerySchema.safeParse(req.query);
-        if (!validationQueryResult.success) {
-            sendResponse(res, BaseResponseCode.ValidationError);
-            return;
-        }
         const validationBodyResult = approvalBodySchema.safeParse(req.body);
         if (!validationBodyResult.success) {
             sendResponse(res, BaseResponseCode.ValidationError);
             return;
         }
 
-        const { title, imgURL } = validationQueryResult.data;
-        const { status } = validationBodyResult.data as { status: status };
+        const { title, imgURL, status } = validationBodyResult.data;
+        const typedStatus: status = status as status;
         try {
-            await ProjectService.approvalProject(title, imgURL, status);
+            await ProjectService.approvalProject(title, imgURL, typedStatus);
 
             sendResponse(res, BaseResponseCode.SUCCESS);
         } catch (error) {
