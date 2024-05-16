@@ -86,12 +86,8 @@ export class ImgRepository {
             const img = await Promise.all(imgPromises);
 
             return {
-                is_success: true,
-                message: '요청에 성공했습니다.',
-                result: {
-                    lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
-                    img: img,
-                },
+                lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
+                img: img,
             };
         } catch (error) {
             console.error('Error fetching images:', error);
