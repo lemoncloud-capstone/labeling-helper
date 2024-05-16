@@ -29,18 +29,54 @@ export class ImgRepository {
                 try {
                     const response = await axios.get(item.skey, { responseType: 'arraybuffer' });
                     const blob = Buffer.from(response.data, 'binary').toString('base64');
+
+                    // 새로운 labelPoint 구조 생성
+                    const labelPoint = Object.entries(item.labelPoints).reduce(
+                        (acc: any[], [label, points]: [string, any[]]) => {
+                            points.forEach((point: any, index: number) => {
+                                acc.push({
+                                    [`label`]: label,
+                                    leftTop: [parseFloat(point.leftTop.x), parseFloat(point.leftTop.y)],
+                                    rightTop: [parseFloat(point.rightTop.x), parseFloat(point.rightTop.y)],
+                                    leftBottom: [parseFloat(point.leftBottom.x), parseFloat(point.leftBottom.y)],
+                                    rightBottom: [parseFloat(point.rightBottom.x), parseFloat(point.rightBottom.y)],
+                                });
+                            });
+                            return acc;
+                        },
+                        []
+                    );
+
                     return {
                         imgURL: item.skey,
                         status: item.status,
-                        labelPoint: item.labelPoints,
+                        labelPoint: labelPoint,
                         blob: blob,
                     };
                 } catch (error) {
                     console.error(`Error fetching image from ${item.skey}:`, error.message);
+
+                    // 새로운 labelPoint 구조 생성
+                    const labelPoint = Object.entries(item.labelPoints).reduce(
+                        (acc: any[], [label, points]: [string, any[]]) => {
+                            points.forEach((point: any, index: number) => {
+                                acc.push({
+                                    [`label${index + 1}`]: label,
+                                    leftTop: [parseFloat(point.leftTop.x), parseFloat(point.leftTop.y)],
+                                    rightTop: [parseFloat(point.rightTop.x), parseFloat(point.rightTop.y)],
+                                    leftBottom: [parseFloat(point.leftBottom.x), parseFloat(point.leftBottom.y)],
+                                    rightBottom: [parseFloat(point.rightBottom.x), parseFloat(point.rightBottom.y)],
+                                });
+                            });
+                            return acc;
+                        },
+                        []
+                    );
+
                     return {
                         imgURL: item.skey,
                         status: item.status,
-                        labelPoint: item.labelPoints,
+                        labelPoint: labelPoint,
                         blob: null,
                     };
                 }
@@ -50,12 +86,20 @@ export class ImgRepository {
             const img = await Promise.all(imgPromises);
 
             return {
-                lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
-                img: img,
+                is_success: true,
+                message: '요청에 성공했습니다.',
+                result: {
+                    lastEvaluatedKey: LastEvaluatedKey ? JSON.stringify(LastEvaluatedKey) : null,
+                    img: img,
+                },
             };
         } catch (error) {
             console.error('Error fetching images:', error);
-            throw error;
+            throw {
+                is_success: false,
+                message: 'Error fetching images',
+                result: {},
+            };
         }
     }
 
