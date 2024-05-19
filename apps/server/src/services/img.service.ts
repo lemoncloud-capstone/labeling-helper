@@ -9,11 +9,28 @@ export class ImgService {
         }
     }
 
-    static async updateStatus(title: string, imgURL: string, status: any, labelPoints: any) {
+    static async updateStatus(title: string, imgURL: string, status: any, labelPoint: any) {
         try {
-            return await imgRepository.updateImageStatus(title, imgURL, status, labelPoints);
+            const formattedLabelPoints = this.formatLabelPoints(labelPoint);
+            return await imgRepository.updateImageStatus(title, imgURL, status, formattedLabelPoints);
         } catch (error) {
-            throw new Error('Failed to update image status');
+            throw new Error(error);
         }
+    }
+    private static formatLabelPoints(labelPoints: any[]): any {
+        const formatted = {};
+        for (const point of labelPoints) {
+            const label = point.label;
+            if (!formatted[label]) {
+                formatted[label] = [];
+            }
+            formatted[label].push({
+                leftTop: { x: String(point.leftTop[0]), y: String(point.leftTop[1]) },
+                rightTop: { x: String(point.rightTop[0]), y: String(point.rightTop[1]) },
+                leftBottom: { x: String(point.leftBottom[0]), y: String(point.leftBottom[1]) },
+                rightBottom: { x: String(point.rightBottom[0]), y: String(point.rightBottom[1]) },
+            });
+        }
+        return formatted;
     }
 }
