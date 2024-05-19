@@ -23,6 +23,9 @@ export class ProjectTempRepository {
         const response = await ddbDocumentClient.send(command);
 
         const project = response.Item;
+        if (!project) {
+            throw new Error('제목이 ' + title + '인 프로젝트가 존재하지 않습니다.');
+        }
 
         // 유저 projectsInvolved에서 에서 프로젝트 삭제
         for (const worker of project.workers) {
