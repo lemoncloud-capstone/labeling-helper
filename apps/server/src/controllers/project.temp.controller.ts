@@ -22,13 +22,13 @@ export class ProjectTempController {
         }
 
         const title = bodyValidationResult.data.title;
+        console.log(title);
 
         try {
             await ProjectTempService.deleteProject(title);
             sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS]);
         } catch (error) {
-            console.error(error);
-            sendResponse(res, BaseResponseCode.BAD_REQUEST);
+            sendResponse(res, BaseResponseCode.FAIL_TO_DELETE_PROJECT, error.message);
         }
     }
 }

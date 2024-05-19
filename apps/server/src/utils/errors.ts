@@ -33,6 +33,7 @@ export enum BaseResponseCode {
     FAIL_TO_GET_PROJECTS = 4001,
     FAIL_TO_GET_IMAGES = 4002,
     FAIL_TO_UPDATE_STATUS = 4003,
+    FAIL_TO_DELETE_PROJECT = 4004,
 
     /**
      * 5XXX : ProjectImage
@@ -73,6 +74,7 @@ export const BaseResponseMessages: Record<BaseResponseCode, string> = {
     [BaseResponseCode.FAIL_TO_GET_PROJECTS]: '프로젝트 조회에 실패했습니다.',
     [BaseResponseCode.FAIL_TO_GET_IMAGES]: '프로젝트 이미지 조회에 실패했습니다.',
     [BaseResponseCode.FAIL_TO_UPDATE_STATUS]: '프로젝트 상태 업데이트에 실패했습니다.',
+    [BaseResponseCode.FAIL_TO_DELETE_PROJECT]: '프로젝트 삭제에 실패했습니다.',
 
     /**
      * 5XXX : ProjectImage
