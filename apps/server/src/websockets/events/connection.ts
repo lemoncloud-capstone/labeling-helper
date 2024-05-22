@@ -32,10 +32,10 @@ export function handleSocketEvents(socket: Socket) {
         (
             label: string,
             points: {
-                rightBottom: { x: string; y: string };
-                leftBottom: { x: string; y: string };
-                leftTop: { x: string; y: string };
-                rightTop: { x: string; y: string };
+                rightBottom: { x: number; y: number };
+                leftBottom: { x: number; y: number };
+                leftTop: { x: number; y: number };
+                rightTop: { x: number; y: number };
             },
             roomId: string
         ) => {
