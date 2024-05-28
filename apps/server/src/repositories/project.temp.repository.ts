@@ -13,7 +13,7 @@ export class ProjectTempRepository {
     public async deleteProject(title: string) {
         const getProjectParams: GetCommandInput = {
             TableName: 'LemonSandbox',
-            Key: { pkey: 'P' + title, skey: 'PROJECT' },
+            Key: { pkey: title, skey: 'PROJECT' },
         };
 
         // 스캔 커맨드에 파라미터 적용
@@ -40,23 +40,25 @@ export class ProjectTempRepository {
             const getWorkerCommand = new GetCommand(getWorkerParams);
             const response = await ddbDocumentClient.send(getWorkerCommand);
             const user = response.Item;
-            const index = user.projectsInvolved.findIndex(titleIndex => titleIndex === 'P' + title);
+            const index = user.projectsInvolved.findIndex(titleIndex => titleIndex === title);
 
-            // 회원 projectsInvolved에서 title의 index로 title 제거
-            const updateWorkerParam: UpdateCommandInput = {
-                TableName: 'LemonSandbox',
-                Key: { pkey: userID, skey: 'USER' },
-                UpdateExpression: `REMOVE projectsInvolved[${index}]`,
-            };
+            if (index != -1) {
+                // 회원 projectsInvolved에서 title의 index로 title 제거
+                const updateWorkerParam: UpdateCommandInput = {
+                    TableName: 'LemonSandbox',
+                    Key: { pkey: userID, skey: 'USER' },
+                    UpdateExpression: `REMOVE projectsInvolved[${index}]`,
+                };
 
-            const updateProjectCommand = new UpdateCommand(updateWorkerParam);
-            await ddbDocumentClient.send(updateProjectCommand);
+                const updateProjectCommand = new UpdateCommand(updateWorkerParam);
+                await ddbDocumentClient.send(updateProjectCommand);
+            }
         }
 
         // 프로젝트 삭제
         const projectDeleteParams: DeleteCommandInput = {
             TableName: 'LemonSandbox',
-            Key: { pkey: 'P' + title, skey: 'PROJECT' },
+            Key: { pkey: title, skey: 'PROJECT' },
         };
 
         const projectDeleteCommand = new DeleteCommand(projectDeleteParams);
