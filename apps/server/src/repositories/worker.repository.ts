@@ -107,6 +107,30 @@ export class WorkerRepository {
             throw error;
         }
     }
+
+    public async getAssignedWorkers(projectId: string) {
+        const pkey = 'P' + projectId;
+        const params: GetCommandInput = {
+            TableName: 'LemonSandbox',
+            Key: { pkey: pkey, skey: 'PROJECT' },
+        };
+
+        try {
+            const command = new GetCommand(params);
+
+            // 커맨드 디비에 전송
+            const response = await ddbDocumentClient.send(command);
+
+            const project = response.Item;
+
+            const workers = project.workers;
+
+            return workers;
+        } catch (error) {
+            console.error('Error get assigned workers to DynamoDB:', error);
+            throw error;
+        }
+    }
 }
 
 export const workerRepository = new WorkerRepository();
