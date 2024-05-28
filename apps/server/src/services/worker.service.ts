@@ -14,4 +14,14 @@ export class WorkerService {
             throw error;
         }
     }
+
+    static async getAssignedWorkers(projectId: string) {
+        try {
+            const assignedWorkers = await workerRepository.getAssignedWorkers(projectId);
+            return assignedWorkers;
+        } catch (error) {
+            console.error('Error in service while get assigned workers:', error);
+            throw error;
+        }
+    }
 }

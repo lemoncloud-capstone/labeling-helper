@@ -17,6 +17,10 @@ const WorkerListQuerySchema = z.object({
     nickname: z.string().nullish(),
 });
 
+const WorkersQuerySchema = z.object({
+    projectId: z.string(),
+});
+
 export class WorkerController {
     public static async workerList(req: Request, res: Response): Promise<void> {
         const bodyValidationResult = WorkerListBodySchema.safeParse(req.body);
@@ -35,6 +39,23 @@ export class WorkerController {
             // 유저에 따른 프로젝트 목록
             const workerList = await WorkerService.getWorkerList(exclusiveStartKey, nickname);
             sendResponse(res, BaseResponseCode.SUCCESS, BaseResponseMessages[BaseResponseCode.SUCCESS], workerList);
+        } catch (error) {
+            console.error(error);
+            sendResponse(res, BaseResponseCode.BAD_REQUEST);
+        }
+    }
+    //query param 내 프로젝트 ID로 프로젝트에 할당된 작업자 불러오는 API
+    public static async getAssignedWorkers(req: Request, res: Response): Promise<void> {
+        const queryValidationResult = WorkersQuerySchema.safeParse(req.query);
+
+        try {
+            const assignedWorkers = await WorkerService.getAssignedWorkers(queryValidationResult.data.projectId);
+            sendResponse(
+                res,
+                BaseResponseCode.SUCCESS,
+                BaseResponseMessages[BaseResponseCode.SUCCESS],
+                assignedWorkers
+            );
         } catch (error) {
             console.error(error);
             sendResponse(res, BaseResponseCode.BAD_REQUEST);
