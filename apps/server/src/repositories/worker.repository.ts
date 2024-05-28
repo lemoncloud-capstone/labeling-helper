@@ -49,12 +49,23 @@ export class WorkerRepository {
             const lastEvaluatedKey = response.LastEvaluatedKey;
 
             for (const worker of workers) {
-                const workerType: WorkerType = {
-                    userID: worker.pkey,
-                    nickname: worker.nickname,
-                    profile_image: worker.profileImage,
-                    projectsInvolved: await this.findProjects(worker.projectsInvolved),
-                };
+                let workerType: WorkerType;
+                if (!worker.projectsInvolved || worker.projectsInvolved.length == 0) {
+                    workerType = {
+                        userID: worker.pkey,
+                        nickname: worker.nickname,
+                        profile_image: worker.profileImage,
+                        projectsInvolved: [],
+                    };
+                } else {
+                    workerType = {
+                        userID: worker.pkey,
+                        nickname: worker.nickname,
+                        profile_image: worker.profileImage,
+                        projectsInvolved: await this.findProjects(worker.projectsInvolved),
+                    };
+                }
+
                 workerTypes.push(workerType);
             }
 
@@ -81,7 +92,7 @@ export class WorkerRepository {
             for (const projectTitle of projectsInvolved) {
                 const params: GetCommandInput = {
                     TableName: 'LemonSandbox',
-                    Key: { pkey: String(projectTitle), skey: 'PROJECT' },
+                    Key: { pkey: projectTitle, skey: 'PROJECT' },
                 };
 
                 const command = new GetCommand(params);
@@ -91,14 +102,15 @@ export class WorkerRepository {
 
                 const workerProject = response.Item;
 
-                const workerProjectType: WorkerProjectType = {
-                    imgURL: workerProject.imgUrls[0],
-                    progress: workerProject.progress,
-                    title: workerProject.pkey.substring(1),
-                    category: workerProject.category,
-                };
-
-                result.push(workerProjectType);
+                if (workerProject != null) {
+                    const workerProjectType: WorkerProjectType = {
+                        imgURL: workerProject.imgUrls[0],
+                        progress: workerProject.progress,
+                        title: workerProject.pkey.substring(1),
+                        category: workerProject.category,
+                    };
+                    result.push(workerProjectType);
+                }
             }
 
             return result;
