@@ -12,6 +12,7 @@ export function projectsRouter(): Router {
     router.post('/fetchProjects', ProjectController.getProjects);
     router.post('/images', ImgController.getProjectImages);
     router.post('/images/status', ImgController.updateStatus);
+    router.post('/workers', ProjectController.assignWorkers);
     router.get('/workers', WorkerController.getAssignedWorkers);
     router.post('/approval', ProjectController.approvalProject);
     router.delete('/', ProjectTempController.deleteProject);
