@@ -43,10 +43,7 @@ export class ImageService {
 
         const labelsData: LabelPoints = {};
         for (const label of labels) {
-            labelsData[label] = [
-                JSON.parse(JSON.stringify(labelStructure)),
-                JSON.parse(JSON.stringify(labelStructure)),
-            ];
+            labelsData[label] = [JSON.parse(JSON.stringify(labelStructure))];
         }
         return labelsData;
     }
