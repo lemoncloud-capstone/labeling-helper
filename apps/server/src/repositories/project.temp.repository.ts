@@ -13,7 +13,7 @@ export class ProjectTempRepository {
     public async deleteProject(title: string) {
         const getProjectParams: GetCommandInput = {
             TableName: 'LemonSandbox',
-            Key: { pkey: title, skey: 'PROJECT' },
+            Key: { pkey: 'P' + title, skey: 'PROJECT' },
         };
 
         // 스캔 커맨드에 파라미터 적용
@@ -58,7 +58,7 @@ export class ProjectTempRepository {
         // 프로젝트 삭제
         const projectDeleteParams: DeleteCommandInput = {
             TableName: 'LemonSandbox',
-            Key: { pkey: title, skey: 'PROJECT' },
+            Key: { pkey: 'P' + title, skey: 'PROJECT' },
         };
 
         const projectDeleteCommand = new DeleteCommand(projectDeleteParams);
